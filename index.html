@@ -10,19 +10,22 @@
   --given:#a9bcd0;--givenInk:#3f6a9a;--good:#3f7f3a;--bad:#b23a2e;
   --wear:#9a7442;--gravel:#efeadf;--cutEdge:#8c8573;
   --th-trails:#b5562e;--th-ground:#4f7a3a;--th-sight:#2f7c78;--th-brush:#7a4f8c;--th-hand:#3f6a9a;--th-scout:#b07a14;
+  --roadEdge:#d3bf8f;--givenEdge:#9db2c8;--shade:rgba(70,58,30,.16);--glow:#f1f3e4;--flA:#e2b04f;--flB:#d98b8b;--flC:#faf6ec;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
   --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
   --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;
   --given:#3e5268;--givenInk:#8fb6e0;--good:#7cc46f;--bad:#ec7a6c;--wear:#c9a066;--gravel:#4a4740;--cutEdge:#a39d90;
-  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;color-scheme:dark}}
+  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;
+  --roadEdge:#51472f;--givenEdge:#354759;--shade:rgba(0,0,0,.32);--glow:#2c3624;--flA:#b98d42;--flB:#a96e6e;--flC:#8f8a7a;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
   --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
   --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;
   --given:#3e5268;--givenInk:#8fb6e0;--good:#7cc46f;--bad:#ec7a6c;--wear:#c9a066;--gravel:#4a4740;--cutEdge:#a39d90;
-  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;color-scheme:dark}
+  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;
+  --roadEdge:#51472f;--givenEdge:#354759;--shade:rgba(0,0,0,.32);--glow:#2c3624;--flA:#b98d42;--flB:#a96e6e;--flC:#8f8a7a;color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
 main{max-width:800px;margin:0 auto;padding-block:48px 80px}
@@ -83,8 +86,8 @@ td:first-child{font-weight:500}
 .meter .ms{background:var(--th-scout);background-image:repeating-linear-gradient(90deg,transparent 0 5px,rgba(255,255,255,.35) 5px 7px)}
 footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
 /* svg vocabulary */
-.road{fill:none;stroke:var(--road);stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
-.givenroad{fill:none;stroke:var(--given);stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
+.road{fill:none;stroke:var(--rs,var(--road));stroke-width:var(--rw,20px);stroke-linecap:round;stroke-linejoin:round}
+.givenroad{fill:none;stroke:var(--rs,var(--given));stroke-width:var(--rw,20px);stroke-linecap:round;stroke-linejoin:round}
 .scoutroad{fill:none;stroke:var(--blaze);stroke-width:3;stroke-dasharray:7 6;stroke-linecap:round}
 .trailbase{fill:none;stroke:var(--road);stroke-linecap:round;opacity:.9}
 .oldtrail{fill:none;stroke:var(--road);stroke-linecap:round;opacity:.35}
@@ -127,6 +130,15 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .ghost{fill:var(--ghost)}
 .gate{stroke:var(--fp);stroke-width:2.5;stroke-linecap:round;fill:none}
 .tuft{stroke:var(--tuft);stroke-width:1.4;fill:none;stroke-linecap:round}
+.ru{--rs:var(--roadEdge);--rw:27px;opacity:.6}
+.gu{--rs:var(--givenEdge);--rw:27px;opacity:.6}
+.shade{fill:var(--shade)}
+.glowstop{stop-color:var(--glow)}
+.fl{stroke:none}.flA{fill:var(--flA)}.flB{fill:var(--flB)}.flC{fill:var(--flC)}
+.track{fill:var(--dc);opacity:.13}
+/* halo: lifts labels off trails and tufts; set --halo on groups that sit on a panel */
+.word,.flabel,.hand,.note,.sign,.vlab,.stamp{paint-order:stroke;stroke:var(--halo,var(--grass));stroke-width:5px;stroke-linejoin:round}
+.hud,.hudb,.prob,.barlab{paint-order:stroke;stroke:var(--halo,var(--grass));stroke-width:3.5px;stroke-linejoin:round}
 .bubble{fill:var(--panel);stroke:var(--dc);stroke-width:1.4}
 .bar{fill:var(--dc)}
 .barlab{font-family:Inter,sans-serif;font-size:10.5px;fill:var(--muted)}
@@ -140,7 +152,7 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .house{fill:var(--fp)}
 </style>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
   <h1>GenAI Park</h1>
   <p class="sub">Where understanding generative AI is a walk in the park. Literally.</p>
@@ -503,7 +515,9 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 <script>
 (()=>{
 const NS='http://www.w3.org/2000/svg';
-const el=(tag,a={},p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const ROADC={road:['ru'],givenroad:['gu']};let RID=0;
+const el=(tag,a={},p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);
+  if(p){const rc=tag==='path'&&ROADC[a.class];if(rc){e.id='rd'+(++RID);el('use',{href:'#'+e.id,class:rc[0]},p)}p.appendChild(e);}return e};
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const seg=(t,a,b)=>clamp((t-a)/(b-a));
 const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
@@ -513,30 +527,50 @@ const DX=84,X0=104,Y0=146,AMP=12;
 const R=s=>({x:X0+s*DX,y:Y0+AMP*Math.sin(s*1.1)});
 const f1=n=>n.toFixed(1);
 function roadD(a,b,F=R){if(b<=a+1e-3)return 'M0 0';let d='';const n=Math.max(2,Math.ceil((b-a)/.08));for(let k=0;k<=n;k++){const p=F(a+(b-a)*k/n);d+=(k?'L':'M')+f1(p.x)+' '+f1(p.y)}return d}
-function place(e,x,y,flip=1){e.setAttribute('transform',`translate(${f1(x)} ${f1(y)}) scale(${flip} 1)`)}
-function tufts(g,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;for(let i=0;i<46;i++){const x=r()*800,y=r()*260;if(Math.abs(y-Y0)<26&&x<720)continue;el('path',{d:`M${f1(x-3)} ${f1(y)}l2 -5M${f1(x)} ${f1(y)}v-6M${f1(x+3)} ${f1(y)}l-2 -5`,class:'tuft'},g)}}
+function place(e,x,y,flip=1){e.setAttribute('transform',`translate(${f1(x)} ${f1(y)}) scale(${flip} 1)`);if(e.gait)e.gait(x,y)}
+function tufts(g,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+  el('rect',{x:0,y:0,width:800,height:400,fill:'url(#glow)'},g);
+  for(let i=0;i<52;i++){const x=r()*800,y=r()*260,k=.75+r()*.6;if(Math.abs(y-Y0)<26&&x<720)continue;
+    el('path',{d:`M${f1(x-3*k)} ${f1(y)}q.4 -3 ${f1(2*k)} ${f1(-5*k)}M${f1(x)} ${f1(y)}v${f1(-6.5*k)}M${f1(x+3*k)} ${f1(y)}q-.4 -3 ${f1(-2*k)} ${f1(-5*k)}`,class:'tuft'},g);
+    if(r()<.16){const c=['flA','flB','flC'][Math.floor(r()*3)];el('circle',{cx:f1(x+(r()-.5)*6),cy:f1(y-7*k-1.5),r:1.9,class:'fl '+c},g)}}}
 function gate(g){const one=(x,y,o)=>{const e=el('path',{d:`M${x-11} ${y+14}V${y-18}M${x+11} ${y+14}V${y-18}M${x-14} ${y-13}H${x+14}M${x-14} ${y-4}H${x+14}`,class:'gate'},g);e.style.opacity=o};
   const p=R(-1);one(p.x,p.y,1);[-58,58].forEach(dy=>{const y=p.y+dy;one(p.x,y,.45);el('path',{d:`M${p.x+14} ${y}q28 ${f1(-dy*.06)} 60 ${f1(-dy*.22)}`,class:'worn','stroke-width':5,'stroke-opacity':.4},g)})}
 function opts_pmax(o){return Math.max(...o.map(x=>x[1]))}
-function posts(g,words=W,F=R,cls=[]){return words.map((w,i)=>{const p=F(i);const c=cls[i]||'';const gg=el('g',{},g);el('ellipse',{cx:p.x,cy:p.y,rx:4.5,ry:6.5,class:'fp '+c},gg);const t=el('text',{x:p.x,y:p.y+38,class:'word '+c,'text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
+function foot(g,p,ang,side,c){const f=el('g',{transform:`translate(${f1(p.x)} ${f1(p.y)}) rotate(${f1(ang)}) translate(0 ${side*3}) scale(1.3)`},g);
+  el('path',{d:'M-.5 -3.4C3.4 -3.6 6.2 -1.6 6.2 .2S3.4 3.7 -.4 3.4C-2.6 3.2 -2.9 -3.2 -.5 -3.4Z',class:'fp '+c},f);
+  el('ellipse',{cx:-5.4,cy:0,rx:2.4,ry:2.6,class:'fp '+c},f);return f}
+function posts(g,words=W,F=R,cls=[],dy=[]){return words.map((w,i)=>{const p=F(i),a=F(i-.15),b=F(i+.15);const c=cls[i]||'';const gg=el('g',{},g);
+  foot(gg,p,Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI,i%2?1:-1,c);const t=el('text',{x:p.x,y:p.y+(dy[i]??38),class:'word '+c,'text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
 const rev=(s,i)=>clamp((s-i)/.12+1);
 function walker(g){const w=el('g',{},g);
-  el('path',{d:'M-5 0L0 -15L5 0',class:'limb'},w);
-  el('path',{d:'M0 -15V-31',class:'limb'},w);
-  el('path',{d:'M0 -26L8 -20',class:'limb'},w);
-  el('rect',{x:6,y:-27,width:8,height:10,rx:1,class:'book'},w);
-  el('circle',{cx:0,cy:-36,r:5,class:'head'},w);
-  el('path',{d:'M-9 -40H9M-5.5 -40L-4.5 -46H4.5L5.5 -40',class:'hat'},w);
+  el('ellipse',{cx:0,cy:1,rx:9,ry:2.4,class:'shade'},w);
+  const body=el('g',{},w);
+  const arm=el('path',{class:'limb',d:'M0 -26L-3 -16'},body),la=el('path',{class:'limb'},body),lb=el('path',{class:'limb'},body);
+  el('path',{d:'M0 -15V-31',class:'limb'},body);
+  el('path',{d:'M0 -26L8 -20',class:'limb'},body);
+  let lx=null,amp=0;
+  const legs=(th,lift)=>{const L=15.4,f=(a,up)=>`M0 -15L${f1(L*Math.sin(a))} ${f1(-15+L*Math.cos(a)-up)}`;la.setAttribute('d',f(th,th>0?0:lift));lb.setAttribute('d',f(-th,th>0?lift:0))};
+  w.gait=(x,y)=>{const dx=lx==null?0:Math.hypot(x-lx,y-w.ly);lx=x;w.ly=y;
+    const tgt=dx>60?0:clamp(dx/1.6);amp+=(tgt-amp)*(tgt>amp?.5:.22);if(amp<.02)amp=0;
+    const ph=x/34*2*Math.PI,th=amp*.42*Math.sin(ph);legs(th,amp*2.2*Math.abs(Math.cos(ph)));
+    arm.setAttribute('d',`M0 -26L${f1(-3-amp*4*Math.sin(ph))} -16`);
+    body.setAttribute('transform',`translate(0 ${f1(-amp*1.3*Math.abs(Math.cos(ph)))})`)};
+  legs(0,0);w.ly=0;
+  el('rect',{x:6,y:-27,width:8,height:10,rx:1,class:'book'},body);
+  el('circle',{cx:0,cy:-36,r:5,class:'head'},body);
+  el('path',{d:'M-9 -40H9M-5.5 -40L-4.5 -46H4.5L5.5 -40',class:'hat'},body);
   return w}
 function dog(g,color){const d=el('g',{style:`--dc:${color}`},g);
+  el('ellipse',{cx:2,cy:1,rx:13,ry:2.3,class:'shade'},d);
   d.legs=[-7,-3,6,10].map(x=>({x,e:el('line',{x1:x,y1:-7,x2:x,y2:0,class:'dleg'},d)}));
-  el('path',{d:'M-9 -10q-6 -3 -8 -10',class:'dtail'},d);
+  d.tail=el('path',{d:'M-9 -10q-6 -3 -8 -10',class:'dtail'},d);
   el('ellipse',{cx:1.5,cy:-10,rx:11,ry:5.5,class:'dbody'},d);
   el('circle',{cx:13,cy:-16,r:4.8,class:'dbody'},d);
   el('path',{d:'M16 -18l6 2.5l-6 2z',class:'dbody'},d);
   el('path',{d:'M10.5 -20l-2.5 7l4 -2z',class:'dear'},d);
   return d}
-function setDog(d,x,y,dir,mv,t){place(d,x,y,dir);d.legs.forEach((l,i)=>{const a=mv?Math.sin(t*22+(i%2)*Math.PI)*3.2:0;l.e.setAttribute('x2',f1(l.x+a))})}
+function setDog(d,x,y,dir,mv,t){place(d,x,y+(mv?-Math.abs(Math.sin(t*22))*1.2:0),dir);d.legs.forEach((l,i)=>{const a=mv?Math.sin(t*22+(i%2)*Math.PI)*3.2:0;l.e.setAttribute('x2',f1(l.x+a))});
+  d.tail.setAttribute('transform',`rotate(${f1(Math.sin(t*(mv?16:9))*(mv?10:16))} -9 -10)`)}
 const DOGC=['var(--dogA)','var(--dogB)','var(--dogC)'];
 class Trip{
   constructor(t,s){this.t=t;this.s=s;this.dir=1;this.kf=[{t,s,dir:1,mv:false}];this.ev=[];this.tag=0}
@@ -572,10 +606,12 @@ function noiseArr(n,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/214748
 function draft(nx,ny,block,amt,noise,tf=scene){const out=[];for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){
   const bi=Math.min(Math.floor(i/block)*block+block/2,nx-.5),bj=Math.min(Math.floor(j/block)*block+block/2,ny-.5);
   out.push(lerpC(tf(bi/nx,bj/ny),noise[j*nx+i],amt))}return out}
-function canvasGrid(g,x,y,w,h,nx,ny){const cw=w/nx,ch=h/ny,cells=[];
+function canvasGrid(g,x,y,w,h,nx,ny,sh=true){const cw=w/nx,ch=h/ny,cells=[];if(sh)shadow(g,x,y,w,h);
   for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const c=el('rect',{x:f1(x+i*cw),y:f1(y+j*ch),width:f1(cw+.5),height:f1(ch+.5)},g);c.style.fill='var(--panel)';cells.push(c)}
   el('rect',{x,y,width:w,height:h,class:'frame'},g);
   return{set(cols){cells.forEach((c,k)=>{if(!cols){c.style.fill='var(--panel)';return}const q=cols[k];c.style.fill=`rgb(${q[0]|0},${q[1]|0},${q[2]|0})`})}}}
+function shadow(g,x,y,w,h,rx=2){return el('rect',{x:x+2,y:y+3,width:w,height:h,rx,class:'shade'},g)}
+const onPanel=e=>(e.style.setProperty('--halo','var(--panel)'),e);
 function bez(P,C,E,u){return{x:(1-u)**2*P.x+2*(1-u)*u*C.x+u*u*E.x,y:(1-u)**2*P.y+2*(1-u)*u*C.y+u*u*E.y}}
 function stampT(g,x,y,ok,label){const t=txt(g,x,y,'stamp '+(ok?'good':'bad'));t.textContent=label;t.style.opacity=0;return t}
 
@@ -586,7 +622,7 @@ function headingSetup(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const S={
   const br=C.map(([w,a])=>{const r=a*Math.PI/180,e={x:S.x+150*Math.cos(r),y:S.y+92*Math.sin(r)};
     const line=el('path',{d:`M${S.x} ${S.y}L${f1(e.x)} ${f1(e.y)}`,class:'fan'},bg);line.style.opacity=0;
     const lab=txt(bg,f1(S.x+168*Math.cos(r)),f1(S.y+103*Math.sin(r)+6),'flabel');lab.append(w);const pr=el('tspan',{class:'prob',dx:5},lab);return{line,lab,pr,r}});
-  roads.forEach(rd=>{rd.path=el('path',{class:'road',d:'M0 0'},bg);rd.p=posts(bg,rd.words,rd.R)});
+  roads.forEach((rd,k)=>{rd.path=el('path',{class:'road',d:'M0 0'},bg);rd.p=posts(bg,rd.words,rd.R,[],k?[38,38,38,48]:[38,38,-20,48])});
   const arrow=el('path',{class:'heading',d:'M0 0'},bg);return{bg,S,roads,C,br,arrow}}
 function setBlaze(H,th,vis){const q=H.br.map(b=>Math.exp(3.2*Math.cos(b.r-th*Math.PI/180))),z=q.reduce((a,b)=>a+b),p=q.map(x=>x/z),pm=Math.max(...p);
   H.br.forEach((b,i)=>{b.line.setAttribute('stroke-width',f1(2+18*p[i]));b.line.setAttribute('stroke-opacity',f1(.12+.88*p[i]/pm));b.line.style.opacity=vis;
@@ -619,10 +655,10 @@ judge:{dur:9,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,101);
 
 /* 2000 · ground */
 ground:{dur:6.2,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,107);
-    el('rect',{x:20,y:20,width:226,height:220,rx:12,class:'panel'},bg);
-    const lab=txt(bg,34,42,'hud');lab.textContent='the ground: word vectors';
-    const V={dog:[118,118],cat:[146,140],horse:[96,150],car:[196,74],truck:[214,98],happy:[70,206],sad:[110,214]};this.V=V;
-    this.vd={};for(const k in V){const [x,y]=V[k];el('circle',{cx:x,cy:y,r:4.5,class:'vdot'},bg);const t=txt(bg,x+8,y+5,'vlab');t.textContent=k}
+    shadow(bg,20,20,226,220,12);el('rect',{x:20,y:20,width:226,height:220,rx:12,class:'panel'},bg);
+    const lab=onPanel(txt(bg,34,42,'hud'));lab.textContent='the ground: word vectors';
+    const V={dog:[118,112,-17],cat:[150,132,17],horse:[92,166,8],car:[196,70,8],truck:[212,94,-8],happy:[62,210,8],sad:[132,204,8]};this.V=V;
+    this.vd={};for(const k in V){const [x,y,o]=V[k];el('circle',{cx:x,cy:y,r:4.5,class:'vdot'},bg);const t=onPanel(txt(bg,x+o,y+5,'vlab',o<0?'end':'start'));t.textContent=k}
     this.ringD=el('circle',{cx:V.dog[0],cy:V.dog[1],r:12,class:'ring'},bg);this.ringC=el('circle',{cx:V.cat[0],cy:V.cat[1],r:12,class:'ring'},bg);
     this.link=el('path',{d:`M${V.dog[0]} ${V.dog[1]}L${V.cat[0]} ${V.cat[1]}`,class:'glance'},bg);
     const RT=s=>({x:310+s*80,y:68}),RB=s=>({x:310+s*80,y:192});
@@ -645,8 +681,8 @@ stroke:{dur:3.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,113);
     this.road=el('path',{class:'road',d:'M0 0'},bg);
     const seed=canvasGrid(bg,92,150,44,44,4,4);seed.set(noiseArr(16,7));const sl=txt(bg,114,214,'hand','middle');sl.textContent='random seed';
     const cp=el('clipPath',{id:'wipeclip'},svg);this.clip=el('rect',{x:380,y:30,width:0,height:180},cp);
-    el('rect',{x:380,y:30,width:300,height:180,class:'panel'},bg);
-    const cg=el('g',{'clip-path':'url(#wipeclip)'},bg);const cv=canvasGrid(cg,380,30,300,180,30,18);cv.set(draft(30,18,1,0,noiseArr(540,3)));
+    shadow(bg,380,30,300,180);el('rect',{x:380,y:30,width:300,height:180,class:'panel'},bg);
+    const cg=el('g',{'clip-path':'url(#wipeclip)'},bg);const cv=canvasGrid(cg,380,30,300,180,30,18,false);cv.set(draft(30,18,1,0,noiseArr(540,3)));
     el('rect',{x:380,y:30,width:300,height:180,class:'frame'},bg);
     this.w=walker(svg);this.hud=txt(svg,24,30,'hud');this.hud.textContent='a painter: the product is the canvas, not the footprints';
     this.lab=txt(svg,530,240,'hand','middle');this.lab.textContent='one stroke, no drafts'},
@@ -703,7 +739,7 @@ diffusion:{dur:6.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,137);
 
 /* 2021 · guidance */
 guide:{dur:6.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,139);
-    el('rect',{x:290,y:12,width:220,height:40,rx:8,class:'card'},bg);const c=txt(bg,400,39,'note','middle');c.textContent='a tree on a hill, sunny';c.style.fontSize='23px';
+    shadow(bg,290,12,220,40,8);el('rect',{x:290,y:12,width:220,height:40,rx:8,class:'card'},bg);const c=onPanel(txt(bg,400,39,'note','middle'));c.textContent='a tree on a hill, sunny';c.style.fontSize='23px';
     const nz=noiseArr(160,5);const mute=(u,v)=>lerpC(scene(u,v),[150,148,140],.5);
     const boost=(u,v)=>{const s=scene(u,v),m=(s[0]+s[1]+s[2])/3;return s.map(x=>clamp(m+(x-m)*1.45,0,255))};
     const blocks=[16,8,4,2,1,1],amt=[1,.7,.45,.25,.1,0];
@@ -832,7 +868,7 @@ collapse:{dur:8.4,hold:2.6,init(svg){const bg=el('g',{},svg);tufts(bg,163);
     this.E=[44,108,172,236].map(y=>({x:640,y}));this.words=['world','west','rose','geese'];
     let p=[.45,.30,.15,.10];this.gens=[p];for(let g=1;g<5;g++){const q=p.map(x=>Math.pow(x,1.8)),z=q.reduce((a,b)=>a+b);p=q.map(x=>x/z);this.gens.push(p)}
     this.br=this.E.map(E=>el('path',{d:roadD(0,1,u=>bez(J,C,E,u)),class:'worn'},bg));
-    this.lb=this.E.map((E,i)=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(this.words[i]);const s=el('tspan',{class:'prob',dx:6},t);return{t,s}});
+    this.lb=this.E.map((E,i)=>{const t=txt(bg,E.x+26,E.y+6,'flabel');t.append(this.words[i]);const s=el('tspan',{class:'prob',dx:6},t);return{t,s}});
     this.hud=txt(svg,24,30,'hudb');this.hud2=txt(svg,24,48,'hud')},
   draw(t){const x=clamp((t-.8)/1.6,0,4),g=Math.floor(x),u=ease(clamp((x-g)/.55));const a=this.gens[g],b=this.gens[Math.min(4,g+1)];
     const p=a.map((v,i)=>lerp(v,b[i],u));
@@ -855,12 +891,12 @@ blaze:{dur:5.4,hold:2.2,init(svg){const L=layers(svg,23);this.L=L;this.fan=fan(L
 
 /* 3 · trails */
 trails:{dur:9.8,hold:2.4,init(svg){const bg=el('g',{},svg);tufts(bg,37);this.J={x:300,y:140};const J=this.J;
-    this.ends=[{x:690,y:56,w:'preservation',p:.6},{x:700,y:146,w:'world',p:.3},{x:690,y:232,w:'end',p:.1}];
+    this.ends=[{x:622,y:56,w:'preservation',p:.6},{x:634,y:146,w:'world',p:.3},{x:622,y:232,w:'end',p:.1}];
     this.C={x:450,y:140};const Bz=(b,u)=>{const E=this.ends[b],C=this.C;return{x:(1-u)**2*J.x+2*(1-u)*u*C.x+u*u*E.x,y:(1-u)**2*J.y+2*(1-u)*u*C.y+u*u*E.y}};this.Bz=Bz;
     el('path',{d:`M24 ${J.y}H${J.x}`,class:'road'},bg);
     this.br=this.ends.map((E,b)=>el('path',{d:roadD(0,1,u=>Bz(b,u)),class:'worn','stroke-width':2,'stroke-opacity':.15},bg));
     const lab=txt(bg,40,J.y-22,'note');lab.textContent='in wildness is the …';lab.style.fontSize='22px';
-    this.lbl=this.ends.map(E=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(E.w);const s=el('tspan',{class:'prob',dx:6},t);s.textContent=Math.round(E.p*100)+'%';t.style.opacity=0;return t});
+    this.lbl=this.ends.map(E=>{const t=txt(bg,E.x+22,E.y+6,'flabel');t.append(E.w);const s=el('tspan',{class:'prob',dx:6},t);s.textContent=Math.round(E.p*100)+'%';t.style.opacity=0;return t});
     const pattern=[0,1,0,0,2,0,1,0,1,0];this.N=44;this.gh=[];
     for(let i=0;i<this.N;i++)this.gh.push({t0:.3+i*.135,b:pattern[(i*7)%10],c:el('circle',{r:4.2,class:'ghost'},svg)});
     this.w=walker(svg);this.hud=txt(svg,24,30,'hud');},
@@ -883,9 +919,9 @@ ngram:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,41);this.L=L;this.cone=el('
 
 /* 5 · pack */
 pack:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,53);this.L=L;
-    el('rect',{x:250,y:16,width:300,height:56,rx:12,class:'pack'},L.mid);
+    shadow(L.mid,250,16,300,56,12);el('rect',{x:250,y:16,width:300,height:56,rx:12,class:'pack'},L.mid);
     const cp=el('clipPath',{id:'packclip'},svg);el('rect',{x:252,y:18,width:296,height:52,rx:11},cp);
-    this.chips=el('g',{'clip-path':'url(#packclip)'},L.mid);this.ch=W.map(w=>{const t=txt(this.chips,0,52,'flabel','end');t.textContent=w;return t});
+    this.chips=onPanel(el('g',{'clip-path':'url(#packclip)'},L.mid));this.ch=W.map(w=>{const t=txt(this.chips,0,52,'flabel','end');t.textContent=w;return t});
     const lab=txt(L.mid,240,49,'hud','end');lab.textContent='the pack';
     this.strap=el('path',{class:'strap',d:'M0 0'},L.mid);this.p=posts(L.mid);this.w=walker(L.top)},
   draw(t){const s=walkS(t,1.1,-1,7);this.L.road.setAttribute('d',roadD(-1,s));
@@ -916,9 +952,9 @@ dog:{hold:2.8,init(svg){const L=layers(svg,67);this.L=L;
 nose:{hold:2.6,init(svg){const L=layers(svg,71);this.L=L;this.wts=[.03,.30,.04,.03,.40,.08,.12];
     this.fan=fan(L.mid,R(6),R(7),[['world',.55],['wild',.25],['end',.20]],95);
     this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[1]}`},L.mid));
-    this.bars=this.wts.map((w,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[1]}`},L.mid);const r=el('rect',{x:p.x-6,width:12,y:p.y-60,height:0,rx:2,class:'bar'},g);return{r,base:p.y-60,h:w*92}});
+    this.bars=this.wts.map((w,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[1]}`},L.mid);el('rect',{x:p.x-6,width:12,y:p.y-98,height:38,rx:2,class:'track'},g);const r=el('rect',{x:p.x-6,width:12,y:p.y-60,height:0,rx:2,class:'bar'},g);return{r,base:p.y-60,h:w*92}});
     this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[1]);
-    this.bub=el('g',{style:`--dc:${DOGC[1]}`},L.top);el('rect',{x:-92,y:-50,width:184,height:30,rx:15,class:'bubble'},this.bub);
+    this.bub=onPanel(el('g',{style:`--dc:${DOGC[1]}`},L.top));shadow(this.bub,-92,-50,184,30,15);el('rect',{x:-92,y:-50,width:184,height:30,rx:15,class:'bubble'},this.bub);
     const bt=txt(this.bub,0,-29,'flabel','middle');[['preservation',21],['wildness',17],['the',12]].forEach(([w,sz],i)=>{const sp=el('tspan',{dx:i?6:0},bt);sp.textContent=w;sp.style.fontSize=sz+'px'});
     const tr=new Trip(.7,6-.24);tr.go(-.4,250,true);this.turn=tr.t;tr.go(6-.24,330);this.back=tr.t;tr.wait(2.6);tr.go(7-.24,DX/.8);this.tr=tr;this.dur=this.back+4.1;
     this.hud=txt(L.top,24,32,'hud');this.hud.append('this dog’s nose: ');const hb=el('tspan',{class:'hudb'},this.hud);hb.textContent='what is the walk about?'},
@@ -936,7 +972,7 @@ Object.assign(FIGS,NEWFIGS);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const live=[];
 document.querySelectorAll('svg[data-fig]').forEach(svg=>{const def=FIGS[svg.dataset.fig];def.init(svg);
-  const st={def,start:performance.now(),vis:false,playing:!reduce};live.push(st);
+  const st={def,svg,start:performance.now(),vis:false,playing:!reduce};live.push(st);
   const btn=svg.closest('figure').querySelector('.replay');btn.onclick=()=>{st.start=performance.now();st.playing=true};
   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!st.vis){st.start=performance.now()}st.vis=e.isIntersecting}),{threshold:.3}).observe(svg);
   def.draw(def.dur)});
@@ -944,5 +980,11 @@ function frame(now){for(const st of live){if(!st.vis)continue;const D=st.def.dur
   if(!st.playing)t=st.def.dur;else if(reduce){if(t>D){st.playing=false;t=st.def.dur}}else t%=D;st.def.draw(Math.min(t,st.def.dur))}
   requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
+/* clear grass tufts and flowers from under any label, once the fonts have their real widths */
+function cull(st){const svg=st.svg,M=svg.getScreenCTM();if(!M)return;const I=M.inverse(),pt=(x,y)=>new DOMPoint(x,y).matrixTransform(I);
+  st.def.draw(st.def.dur);const boxes=[];
+  svg.querySelectorAll('text').forEach(t=>{if(!t.textContent.trim())return;const r=t.getBoundingClientRect();if(!r.width)return;const a=pt(r.left,r.top),b=pt(r.right,r.bottom);boxes.push([a.x-4,a.y-3,b.x+4,b.y+3])});
+  svg.querySelectorAll('.tuft,.fl').forEach(e=>{const b=e.getBBox();if(boxes.some(q=>b.x<q[2]&&b.x+b.width>q[0]&&b.y<q[3]&&b.y+b.height>q[1]))e.remove()})}
+document.fonts.ready.then(()=>live.forEach(cull));
 })();
 </script>
