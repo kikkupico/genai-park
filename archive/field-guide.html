@@ -1,0 +1,585 @@
+<title>Trails Field Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: the Trails field notebook. Each entry is one result: a before/after pair of the same picture, then the explanation. */
+:root {
+  --bg: #f3f5f2;
+  --surface: #ffffff;
+  --fg: #1c2420;
+  --muted: #5a6760;
+  --rule: #d5dcd7;
+  --sign: #17603f;        /* the walk */
+  --sign-fg: #ffffff;
+  --scout: #b26a00;       /* scouting */
+  --faint: #a9b4ae;       /* roads not taken */
+  --trail: #3c5a99;       /* trails */
+  --terrain: #8a7a55;     /* terrain */
+  --font-display: "Overpass", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "Overpass Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121815; --surface: #1a221e; --fg: #e3eae5; --muted: #9aa8a0; --rule: #2d3832;
+    --sign: #3a9d6c; --sign-fg: #ffffff; --scout: #e09a34; --faint: #56635c; --trail: #7f9fe0; --terrain: #b3a47a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121815; --surface: #1a221e; --fg: #e3eae5; --muted: #9aa8a0; --rule: #2d3832;
+  --sign: #3a9d6c; --sign-fg: #ffffff; --scout: #e09a34; --faint: #56635c; --trail: #7f9fe0; --terrain: #b3a47a;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 1.06rem; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 2.5rem 4rem;
+}
+main { max-width: 54rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3.5rem; }
+header, section, article { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.6rem; font-weight: 800; }
+p, ul, dl { margin: 0; }
+a { color: var(--sign); }
+.prose { max-width: 40rem; }
+.label { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 1.2rem; color: var(--muted); max-width: 40rem; }
+
+.chip {
+  display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0.5rem; border-radius: 4px;
+  border: 1.5px solid currentColor; white-space: nowrap;
+}
+.c-walk { color: var(--sign); } .c-scout { color: var(--scout); } .c-trail { color: var(--trail); } .c-terrain { color: var(--terrain); } .c-move { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.7rem 1.4rem; }
+.legend div { display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.6rem; align-items: start; font-size: 0.95rem; }
+.legend svg { width: 2.6rem; height: 1.5rem; margin-top: 0.1rem; }
+.legend b { font-family: var(--font-display); }
+
+.index { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.4rem 1.4rem; }
+.index li { display: grid; grid-template-columns: 3rem 1fr; gap: 0.5rem; align-items: baseline; }
+.index .yr { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.entry { border-top: 2px solid var(--fg); padding-top: 1.2rem; }
+.ehead { display: flex; flex-direction: column; gap: 0.4rem; }
+.cite { font-size: 0.95rem; color: var(--muted); font-style: italic; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.8rem; }
+.pair figure { margin: 0; display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.pair figcaption { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pair figure.after figcaption { color: var(--sign); font-weight: 600; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+.after .panel { border-color: var(--sign); }
+.panel svg { display: block; width: 100%; height: auto; }
+.explain { display: grid; grid-template-columns: 9rem 1fr; gap: 0.6rem 1.2rem; }
+.explain dt { font-family: var(--font-display); font-weight: 600; }
+.explain dd { margin: 0; max-width: 40rem; }
+.explain dd.mech { font-size: 0.97rem; }
+.explain dd.ans { font-size: 0.97rem; color: var(--muted); }
+@media (max-width: 34rem) { .explain { grid-template-columns: 1fr; gap: 0.2rem; } .explain dd { margin-bottom: 0.6rem; } }
+
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; }
+.foot { font-size: 0.92rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+/* Picture vocabulary */
+svg .r-walk { stroke: var(--sign); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg .n-walk { fill: var(--sign); }
+svg .r-given { stroke: var(--faint); stroke-width: 3.5; fill: none; stroke-linecap: round; }
+svg .n-given { fill: var(--faint); }
+svg .r-past { stroke: var(--trail); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+svg .n-past { fill: var(--trail); }
+svg .r-expert { stroke: var(--fg); stroke-width: 1.5; fill: none; stroke-dasharray: 5 3; }
+svg .n-expert { fill: var(--fg); }
+svg .r-ghost { stroke: var(--faint); stroke-width: 2; fill: none; stroke-dasharray: 3 3; }
+svg .n-ghost { fill: var(--faint); }
+svg .worn { stroke: var(--trail); stroke-opacity: 0.22; stroke-width: 14; fill: none; stroke-linecap: round; }
+svg .here { fill: var(--sign); stroke: var(--surface); stroke-width: 2; }
+svg .br { stroke: var(--sign); fill: none; stroke-linecap: butt; }
+svg .br.past { stroke: var(--trail); stroke-opacity: 0.7; }
+svg .bl { font-family: var(--font-mono); font-size: 11px; fill: var(--fg); }
+svg .bl.past { fill: var(--trail); }
+svg .w { font-family: var(--font-mono); font-size: 11px; fill: var(--fg); }
+svg .w.given { fill: var(--muted); }
+svg .w.past { fill: var(--trail); }
+svg .prompt { font-family: var(--font-body); font-style: italic; font-size: 13px; fill: var(--muted); }
+svg .lost { fill: var(--surface); stroke: var(--scout); stroke-width: 2; }
+svg .lostq { font-family: var(--font-mono); font-size: 12px; font-weight: 600; fill: var(--scout); }
+svg .lostt { font-family: var(--font-body); font-size: 12px; fill: var(--scout); }
+svg .lostsm { font-family: var(--font-mono); font-size: 10px; fill: var(--scout); }
+svg .band { fill: var(--trail); fill-opacity: 0.1; stroke: var(--trail); stroke-width: 1.2; }
+svg .band.old { fill-opacity: 0.04; stroke-dasharray: 3 3; stroke-opacity: 0.6; }
+svg .bandt { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; fill: var(--trail); font-weight: 600; }
+svg .bandt.old { font-weight: 400; fill-opacity: 0.75; }
+svg .riser { stroke: var(--trail); stroke-width: 1.2; stroke-dasharray: 2 3; fill: none; }
+svg .leash { stroke: var(--trail); stroke-width: 1.5; stroke-dasharray: 1 3; fill: none; stroke-linecap: round; }
+svg .update { stroke: var(--trail); stroke-width: 1.6; fill: none; }
+svg .update.dash { stroke-dasharray: 5 3; }
+svg .thread { stroke: var(--terrain); fill: none; stroke-linecap: round; }
+svg .pack { fill: var(--surface); stroke: var(--terrain); stroke-width: 1.5; }
+svg .packline { stroke: var(--terrain); stroke-opacity: 0.45; stroke-width: 1; fill: none; }
+svg .region { fill: var(--terrain); fill-opacity: 0.12; stroke: var(--terrain); stroke-width: 1.2; stroke-dasharray: 4 3; }
+svg .link { stroke: var(--terrain); stroke-width: 1.5; stroke-dasharray: 3 3; fill: none; }
+svg .scout { stroke: var(--scout); stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+svg .scout.thin { stroke-opacity: 0.6; stroke-width: 1.2; }
+svg .sdot { fill: var(--scout); }
+svg .smark { font-family: var(--font-mono); font-size: 10px; fill: var(--scout); }
+svg .val { fill: var(--surface); stroke: var(--trail); stroke-width: 1.5; }
+svg .valt { font-family: var(--font-mono); font-size: 9px; fill: var(--trail); font-weight: 600; }
+svg .post { stroke: var(--fg); stroke-width: 1.5; }
+svg .flag-good { fill: var(--sign); }
+svg .flag-bad { fill: var(--scout); }
+svg .mark-good { font-family: var(--font-mono); font-size: 12px; font-weight: 600; fill: var(--sign); }
+svg .mark-bad { font-family: var(--font-mono); font-size: 12px; font-weight: 600; fill: var(--scout); }
+svg .note { font-family: var(--font-body); font-size: 12.5px; fill: var(--muted); }
+svg .note.strong { fill: var(--fg); }
+svg .lbl { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; fill: var(--muted); }
+svg .canvasf { fill: var(--surface); stroke: var(--fg); stroke-width: 1.2; }
+svg .px-0 { fill: var(--sign); } svg .px-1 { fill: var(--terrain); } svg .px-2 { fill: var(--trail); } svg .px-3 { fill: var(--faint); } svg .px-4 { fill: var(--scout); }
+svg .canopy { fill: var(--sign); } svg .trunk { fill: var(--terrain); } svg .ground { stroke: var(--muted); stroke-width: 1.2; }
+svg .stroke1 { stroke: var(--sign); stroke-width: 4; fill: none; stroke-linecap: round; }
+svg .stub { stroke: var(--faint); stroke-width: 1.5; fill: none; }
+svg .dotted { stroke: var(--faint); stroke-width: 1; stroke-dasharray: 2 3; fill: none; }
+svg .glow-trail { stroke: var(--trail); stroke-opacity: 0.16; fill: none; stroke-linecap: round; }
+svg .glow-terrain { stroke: var(--terrain); stroke-opacity: 0.18; fill: none; stroke-linecap: round; }
+svg .glow-walk { stroke: var(--sign); stroke-opacity: 0.16; fill: none; stroke-linecap: round; }
+svg .glow-band { fill: none; stroke: var(--trail); stroke-opacity: 0.25; stroke-width: 7; }
+svg .tag rect { stroke-width: 1.5; fill: var(--surface); }
+svg .tag text { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; }
+svg .tag-trail rect { stroke: var(--trail); } svg .tag-trail text { fill: var(--trail); }
+svg .tag-terrain rect { stroke: var(--terrain); } svg .tag-terrain text { fill: var(--terrain); }
+svg .tag-scout rect { stroke: var(--scout); } svg .tag-scout text { fill: var(--scout); }
+svg .tag-walk rect { stroke: var(--sign); } svg .tag-walk text { fill: var(--sign); }
+svg .mk-trail { fill: var(--trail); }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="arr-trail" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="mk-trail"/></marker>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <span class="label">Trails · proof of concept</span>
+    <h1>Trails Field Guide</h1>
+    <p class="lede">What eight landmark results each brought to the table, told through one picture: a walker on a road, choosing its next step.</p>
+    <p class="prose">Each entry draws the same picture twice: the field just before the result, and just after. The one thing the result changed is marked NEW. Then it is explained twice: as a walk, and as the mechanism in the paper's own terms. The frame behind the picture is on the <a href="https://claude.ai/artifact/6C5vV6FxgUCXuRJRYnTDG2">Trails canvas</a>.</p>
+  </header>
+
+  <section aria-labelledby="h-key">
+    <span class="label">The picture</span>
+    <h2 id="h-key">What the marks mean</h2>
+    <div class="legend">
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><line x1="3" y1="11" x2="39" y2="11" class="r-walk"/></svg><span><b>Road.</b> The steps the walker has taken. The road is the product.</span></div>
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><path d="M3 11 C16 11 16 3 39 3" class="br" stroke-width="5"/><path d="M3 11 L39 11" class="br" stroke-width="2.5"/><path d="M3 11 C16 11 16 19 39 19" class="br" stroke-width="1"/></svg><span><b>Blaze.</b> The choices for the next step. Width is probability.</span></div>
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><rect x="3" y="4" width="36" height="14" rx="4" class="band"/></svg><span><b>Trails.</b> Where past walks went and ended well, worn in by training.</span></div>
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><ellipse cx="21" cy="11" rx="17" ry="8" class="region"/></svg><span><b>Terrain.</b> What the walker can tell apart, and what counts as nearby.</span></div>
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><path d="M3 11 L20 5 L39 8" class="scout"/><circle cx="39" cy="8" r="2.5" class="sdot"/></svg><span><b>Scouts.</b> Walks taken only to choose the real step, then thrown away.</span></div>
+      <div><svg viewBox="0 0 42 22" aria-hidden="true"><line x1="3" y1="11" x2="39" y2="11" class="r-given"/></svg><span><b>Given road.</b> Laid by someone else before the walk: a prompt.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-index">
+    <span class="label">Eight entries</span>
+    <h2 id="h-index">In this guide</h2>
+    <ol class="index">
+      <li><span class="yr">1948</span><a href="#shannon">Shannon's n-grams</a></li>
+      <li><span class="yr">1988</span><a href="#td">Temporal-difference learning</a></li>
+      <li><span class="yr">2003</span><a href="#bengio">Neural language model</a></li>
+      <li><span class="yr">2011</span><a href="#dagger">DAgger</a></li>
+      <li><span class="yr">2014</span><a href="#attention">Attention and the Transformer</a></li>
+      <li><span class="yr">2016</span><a href="#alphago">AlphaGo</a></li>
+      <li><span class="yr">2020</span><a href="#diffusion">Diffusion</a></li>
+      <li><span class="yr">2022</span><a href="#rlhf">RLHF and InstructGPT</a></li>
+    </ol>
+  </section>
+
+  <article class="entry" id="shannon" aria-labelledby="h-shannon">
+    <div class="ehead">
+      <span class="label">1948 · row 1 of the test</span>
+      <h2 id="h-shannon">Shannon's n-grams</h2>
+      <p class="cite">Claude Shannon, “A Mathematical Theory of Communication”</p>
+      <div class="chips"><span class="chip c-trail">Changes the trails</span><span class="chip c-move">M1 · a new source of trails</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · nothing counted</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="shannon-before" role="img" aria-label="After the letters t h, six equally thin branches: every letter is equally likely."></svg></div></figure>
+      <figure class="after"><figcaption>After · counted trails</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="shannon-after" role="img" aria-label="After t h, the branch to e is thick. A trails band below, counted from text, feeds the junction."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>With nothing counted, every branch is equally wide and the walker writes noise. Shannon counted which letters follow which in real English. Those counts are the first trails: after “t h”, the blaze now leans hard toward “e”. The walker's terrain is only the last few letters, so it can tell apart nothing older.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Estimate the probability of the next symbol given the previous n−1 symbols by counting in a body of text. Shannon used this to build successively closer approximations of English, first with letters and then with words.</dd>
+      <dt>Answered</dt><dd class="ans">The origin. Text treated as a chain of local choices.</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="td" aria-labelledby="h-td">
+    <div class="ehead">
+      <span class="label">1988 · row 10 of the test</span>
+      <h2 id="h-td">Temporal-difference learning</h2>
+      <p class="cite">Richard Sutton, “Learning to Predict by the Methods of Temporal Differences”</p>
+      <div class="chips"><span class="chip c-trail">Changes the trails</span><span class="chip c-move">M1 · a new source of trails</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · learn after the end</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="td-before" role="img" aria-label="A finished walk ending at a flag. One long arrow runs from the flag back to the start: every junction waits for the end."></svg></div></figure>
+      <figure class="after"><figcaption>After · learn at every step</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="td-after" role="img" aria-label="The same walk. Short arrows run from each junction to the one before it: each junction learns from the next one's guess."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>Trails record where walks ended well. Before TD, a junction could only learn its worth by waiting until the walk reached its end and looking back, or by knowing the whole map in advance. TD lets each junction learn from the next junction's guess. Trails wear in during the walk, one step at a time.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Move the predicted value of a state toward the reward plus the predicted value of the next state, instead of toward the final outcome. Learning happens at every step and needs no model of the environment.</dd>
+      <dt>Answered</dt><dd class="ans">Bellman's equation (row 2) needs a model of every next junction, and waiting for the end of each walk is slow.</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="bengio" aria-labelledby="h-bengio">
+    <div class="ehead">
+      <span class="label">2003 · row 20 of the test</span>
+      <h2 id="h-bengio">The neural language model</h2>
+      <p class="cite">Yoshua Bengio, Réjean Ducharme, Pascal Vincent, Christian Jauvin, “A Neural Probabilistic Language Model”</p>
+      <div class="chips"><span class="chip c-terrain">Changes the terrain</span><span class="chip c-move">M2 · reshape the terrain</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · n-gram trails</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="bengio-before" role="img" aria-label="Above, a past walk 'the dog sat on' with a blaze at its end. Below, the walker on 'the cat sat on' has no blaze: no walker stood there."></svg></div></figure>
+      <figure class="after"><figcaption>After · learned terrain</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="bengio-after" role="img" aria-label="Dog and cat now lie in the same region of the terrain, so the walker on 'the cat sat on' borrows a blaze."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>N-gram trails exist only where some walker has already stood. At a new junction the walker has no blaze at all. Bengio gave the walker a terrain in which junctions with similar words lie close together. A trail worn at “the dog sat on” now lends its blaze to “the cat sat on”, which nobody walked.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Map each word to a learned vector and predict the next word with a neural network over the vectors of the previous words. Contexts made of similar words get similar predictions, so probability spreads to sequences never seen in training.</dd>
+      <dt>Answered</dt><dd class="ans">N-gram sparsity, exposed by Shannon's counting (row 1): most long contexts never occur in any training text.</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="dagger" aria-labelledby="h-dagger">
+    <div class="ehead">
+      <span class="label">2011 · row 24 of the test</span>
+      <h2 id="h-dagger">DAgger</h2>
+      <p class="cite">Stéphane Ross, Geoffrey Gordon, J. Andrew Bagnell, “A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning”</p>
+      <div class="chips"><span class="chip c-trail">Changes the trails</span><span class="chip c-move">M1 · a new source of trails</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · trails only on the expert's road</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="dagger-before" role="img" aria-label="The expert's road is worn. The walker slips off it once, finds no trails, and drifts further and further away."></svg></div></figure>
+      <figure class="after"><figcaption>After · trails where the walker actually went</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="dagger-after" role="img" aria-label="Trails now sit at the junctions where the walker slipped, each with the expert's correction pointing back. The new walk slips and recovers."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>A walker trained only on the expert's road has trails only on that road. One small slip puts it on ground with no trails, its next step is a guess, and the guesses compound. DAgger lets the walker walk, asks the expert what to do at the junctions the walker actually reached, and wears trails there. Recovery becomes a trail like any other.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Run the current policy, have the expert label the states it visits, add those labelled states to the training set, retrain, and repeat. The training data comes to match the states the learner itself produces.</dd>
+      <dt>Answered</dt><dd class="ans">Compounding error in behavior cloning (Ross and Bagnell, 2010). In language models the same failure is called exposure bias.</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="attention" aria-labelledby="h-attention">
+    <div class="ehead">
+      <span class="label">2014 and 2017 · rows 31 and 36 of the test</span>
+      <h2 id="h-attention">Attention and the Transformer</h2>
+      <p class="cite">Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio, “Neural Machine Translation by Jointly Learning to Align and Translate”; Ashish Vaswani and colleagues, “Attention Is All You Need”</p>
+      <div class="chips"><span class="chip c-terrain">Changes the terrain</span><span class="chip c-move">M2 · reshape the terrain</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · one fixed pack</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="attention-before" role="img" aria-label="The road 'the keys to the old cabinet' fades toward its start. Everything is squeezed into one pack, and the blaze cannot decide between is and are."></svg></div></figure>
+      <figure class="after"><figcaption>After · threads back to any step</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="attention-after" role="img" aria-label="Threads run from the blaze back to every word, the thickest to 'keys'. The blaze now leans firmly to are."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>A recurrent walker carries the road behind it in one fixed-size pack, and the oldest steps fade from it. Attention lets the blaze reach back along threads to any step of the road and weigh each one. To choose between “is” and “are”, it looks straight back at “keys”. The Transformer builds the walker's whole terrain out of these threads.</dd>
+      <dt>In the mechanism</dt><dd class="mech">At each step, score every earlier position, turn the scores into weights, and take the weighted sum of their representations. Bahdanau's model attended from the output to the input sentence. The Transformer drops recurrence and attends over the sequence's own past as well.</dd>
+      <dt>Answered</dt><dd class="ans">One fixed vector for the whole input in sequence-to-sequence models (row 30), and the slow, fading memory of recurrent networks (row 17).</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="alphago" aria-labelledby="h-alphago">
+    <div class="ehead">
+      <span class="label">2016 · row 35 of the test</span>
+      <h2 id="h-alphago">AlphaGo</h2>
+      <p class="cite">David Silver and colleagues, “Mastering the Game of Go with Deep Neural Networks and Tree Search”</p>
+      <div class="chips"><span class="chip c-scout">Changes the scouting</span><span class="chip c-move">M5 · scout</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · random scouts</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="alphago-before" role="img" aria-label="Many scouts wander off in random directions, each played to the end of the game, marked win or loss."></svg></div></figure>
+      <figure class="after"><figcaption>After · scouts that follow the blaze</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="alphago-after" role="img" aria-label="Scouts follow the thick branches of the blaze and stop early, where a learned value judges each position."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>Before each move, a Go program sends scouts ahead. Earlier programs sent random scouts that spread everywhere and played every game to its end. AlphaGo's scouts follow the blaze, so they stay on promising branches, and they stop early because a learned value judges a position without playing it out. Its trails came first from human games, then from games against itself.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Monte Carlo tree search guided by a policy network, which proposes moves, and a value network, which scores positions. Both were trained first on expert games and then improved by self-play reinforcement learning.</dd>
+      <dt>Answered</dt><dd class="ans">Monte Carlo tree search alone (row 22) was too weak for Go: random rollouts are poor scouts on a board that large.</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="diffusion" aria-labelledby="h-diffusion">
+    <div class="ehead">
+      <span class="label">2020 · row 43 of the test</span>
+      <h2 id="h-diffusion">Diffusion</h2>
+      <p class="cite">Jonathan Ho, Ajay Jain, Pieter Abbeel, “Denoising Diffusion Probabilistic Models”</p>
+      <div class="chips"><span class="chip c-walk">Changes the walk</span><span class="chip c-move">M4 · change the blaze</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · one stroke</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="diffusion-before" role="img" aria-label="Noise turns into a finished picture in a single stroke, trained by a contest with a judge."></svg></div></figure>
+      <figure class="after"><figcaption>After · the brush</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="diffusion-after" role="img" aria-label="Four canvases in a row, from noise to blocks to shapes to detail, joined by a walk. Each canvas is a draft of the picture."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>A one-stroke painter makes the whole picture at once and gets no chance to fix it. GANs trained such painters through a contest with a judge, and the contest often broke down. Diffusion makes the painter walk: many small strokes from noise to picture, composition first and detail last. The strokes are thrown away and the canvas is kept, and every canvas along the way is a draft of the product. This is the brush, where a language model is the pen.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Train a network to remove a little Gaussian noise at each of many noise levels. Generate by starting from pure noise and denoising step by step, a thousand steps in the original paper.</dd>
+      <dt>Answered</dt><dd class="ans">Unstable adversarial training in GANs (row 29).</dd>
+    </dl>
+  </article>
+
+  <article class="entry" id="rlhf" aria-labelledby="h-rlhf">
+    <div class="ehead">
+      <span class="label">2022 · row 45 of the test</span>
+      <h2 id="h-rlhf">RLHF and InstructGPT</h2>
+      <p class="cite">Long Ouyang and colleagues, “Training Language Models to Follow Instructions with Human Feedback”, building on Paul Christiano and colleagues, 2017</p>
+      <div class="chips"><span class="chip c-trail">Changes the trails</span><span class="chip c-move">M1 · a new source of trails</span></div>
+    </div>
+    <div class="pair">
+      <figure><figcaption>Before · the web's trails</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="rlhf-before" role="img" aria-label="After the prompt 'how do I boil an egg?', the thickest branch continues with another question, as web pages often do."></svg></div></figure>
+      <figure class="after"><figcaption>After · a judge at the destination</figcaption><div class="panel"><svg viewBox="0 0 360 210" data-fig="rlhf-after" role="img" aria-label="Judges mark finished routes good or bad. The trails are reshaped toward the answer, tied to the old trails by a leash."></svg></div></figure>
+    </div>
+    <dl class="explain">
+      <dt>In the walk</dt><dd>A pretrained walker's trails are the web's routes. Asked a question, it may carry on with more questions, because that is a route web pages often take. RLHF puts a judge at the destinations: people compare finished routes, and the trails are reshaped toward the routes they preferred. A leash keeps the new trails close to the old ones, so the walker does not leave the ground it knows.</dd>
+      <dt>In the mechanism</dt><dd class="mech">Fine-tune a pretrained model on demonstrations, train a reward model on human rankings of its outputs, then optimize the model against that reward with PPO, plus a KL penalty that keeps it near the original model.</dd>
+      <dt>Answered</dt><dd class="ans">Pretrained trails follow the web, not the request (GPT-2, row 40). Rewards for “a good answer” are too hard to write by hand (row 38).</dd>
+    </dl>
+  </article>
+
+  <section aria-labelledby="h-sum">
+    <span class="label">Summary</span>
+    <h2 id="h-sum">What each result edited</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Result</th><th>Edits</th><th>The edit, in one line</th></tr></thead>
+        <tbody>
+          <tr><td>Shannon, 1948</td><td><span class="chip c-trail">Trails</span></td><td>Counts become the first trails.</td></tr>
+          <tr><td>TD learning, 1988</td><td><span class="chip c-trail">Trails</span></td><td>Trails wear in at every step, not after the end.</td></tr>
+          <tr><td>Bengio, 2003</td><td><span class="chip c-terrain">Terrain</span></td><td>Similar junctions lie close, so blazes reach places nobody walked.</td></tr>
+          <tr><td>DAgger, 2011</td><td><span class="chip c-trail">Trails</span></td><td>Trails are worn where the walker actually goes.</td></tr>
+          <tr><td>Attention, 2014; Transformer, 2017</td><td><span class="chip c-terrain">Terrain</span></td><td>The blaze reaches back to any step of the road.</td></tr>
+          <tr><td>AlphaGo, 2016</td><td><span class="chip c-scout">Scouting</span></td><td>Scouts follow the blaze and stop where a value can judge.</td></tr>
+          <tr><td>Diffusion, 2020</td><td><span class="chip c-walk">Walk</span></td><td>The pen becomes a brush.</td></tr>
+          <tr><td>InstructGPT, 2022</td><td><span class="chip c-trail">Trails</span></td><td>A judge at the destination reshapes the trails, on a leash.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">Not covered yet: M3, changing who builds the terrain (AlexNet, word2vec), and M6, exposing a failure (Minsky and Papert, model collapse).</p>
+  </section>
+
+  <footer class="foot">
+    <p>Probabilities in the pictures are illustrative. They show the shape of each change, not measured values.</p>
+    <p>Mechanism sentences and attributions are written from memory and are still to be checked against the papers.</p>
+  </footer>
+</main>
+
+<script>
+(() => {
+"use strict";
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const P = (pts) => "M" + pts.map((p) => p[0] + " " + p[1]).join(" L");
+const curve = (x1, y1, x2, y2) => { const m = x1 + (x2 - x1) * 0.45; return `M${x1} ${y1} C${m} ${y1}, ${m} ${y2}, ${x2} ${y2}`; };
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+// Primitives of the picture
+function road(pts, cls = "walk", nodes = true) {
+  return `<path class="r-${cls}" d="${P(pts)}"/>` + (nodes ? pts.map((p) => `<circle class="n-${cls}" cx="${p[0]}" cy="${p[1]}" r="3"/>`).join("") : "");
+}
+function words(pts, ws, cls = "", dy = 18) {
+  return ws.map((w, i) => { const [x1, y1] = pts[i], [x2, y2] = pts[i + 1]; return `<text class="w ${cls}" x="${(x1 + x2) / 2}" y="${(y1 + y2) / 2 + dy}" text-anchor="middle">${esc(w)}</text>`; }).join("");
+}
+const here = (x, y) => `<circle class="here" cx="${x}" cy="${y}" r="6"/>`;
+function fan(x, y, len, brs, o = {}) {
+  let s = "";
+  for (const [dy, p, lbl] of brs) {
+    const c = curve(x, y, x + len, y + dy);
+    if (o.glow) s += `<path class="glow-${o.glow}" d="${c}" stroke-width="${(10 + 16 * p).toFixed(1)}"/>`;
+    s += `<path class="br ${o.cls || ""}" d="${c}" stroke-width="${(1 + 16 * p).toFixed(1)}"/>`;
+    if (lbl) s += `<text class="bl ${o.cls || ""}" x="${x + len + 5}" y="${y + dy + 4}">${esc(lbl)}</text>`;
+  }
+  return s + (o.noHere ? "" : here(x, y));
+}
+function lost(x, y) { return `<circle class="lost" cx="${x}" cy="${y}" r="9"/><text class="lostq" x="${x}" y="${y + 4}" text-anchor="middle">?</text>`; }
+function band(y, label, risers = [], o = {}) {
+  const h = o.h || 26;
+  return (o.glow ? `<rect class="glow-band" x="10" y="${y}" width="340" height="${h}" rx="6"/>` : "") +
+    `<rect class="band ${o.cls || ""}" x="10" y="${y}" width="340" height="${h}" rx="6"/>` +
+    `<text class="bandt ${o.cls || ""}" x="20" y="${y + h / 2 + 3.5}">${esc(label)}</text>` +
+    risers.map(([x, yy]) => `<path class="riser" d="M${x} ${y} L${x} ${yy}"/>`).join("");
+}
+function tag(x, y, txt, kind) { const w = txt.length * 6.4 + 16; return `<g class="tag tag-${kind}"><rect x="${x}" y="${y}" width="${w}" height="18" rx="9"/><text x="${x + w / 2}" y="${y + 12.5}" text-anchor="middle">${esc(txt)}</text></g>`; }
+const note = (x, y, txt, cls = "note", anchor = "start") => `<text class="${cls}" x="${x}" y="${y}" text-anchor="${anchor}">${esc(txt)}</text>`;
+function flag(x, y, kind) {
+  return `<path class="post" d="M${x} ${y} L${x} ${y - 24}"/><path class="flag-${kind}" d="M${x} ${y - 24} L${x + 13} ${y - 19} L${x} ${y - 14} Z"/>` +
+    `<text class="mark-${kind}" x="${x + 6}" y="${y - 2}">${kind === "good" ? "✓" : "✗"}</text>`;
+}
+function canvas(x, y, stage, seed) {
+  const r = rng(seed); let s = `<rect class="canvasf" x="${x}" y="${y}" width="64" height="64" rx="2"/><svg x="${x}" y="${y}" width="64" height="64" viewBox="0 0 64 64">`;
+  const noise = (n) => { for (let i = 0; i < n; i++) s += `<rect class="px-${Math.floor(r() * 5)}" x="${(r() * 60).toFixed(1)}" y="${(r() * 60).toFixed(1)}" width="4" height="4" opacity="${(0.45 + r() * 0.5).toFixed(2)}"/>`; };
+  if (stage === 0) noise(90);
+  if (stage === 1) { noise(40); s += `<circle class="canopy" cx="32" cy="27" r="19" opacity="0.4"/><rect class="trunk" x="27" y="38" width="10" height="24" opacity="0.4"/>`; }
+  if (stage === 2) { noise(14); s += `<path class="canopy" d="M32 9 L12 44 L52 44 Z" opacity="0.75"/><rect class="trunk" x="29" y="42" width="7" height="19" opacity="0.75"/>`; }
+  if (stage === 3) { s += `<path class="canopy" d="M32 6 L16 30 L48 30 Z"/><path class="canopy" d="M32 16 L12 46 L52 46 Z"/><rect class="trunk" x="29" y="45" width="6" height="14"/><path class="ground" d="M0 59 L64 59"/>`; }
+  return s + "</svg>";
+}
+
+const FIG = {};
+
+// Shannon
+const shRoad = [[30, 92], [80, 92], [130, 92]];
+FIG["shannon-before"] = () =>
+  road(shRoad) + words(shRoad, ["t", "h"]) +
+  fan(130, 92, 70, [[-60, 0.04, "e  1 in 27"], [-36, 0.04, "a  1 in 27"], [-12, 0.04, "x  1 in 27"], [12, 0.04, "q  1 in 27"], [36, 0.04, "z  1 in 27"], [60, 0.04, "…"]]) +
+  note(20, 196, "No trails: every letter is equally likely.");
+FIG["shannon-after"] = () =>
+  road(shRoad) + words(shRoad, ["t", "h"]) +
+  fan(130, 92, 70, [[-56, 0.05, "r   5%"], [-30, 0.14, "a  14%"], [0, 0.62, "e  62%"], [30, 0.1, "i  10%"], [56, 0.03, "o   3%"]]) +
+  band(166, "TRAILS · COUNTED FROM TEXT", [[130, 98]], { glow: true }) +
+  tag(250, 170, "NEW · TRAILS", "trail");
+
+// TD
+const tdX = [30, 85, 140, 195, 250, 305], tdRoad = tdX.map((x) => [x, 110]);
+FIG["td-before"] = () =>
+  road(tdRoad) + flag(305, 110, "good") +
+  `<path class="update dash" d="M298 98 C 240 30, 95 30, 36 98" marker-end="url(#arr-trail)"/>` +
+  note(167, 46, "learn only once the walk has ended", "note", "middle") +
+  note(20, 160, "Every junction waits for the whole walk.");
+FIG["td-after"] = () => {
+  let s = road(tdRoad) + flag(305, 110, "good");
+  for (let i = 0; i < tdX.length - 1; i++) {
+    const x1 = tdX[i] + 4, x2 = tdX[i + 1] - 4, m = `M${x2} 102 C${x2 - 12} 76, ${x1 + 12} 76, ${x1} 102`;
+    s += `<path class="glow-trail" d="${m}" stroke-width="9"/><path class="update" d="${m}" marker-end="url(#arr-trail)"/>`;
+  }
+  return s + note(167, 56, "each junction learns from the next one's guess", "note", "middle") +
+    tag(20, 150, "NEW · TRAILS WORN STEP BY STEP", "trail");
+};
+
+// Bengio
+const bxs = [30, 80, 130, 180, 230], bUp = bxs.map((x) => [x, 62]), bDown = bxs.map((x) => [x, 148]);
+const bPast = () => note(30, 32, "IN THE TRAINING TEXT", "lbl") + road(bUp, "past") + words(bUp, ["the", "dog", "sat", "on"], "past") +
+  fan(230, 62, 45, [[-18, 0.4, "the"], [0, 0.3, "a"], [18, 0.15, "his"]], { cls: "past", noHere: true });
+FIG["bengio-before"] = () =>
+  bPast() + note(30, 120, "THE WALKER", "lbl") + road(bDown) + words(bDown, ["the", "cat", "sat", "on"]) +
+  lost(230, 148) + note(250, 152, "no walker", "lostt") + note(250, 166, "stood here", "lostt");
+FIG["bengio-after"] = () =>
+  `<ellipse class="glow-terrain" cx="105" cy="113" rx="36" ry="60" stroke-width="8"/><ellipse class="region" cx="105" cy="113" rx="36" ry="60"/>` +
+  bPast() + note(30, 120, "THE WALKER", "lbl") + road(bDown) + words(bDown, ["the", "cat", "sat", "on"]) +
+  `<path class="link" d="M105 86 L105 142"/>` + note(146, 112, "dog and cat lie close", "note strong") +
+  fan(230, 148, 45, [[-18, 0.4, "the"], [0, 0.3, "a"], [18, 0.15, "his"]], { glow: "walk" }) +
+  tag(10, 186, "NEW · TERRAIN", "terrain") + note(108, 199, "the blaze is borrowed from nearby", "note");
+
+// Attention
+const ax = [20, 52, 92, 118, 150, 186, 250], aRoad = ax.map((x) => [x, 112]);
+const aWords = ["the", "keys", "to", "the", "old", "cabinet"];
+FIG["attention-before"] = () => {
+  let s = "";
+  const op = [0.15, 0.25, 0.38, 0.55, 0.75, 1];
+  for (let i = 0; i < 6; i++) {
+    s += `<g opacity="${op[i]}"><path class="r-walk" d="${P([aRoad[i], aRoad[i + 1]])}"/><circle class="n-walk" cx="${ax[i]}" cy="112" r="3"/>${words([aRoad[i], aRoad[i + 1]], [aWords[i]])}</g>`;
+    const xm = (ax[i] + ax[i + 1]) / 2;
+    s += `<path class="packline" d="M${xm} 136 L${200} 160"/>`;
+  }
+  s += `<rect class="pack" x="176" y="160" width="62" height="22" rx="4"/>` + note(207, 175, "one pack", "note", "middle");
+  return s + fan(250, 112, 40, [[-18, 0.52, "is  52%"], [18, 0.48, "are 48%"]]) +
+    note(20, 40, "Old steps fade from the walker's memory.");
+};
+FIG["attention-after"] = () => {
+  let s = road(aRoad) + words(aRoad, aWords);
+  const wts = [0.03, 0.75, 0.03, 0.04, 0.08, 0.12];
+  for (let i = 0; i < 6; i++) {
+    const xm = (ax[i] + ax[i + 1]) / 2, cy = 108 - 30 - (250 - xm) * 0.22;
+    const d = `M250 104 C250 ${cy}, ${xm} ${cy}, ${xm} 106`;
+    s += `<path class="glow-terrain" d="${d}" stroke-width="${(7 + 10 * wts[i]).toFixed(1)}"/><path class="thread" d="${d}" stroke-width="${(0.8 + 9 * wts[i]).toFixed(1)}"/>`;
+  }
+  return s + fan(250, 112, 40, [[-18, 0.12, "is  12%"], [18, 0.88, "are 88%"]]) +
+    note(20, 168, "The blaze looks straight back at “keys”.") +
+    tag(20, 180, "NEW · THREADS TO ANY STEP", "terrain");
+};
+
+// DAgger
+const expert = [[20, 70], [340, 70]];
+const expertWithTrail = () => `<path class="worn" d="${P(expert)}"/>` + road(expert, "expert", false) + note(20, 50, "THE EXPERT'S ROAD, WITH ITS TRAILS", "lbl");
+const drift = [[20, 70], [70, 70], [120, 70], [165, 84], [210, 104], [255, 130], [300, 160], [340, 188]];
+FIG["dagger-before"] = () =>
+  expertWithTrail() + road(drift) +
+  [3, 4, 5, 6].map((i) => note(drift[i][0] + 8, drift[i][1] - 6, "?", "lostsm")).join("") +
+  note(20, 140, "One slip, then no trails.") + note(20, 156, "Each guess makes the next one worse.");
+FIG["dagger-after"] = () => {
+  let s = expertWithTrail() + road(drift.slice(2, 7), "ghost");
+  for (const i of [3, 4, 5]) {
+    const [x, y] = drift[i];
+    s += `<path class="glow-trail" d="M${x - 9} ${y} L${x + 9} ${y}" stroke-width="16"/><path class="worn" d="M${x - 8} ${y} L${x + 8} ${y}"/>` +
+      `<path class="update" d="M${x + 4} ${y - 6} L${x + 20} ${y - 22 + (i - 3) * 0}" marker-end="url(#arr-trail)"/>`;
+  }
+  s += road([[20, 70], [70, 70], [120, 70], [165, 84], [208, 78], [250, 71], [340, 70]]);
+  return s + note(20, 166, "The expert marks the way back at the", "note") + note(20, 181, "junctions the walker actually reached.", "note") +
+    tag(170, 186, "NEW · TRAILS OFF THE ROAD", "trail");
+};
+
+// AlphaGo
+FIG["alphago-before"] = () => {
+  const r = rng(42); let s = "";
+  for (let k = 0; k < 9; k++) {
+    let x = 30, y = 105; const pts = [[x, y]], endY = 24 + k * 19.5;
+    while (x < 250) { x += 38 + r() * 16; y = Math.max(22, Math.min(186, y + (r() - 0.5) * 80)); pts.push([x, y]); }
+    pts.push([300, endY]);
+    s += `<path class="scout thin" d="${P(pts)}"/>`;
+    const [ex, ey] = pts[pts.length - 1];
+    s += `<text class="smark" x="${ex + 6}" y="${ey + 4}">${r() < 0.5 ? "win" : "loss"}</text>`;
+  }
+  return s + here(30, 105) + note(20, 204, "Random scouts, each played to the end of the game.");
+};
+FIG["alphago-after"] = () => {
+  let s = fan(30, 105, 55, [[-42, 0.06, ""], [-14, 0.55, ""], [14, 0.28, ""], [42, 0.05, ""]]);
+  const tree = [[[85, 91], [140, 72], [195, 60]], [[140, 72], [195, 84]], [[85, 91], [140, 100], [195, 108]], [[85, 119], [140, 130], [195, 138]], [[140, 130], [195, 158]]];
+  for (const t of tree) s += `<path class="scout" d="${P(t)}"/>`;
+  const vals = [[195, 60, ".71"], [195, 84, ".58"], [195, 108, ".64"], [195, 138, ".40"], [195, 158, ".45"]];
+  for (const [x, y, v] of vals) s += `<path class="update" d="M${x} ${y} L${x + 14} ${y}"/><circle class="val" cx="${x + 26}" cy="${y}" r="11"/><text class="valt" x="${x + 26}" y="${y + 3}" text-anchor="middle">${v}</text>`;
+  return s + note(246, 66, "a learned value", "note") + note(246, 81, "judges each end,", "note") + note(246, 96, "with no playing", "note") + note(246, 111, "to the end", "note") +
+    note(20, 30, "Scouts follow the thick branches.") + tag(20, 182, "NEW · GUIDED SCOUTS AND VALUES", "scout");
+};
+
+// Diffusion
+FIG["diffusion-before"] = () =>
+  canvas(30, 50, 0, 7) + canvas(262, 50, 3, 9) +
+  `<path class="stroke1" d="M98 82 C150 40, 210 40, 258 82"/>` + note(178, 40, "one stroke", "note strong", "middle") +
+  note(62, 132, "noise", "lbl", "middle") + note(294, 132, "picture", "lbl", "middle") +
+  flag(176, 178, "bad") + note(196, 166, "a judge in training:", "note") + note(196, 181, "real or fake?", "note") +
+  note(20, 204, "The contest often breaks down.");
+FIG["diffusion-after"] = () => {
+  const xs = [14, 100, 186, 272], labels = ["noise", "blocks", "shapes", "detail"];
+  let s = "";
+  xs.forEach((x, i) => { s += canvas(x, 34, i, 7 + i); s += `<path class="dotted" d="M${x + 32} 100 L${x + 32} 126"/>`; });
+  const pts = xs.map((x) => [x + 32, 130]);
+  s += `<path class="glow-walk" d="${P(pts)}" stroke-width="12"/>` + road(pts);
+  xs.forEach((x, i) => {
+    s += note(x + 32, 150, labels[i].toUpperCase(), "lbl", "middle");
+    if (i < 3) s += `<path class="stub" d="M${x + 32} 130 L${x + 52} 116"/><path class="stub" d="M${x + 32} 130 L${x + 50} 144"/>`;
+  });
+  return s + note(180, 176, "Every canvas is a draft of the picture.", "note", "middle") +
+    note(180, 192, "The strokes are thrown away; the canvas is kept.", "note", "middle") +
+    tag(14, 8, "NEW · THE BRUSH", "walk");
+};
+
+// RLHF
+const rPrompt = () => road([[20, 92], [140, 92]], "given", false) + note(80, 80, "how do I boil an egg?", "prompt", "middle") + note(20, 112, "GIVEN ROAD", "lbl");
+FIG["rlhf-before"] = () =>
+  rPrompt() + fan(140, 92, 55, [[-32, 0.55, "how do I boil rice?"], [0, 0.25, "Place the egg in…"], [32, 0.1, "Eggs are a source…"]]) +
+  band(162, "TRAILS · WORN BY THE WEB'S ROUTES", [[140, 98]]) +
+  note(20, 30, "Web pages often follow a question with another.");
+FIG["rlhf-after"] = () =>
+  rPrompt() + fan(140, 92, 55, [[-32, 0.07, ""], [0, 0.7, ""], [32, 0.06, ""]], { glow: "walk" }) +
+  note(201, 64, "✗", "mark-bad") + note(215, 64, "how do I boil rice?", "bl") +
+  note(201, 96, "✓", "mark-good") + note(215, 96, "Place the egg in…", "bl") +
+  note(215, 128, "Eggs are a source…", "bl") +
+  note(346, 30, "people compared", "note", "end") + note(346, 44, "finished routes", "note", "end") +
+  band(140, "TRAILS · RESHAPED BY THE JUDGES", [[140, 98]], { glow: true, h: 22 }) +
+  band(182, "THE OLD TRAILS", [], { cls: "old", h: 22 }) +
+  `<path class="leash" d="M250 162 L250 182"/><path class="leash" d="M300 162 L300 182"/>` + note(258, 176, "KL leash", "note") +
+  tag(20, 8, "NEW · A JUDGE AT THE DESTINATION", "trail");
+
+document.querySelectorAll("svg[data-fig]").forEach((svg) => { const f = FIG[svg.dataset.fig]; if (f) svg.innerHTML = f(); });
+})();
+</script>

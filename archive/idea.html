@@ -1,0 +1,601 @@
+<title>Trails</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,600;0,800;1,400&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one reading column, like a field notebook; trail-sign panels mark the load-bearing claims. */
+:root {
+  --bg: #f3f5f2;
+  --surface: #ffffff;
+  --fg: #1c2420;
+  --muted: #5a6760;
+  --rule: #d5dcd7;
+  --sign: #17603f;        /* trail-sign green: the walk, the product */
+  --sign-fg: #ffffff;
+  --scout: #b26a00;       /* amber: scouting, discarded walks */
+  --faint: #a9b4ae;       /* roads not taken */
+  --trail: #3c5a99;       /* trails: worn in by training */
+  --terrain: #8a7a55;     /* terrain: what the walker can tell apart */
+  --font-display: "Overpass", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "Overpass Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121815; --surface: #1a221e; --fg: #e3eae5; --muted: #9aa8a0; --rule: #2d3832;
+    --sign: #2e8a5e; --sign-fg: #ffffff; --scout: #e09a34; --faint: #56635c; --trail: #7f9fe0; --terrain: #b3a47a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121815; --surface: #1a221e; --fg: #e3eae5; --muted: #9aa8a0; --rule: #2d3832;
+  --sign: #2e8a5e; --sign-fg: #ffffff; --scout: #e09a34; --faint: #56635c; --trail: #7f9fe0; --terrain: #b3a47a;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 1.06rem; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 2.5rem 4rem;
+}
+main { max-width: 46rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3rem; }
+section { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 7vw, 3.4rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1.5rem; font-weight: 800; }
+h3 { font-size: 1.08rem; font-weight: 600; }
+p, ul, ol { margin: 0; }
+ul, ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.4rem; }
+a { color: var(--sign); }
+.label {
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.lede { font-size: 1.2rem; color: var(--muted); max-width: 38rem; }
+header { display: flex; flex-direction: column; gap: 0.8rem; }
+.subtitle { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--terrain); margin-top: -0.4rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+
+/* The trail-sign panel: reserved for the thesis. */
+.panel {
+  background: var(--sign); color: var(--sign-fg);
+  border-radius: 10px; padding: 1.4rem 1.5rem;
+  box-shadow: inset 0 0 0 3px var(--sign), inset 0 0 0 5px rgba(255,255,255,0.85);
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; line-height: 1.4;
+}
+.panel .label { color: rgba(255,255,255,0.8); display: block; margin-bottom: 0.5rem; }
+
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.compare > div {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; min-width: 0;
+}
+
+.vocab { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.55rem 1rem; margin: 0; }
+.vocab dt { font-family: var(--font-display); font-weight: 800; }
+.vocab dd { margin: 0; }
+.vocab .d-walk { color: var(--sign); }
+.vocab .d-scout { color: var(--scout); }
+.vocab .d-trail { color: var(--trail); }
+.vocab .d-terrain { color: var(--terrain); }
+.vocab .d-blaze { color: var(--fg); }
+@media (max-width: 30rem) { .vocab { grid-template-columns: 1fr; } .vocab dd { margin-bottom: 0.4rem; } }
+
+.figure { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 0.75rem; }
+.figure svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.figcap { font-size: 0.92rem; color: var(--muted); }
+svg .t { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+svg .tw { font-family: var(--font-mono); font-size: 11px; fill: var(--sign); font-weight: 600; }
+svg .ts { font-family: var(--font-mono); font-size: 11px; fill: var(--scout); font-weight: 600; }
+svg .tb { font-family: var(--font-mono); font-size: 11px; fill: var(--trail); font-weight: 600; }
+svg .tt { font-family: var(--font-mono); font-size: 11px; fill: var(--terrain); font-weight: 600; }
+
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.97rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; }
+td:first-child { white-space: nowrap; }
+td.fused { text-align: center; font-weight: 600; }
+.chip {
+  display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0.5rem; border-radius: 4px;
+  border: 1.5px solid currentColor;
+}
+.c-walk { color: var(--sign); }
+.c-scout { color: var(--scout); }
+.c-trail { color: var(--trail); }
+.c-terrain { color: var(--terrain); }
+.c-out { color: var(--muted); }
+
+.callout {
+  border: 1.5px solid var(--trail); border-radius: 8px; padding: 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: 0.5rem; background: var(--surface);
+}
+.callout .label { color: var(--trail); }
+
+.swing { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 0.6rem; }
+.swing > div {
+  border-top: 4px solid var(--rule); padding-top: 0.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 0;
+}
+.swing .name { font-family: var(--font-display); font-weight: 600; }
+.swing .what { font-size: 0.9rem; color: var(--muted); }
+.swing .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--rule); }
+.swing .bar i { display: block; height: 100%; }
+.swing .bar .s { background: var(--trail); }
+.swing .bar .l { background: var(--scout); }
+.key { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+.key span::before { content: ""; display: inline-block; width: 0.8rem; height: 0.5rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: middle; }
+.key .ks::before { background: var(--trail); }
+.key .kl::before { background: var(--scout); }
+.key .kn::before { display: none; }
+
+.cases { display: flex; flex-direction: column; gap: 0.9rem; }
+.case { display: grid; grid-template-columns: 9.5rem 1fr; gap: 0.3rem 1rem; }
+.case h3 { font-size: 1rem; }
+@media (max-width: 34rem) { .case { grid-template-columns: 1fr; } }
+
+.qs { list-style: none; padding: 0; gap: 0.9rem; }
+.qs li { display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.6rem; }
+.qs .qid { font-family: var(--font-mono); font-weight: 600; color: var(--sign); }
+
+.log { list-style: none; padding: 0; gap: 0; border-left: 2px solid var(--rule); }
+.log li { padding: 0.35rem 0 0.35rem 1rem; position: relative; }
+.log li::before {
+  content: ""; position: absolute; left: -6px; top: 0.85rem; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--sign);
+}
+.log .when { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.note { font-size: 0.95rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; }
+
+/* Q1 test: verdict tallies, then the tagged table. */
+.tally { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.6rem; }
+.tally > div { border-top: 4px solid var(--rule); padding-top: 0.5rem; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.tally .n { font-family: var(--font-display); font-weight: 800; font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.tally .what { font-size: 0.9rem; color: var(--muted); }
+.tally .t-native { border-color: var(--sign); } .tally .t-native .n { color: var(--sign); }
+.tally .t-stretch { border-color: var(--scout); } .tally .t-stretch .n { color: var(--scout); }
+.tally .t-out { border-color: var(--faint); } .tally .t-out .n { color: var(--muted); }
+.tagtable { min-width: 60rem; font-size: 0.86rem; line-height: 1.45; }
+.tagtable td, .tagtable th { padding: 0.45rem 0.5rem; }
+.tagtable td:nth-child(1), .tagtable td:nth-child(2) { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tagtable td:nth-child(3) { font-family: var(--font-display); font-weight: 600; }
+.tagtable td:nth-child(7) { font-family: var(--font-mono); font-size: 0.78rem; white-space: nowrap; }
+.tagtable .ref { font-family: var(--font-mono); font-size: 0.78rem; color: var(--trail); white-space: nowrap; }
+.fit { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.fit-n { color: var(--sign); } .fit-s { color: var(--scout); } .fit-o { color: var(--muted); }
+.fit small { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); font-family: var(--font-body); font-size: 0.8rem; }
+.moves { display: grid; grid-template-columns: 3rem 1fr 3.5rem; gap: 0.5rem 0.8rem; margin: 0; }
+.moves dt { font-family: var(--font-mono); font-weight: 600; color: var(--sign); }
+.moves dd { margin: 0; }
+.moves .count { font-family: var(--font-mono); color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+
+<main>
+  <header>
+    <span class="label">Working canvas · status: exploring</span>
+    <h1>Trails</h1>
+    <p class="subtitle">Terrain and trails: a compressed picture of statistical AI</p>
+    <p class="lede">A search for one compressed representation of decades of statistical AI research. The aim is to see the field's results as variations on one picture, not to teach LLMs or any single technique.</p>
+    <div class="meta">
+      <span class="label">Started 2026-11-20</span>
+      <span class="label">Sister project: DAAG2</span>
+    </div>
+  </header>
+
+  <section id="thesis">
+    <div class="panel">
+      <span class="label">Current thesis</span>
+      An AI system's product is its own walk. Terrain decides what the walker can tell apart, trails record where walks went before, and scouting looks ahead.
+    </div>
+  </section>
+
+  <section id="vocabulary">
+    <span class="label">Vocabulary</span>
+    <h2>Five words</h2>
+    <dl class="vocab">
+      <dt class="d-walk">Walk</dt><dd>The product. One traversal, one irreversible local step at a time: the tokens generated, the moves played.</dd>
+      <dt class="d-blaze">Blaze</dt><dd>The mark read at a junction: the distribution over next steps. The walker sees only the blaze in front of it and the road behind.</dd>
+      <dt class="d-trail">Trails</dt><dd>Where past walks went, and where they ended well. Worn in by many walkers: counts, likelihood, reward.</dd>
+      <dt class="d-terrain">Terrain</dt><dd>What the walker can tell apart, and what counts as nearby. Representation, architecture, inductive bias. It decides where a trail could run at all.</dd>
+      <dt class="d-scout">Scouting</dt><dd>Walks taken only to choose the real one, then discarded. Search, lookahead, rollouts.</dd>
+    </dl>
+    <p>Why trails and not signposts: a signpost is put up by someone, and a trail is worn in by many walkers. That is the difference between symbolic AI, which posted its signs by hand, and statistical AI, which wears them in from data.</p>
+  </section>
+
+  <section id="criterion">
+    <span class="label">The criterion</span>
+    <h2>The trace is the product</h2>
+    <p>Every algorithm is a sequence of steps, so "it is a walk" would say nothing on its own. What separates AI from ordinary computation is what happens to the steps.</p>
+    <div class="compare">
+      <div>
+        <span class="chip c-out">Computation</span>
+        <p>The trace is scaffolding. Dijkstra outputs a path, but the nodes it expanded along the way are thrown away. A mistake midway costs nothing if the answer comes out right.</p>
+      </div>
+      <div>
+        <span class="chip c-walk">AI</span>
+        <p>The trace is delivered. Each token is read, each move is played, each action lands in the world. A mistake midway is a defect in the product, and it stays.</p>
+      </div>
+    </div>
+    <p>This is why the walk is literally true. A language model is a distribution over paths, and the chain rule factors any such distribution into one local blaze per junction. A policy does the same for trajectories. It also explains why the field's chronic problems are path problems: exposure bias, compounding error, hallucination, and the lack of a way back.</p>
+    <h3>Pen and brush</h3>
+    <p>The walk builds the product as it goes. Some walkers draw with a pen: the line of ink is the text, so the footprints are the product. That is an autoregressive model. Others paint with a brush on a canvas they carry: the strokes are lost and the painting remains. That is diffusion, which blocks in the composition first and the detail last, the way a painter does. Either way, the walker looks at the work so far before each step.</p>
+    <p>Pen and brush differ in the order they build the product, not in how they move through the possibilities. Both make one walk through the tree of possible outputs and touch one junction per level. The difference shows on a second tree, made of the product's own parts. The pen finishes each part before starting the next. The brush refines every part a little on each pass, coarse to fine, which visits the product's levels of detail one level at a time.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Through the tree of possible outputs</th><th>Through the product's own parts</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-walk">Pen</span><br>autoregressive</td><td>One path, never revisited</td><td>Depth-first: finish each part, then the next. The trace is the product.</td></tr>
+          <tr><td><span class="chip c-walk">Brush</span><br>diffusion</td><td>One path, never revisited</td><td>Breadth-first: refine every part a little, level by level. The trace is a series of drafts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>This gives the criterion a test: is every intermediate state a rough draft of the product? A text prefix is a partial text, and a half-denoised canvas is a blurry version of the final image, so both are walks. Dijkstra's distance table is no draft of a path, because the path is pulled out at the end, so it stays computation. A painter can paint over earlier work, so for the brush "a mistake midway stays" softens to "early strokes mostly stay." And because two stroke orders can give the same canvas, a brush walker's paths merge: it crosses a terrain, not a tree.</p>
+    <p>A walker can be given two things at the start: road already laid, and a destination named in advance. A user's prompt is road, which the walker finishes. An inpainting mask or an image-to-image draft is the brush version, and image-to-image starts the walk partway along. A text-to-image prompt is never painted; the painter keeps it beside the canvas and glances at it before every stroke, and guidance sets how strictly. Chat models write both kinds into the road. A system prompt is road too, but it is posted once and read by every walker, so it does the job of a signpost.</p>
+    <div class="callout">
+      <span class="label">The Turing test judges footprints</span>
+      <p>Turing's test (1950) looks only at the footprints and asks whether a person made them. It never asks where the walk ended. That is the criterion above in its oldest form: the trace is what gets judged.</p>
+      <p>It is also the judge most of the field trains against. Maximum likelihood wears trails so that the walker's footprints match human ones, step by step. Trails are footprints that have piled up, and the test reads one set of them.</p>
+      <p>Its blind spot is the field's blind spot. Footprints can look human and still lead nowhere, and a hallucination is human-looking footprints to a place that does not exist. The two judges in M1 split along this line: imitation judges the footprints, and reward judges where they ended.</p>
+    </div>
+  </section>
+
+  <section id="roles">
+    <span class="label">The picture</span>
+    <h2>Four roles</h2>
+    <div class="figure">
+      <svg viewBox="0 0 720 340" role="img" aria-label="Faint contour lines show the terrain. Over it, a tree of roads. One solid green path is the walk that becomes the product, with a blaze at each junction. Dashed amber branches are scouting walks that get discarded. Faint grey branches are roads not taken. A blue band below is the trails, worn in by training, with dotted arrows up to the blazes.">
+        <!-- terrain: contour lines -->
+        <g stroke="var(--terrain)" stroke-width="1" fill="none" opacity="0.45">
+          <path d="M0 40 C120 20, 220 60, 340 35 S560 10, 720 30"/>
+          <path d="M0 95 C140 70, 250 115, 380 90 S590 60, 720 85"/>
+          <path d="M0 200 C130 180, 240 230, 370 205 S600 175, 720 200"/>
+          <path d="M0 250 C150 235, 270 265, 400 245 S610 225, 720 245"/>
+        </g>
+        <text class="tt" x="610" y="232">TERRAIN</text>
+        <!-- roads not taken -->
+        <g stroke="var(--faint)" stroke-width="2" fill="none">
+          <path d="M150 150 L270 70"/>
+          <path d="M150 150 L270 225"/>
+          <path d="M270 150 L370 205"/>
+          <path d="M490 125 L590 190"/>
+        </g>
+        <!-- scouting from the junction at (370,115) -->
+        <g stroke="var(--scout)" stroke-width="2" stroke-dasharray="5 4" fill="none">
+          <path d="M370 115 L460 50 L540 30"/>
+          <path d="M460 50 L540 70"/>
+          <path d="M370 115 L470 185 L540 205"/>
+        </g>
+        <g fill="var(--scout)">
+          <circle cx="540" cy="30" r="3.5"/><circle cx="540" cy="70" r="3.5"/><circle cx="540" cy="205" r="3.5"/>
+        </g>
+        <!-- the walk -->
+        <path d="M30 150 L150 150 L270 150 L370 115 L490 125 L610 115 L690 120" stroke="var(--sign)" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <g fill="var(--sign)">
+          <circle cx="30" cy="150" r="5"/><circle cx="150" cy="150" r="5"/><circle cx="270" cy="150" r="5"/>
+          <circle cx="370" cy="115" r="5"/><circle cx="490" cy="125" r="5"/><circle cx="610" cy="115" r="5"/>
+        </g>
+        <!-- blazes: post + panel with three bars -->
+        <g>
+          <g transform="translate(150 150)">
+            <rect x="-1" y="-38" width="2" height="34" fill="var(--sign)"/>
+            <rect x="-15" y="-58" width="30" height="20" rx="2" fill="var(--sign)"/>
+            <rect x="-11" y="-46" width="5" height="5" fill="var(--sign-fg)"/><rect x="-3" y="-54" width="5" height="13" fill="var(--sign-fg)"/><rect x="5" y="-48" width="5" height="7" fill="var(--sign-fg)"/>
+          </g>
+          <g transform="translate(270 150)">
+            <rect x="-1" y="-38" width="2" height="34" fill="var(--sign)"/>
+            <rect x="-15" y="-58" width="30" height="20" rx="2" fill="var(--sign)"/>
+            <rect x="-11" y="-54" width="5" height="13" fill="var(--sign-fg)"/><rect x="-3" y="-47" width="5" height="6" fill="var(--sign-fg)"/><rect x="5" y="-45" width="5" height="4" fill="var(--sign-fg)"/>
+          </g>
+          <g transform="translate(490 125)">
+            <rect x="-1" y="-38" width="2" height="34" fill="var(--sign)"/>
+            <rect x="-15" y="-58" width="30" height="20" rx="2" fill="var(--sign)"/>
+            <rect x="-11" y="-49" width="5" height="8" fill="var(--sign-fg)"/><rect x="-3" y="-54" width="5" height="13" fill="var(--sign-fg)"/><rect x="5" y="-46" width="5" height="5" fill="var(--sign-fg)"/>
+          </g>
+        </g>
+        <!-- trails band -->
+        <rect x="20" y="278" width="680" height="44" rx="6" fill="none" stroke="var(--trail)" stroke-width="1.5"/>
+        <text class="tb" x="36" y="304">TRAILS · worn in by training: from routes walked, then from where routes ended</text>
+        <g stroke="var(--trail)" stroke-width="1.2" stroke-dasharray="2 4" fill="none">
+          <path d="M150 278 L150 157"/><path d="M270 278 L270 157"/><path d="M490 278 L490 132"/>
+        </g>
+        <!-- labels -->
+        <text class="tw" x="30" y="178">START</text>
+        <text class="tw" x="600" y="146">WALK · the product</text>
+        <text class="ts" x="548" y="34">SCOUTING</text>
+        <text class="t" x="548" y="48">discarded; only the</text>
+        <text class="t" x="548" y="60">choice survives</text>
+        <text class="t" x="168" y="240">roads not taken</text>
+        <text class="t" x="96" y="80">blaze: a distribution</text>
+        <text class="t" x="96" y="93">over next steps</text>
+      </svg>
+    </div>
+    <p class="figcap">The walker sees only the blaze in front of it and the road behind. There is no map. Its position is the whole road behind it, so the space is a tree and no junction is visited twice. The terrain decides which junctions look alike, so a blaze can be guessed at a junction no walker has passed.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>What survives</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-walk">Walking</span></td><td>The path. It is the product.</td><td>Decoding, acting, generating, a policy running</td></tr>
+          <tr><td><span class="chip c-scout">Scouting</span></td><td>Only the choice. Scouting walks are discarded.</td><td>Beam search, Viterbi, MCTS rollouts, tree of thoughts, lookahead, a speculative draft</td></tr>
+          <tr><td><span class="chip c-trail">Wearing trails</span></td><td>The trails: which steps are likely, which routes ended well.</td><td>Counting n-grams, maximum likelihood, TD learning, policy gradients, RLHF</td></tr>
+          <tr><td><span class="chip c-terrain">Building terrain</span></td><td>What the walker can tell apart.</td><td>Hand-made features, kernels, embeddings, architectures, representation learning</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Scouting, wearing trails and building terrain are ordinary computation by the criterion above: their own traces are scaffolding. They matter because they serve the one walk that is delivered.</p>
+  </section>
+
+  <section id="terrain-and-trails">
+    <span class="label">Two things, one or two processes</span>
+    <h2>Terrain and trails</h2>
+    <p>Terrain and trails are different things. Whether they are built by different processes has changed over time, and that change is one of the field's main storylines.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Era</th><th>Terrain built by</th><th>Trails worn by</th></tr></thead>
+        <tbody>
+          <tr><td>Feature engineering, kernels</td><td>Hand, by design</td><td>Learning</td></tr>
+          <tr><td>word2vec, then a downstream model</td><td>One learning process</td><td>A second learning process</td></tr>
+          <tr><td>End-to-end deep learning, about 2012 on</td><td class="fused" colspan="2">The same gradient, at once</td></tr>
+          <tr><td>Pretraining, then RLHF</td><td>Mostly pretraining</td><td>Reshaped by RLHF, held near the existing trails by the KL leash</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The 2012 fusion is the point where the terrain stopped being built by hand.</p>
+    <h3>Garden or forest, signposts or trails</h3>
+    <p>Terrain can be laid out like a manicured garden, with every bed planted by design. It can also be grown like a forest from scattered seed. Trails can be posted or worn. The two choices are independent, so there are four corners, and the field has filled all of them.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Terrain</th><th>Signposts posted by hand</th><th>Trails worn in</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip c-terrain">Garden</span></td><td>Symbolic AI: expert systems, A* with hand-made heuristics</td><td>Statistical learning before 2012: hand-made features, kernels, HMMs with hand-chosen states</td></tr>
+          <tr><td><span class="chip c-terrain">Forest</span></td><td>System prompts: road posted once by hand and read by every walker who enters the grown forest</td><td>Deep learning from 2012</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>So the garden ends in 2012, not where symbolic AI ends. Statistical AI kept gardening its terrain for decades while letting the trails wear in. The seeds are not thrown blindly, either. The architecture decides what can grow, which is why architecture counts as terrain.</p>
+    <div class="callout">
+      <span class="label">A prediction the frame makes</span>
+      <p>Trails worn only by your own walks narrow and fade. That is model collapse, seen when models train on their own outputs (Shumailov et al. 2024). Self-play avoids it because a destination check, a win or a loss, keeps correcting the trails. The frame was not built to explain this, which is a good sign.</p>
+    </div>
+  </section>
+
+  <section id="history">
+    <span class="label">What it compresses</span>
+    <h2>Two motions across the decades</h2>
+    <h3>Where the trails come from</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Source</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Posted by hand (signposts, before trails)</td><td>A* heuristics (1968), expert-system rules, chess evaluation functions</td></tr>
+          <tr><td>Counted</td><td>Shannon's n-grams (1948), HMMs in speech recognition</td></tr>
+          <tr><td>Worn by routes walked</td><td>Supervised learning, neural LMs (Bengio 2003), pretraining</td></tr>
+          <tr><td>Worn by where routes ended</td><td>TD learning (1988), policy gradients, RLHF (2017, 2022)</td></tr>
+          <tr><td>Worn by its own walks</td><td>TD-Gammon (1992), AlphaZero (2017)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figcap">These overlap in time. The order is the order of independence from human-made routes, not a strict chronology.</p>
+
+    <h3>Follow the trail, or look ahead</h3>
+    <p>Sutton's two methods that scale, learning and search, become wearing trails and scouting. The field keeps swinging between them.</p>
+    <div class="swing">
+      <div><span class="name">Deep Blue</span><span class="bar"><i class="s" style="width:20%"></i><i class="l" style="width:80%"></i></span><span class="what">hand-posted signs, deep scouting</span></div>
+      <div><span class="name">TD-Gammon</span><span class="bar"><i class="s" style="width:85%"></i><i class="l" style="width:15%"></i></span><span class="what">worn trails, shallow scouting</span></div>
+      <div><span class="name">AlphaZero</span><span class="bar"><i class="s" style="width:55%"></i><i class="l" style="width:45%"></i></span><span class="what">both</span></div>
+      <div><span class="name">LLMs</span><span class="bar"><i class="s" style="width:100%"></i></span><span class="what">trails only</span></div>
+      <div><span class="name">Reasoning models</span><span class="bar"><i class="s" style="width:65%"></i><i class="l" style="width:35%"></i></span><span class="what">scouting returns, in tokens</span></div>
+    </div>
+    <div class="key"><span class="ks">trails</span><span class="kl">scouting</span><span class="kn">(proportions are impressions, not measurements)</span></div>
+  </section>
+
+  <section id="test">
+    <span class="label">Q1 · the test, run 2026-11-20</span>
+    <h2>Fifty-one results, tagged</h2>
+    <p>Results were picked for their weight in the field, not for how well they fit. Likely misfits were included on purpose. Each result gets one primary role, the move it made, the failure it answered, and a fit grade.</p>
+    <ul>
+      <li><strong>Native:</strong> the contribution can be stated in the five words without losing its main point.</li>
+      <li><strong>Stretched:</strong> it can be stated, but a word is bent or the main point is lost.</li>
+      <li><strong>Outside:</strong> it needs words the frame does not have.</li>
+    </ul>
+    <p><strong>Rule for training methods:</strong> a training method is tagged by what it changes in the finished walker. If it only reaches the same walker more cheaply or reliably, it is machinery and sits outside the frame, because training's trace is scaffolding.</p>
+
+    <div class="callout">
+      <span class="label">Verdict</span>
+      <p><strong>The frame holds, with one amendment.</strong> 37 of 51 results are native, and as predicted the misfits cluster in terrain and in machinery. The amendment: the walk builds the product as it goes, with a pen or with a brush (see <a href="#criterion">the criterion</a>). Before it, VAE and diffusion formed a third cluster of misfits.</p>
+    </div>
+    <div class="tally">
+      <div class="t-native"><span class="n">37</span><span class="what">native, 5 of them one-step walks where the frame adds little</span></div>
+      <div class="t-stretch"><span class="n">9</span><span class="what">stretched</span></div>
+      <div class="t-out"><span class="n">5</span><span class="what">outside</span></div>
+      <div><span class="n">32</span><span class="what">failures traced to another row; the links are not yet verified</span></div>
+    </div>
+
+    <h3>Where the 14 misfits fall</h3>
+    <ul>
+      <li><strong>Terrain theory (5):</strong> SVMs, boosting, LDA, BERT, EM. Six of the 18 terrain rows are misfits, against four of the 22 trail rows.</li>
+      <li><strong>Machinery (6):</strong> deep belief nets, ResNet, optimizers and normalization, scaling laws, GPT-2 and speculative decoding. Their point is that training works, how well it scales, or how fast the same walk runs. The frame has no word for cost.</li>
+      <li><strong>Adversarial game (1):</strong> GAN. Its generator is a one-stroke painter, which fits, but the frame has no word for the game between generator and judge.</li>
+      <li><strong>Messages (1):</strong> belief propagation, which belongs to the DAAG2 frame.</li>
+      <li><strong>Whole-path scoring (1):</strong> CRFs have no local blaze. They score whole paths and are decoded by scouting (Viterbi). This marks a real edge: the blaze is locally normalized by definition.</li>
+    </ul>
+
+    <h3>Three findings the frame did not set out to make</h3>
+    <ul>
+      <li><strong>Few results change the walk itself, at least in this selection.</strong> Only two rows have walking as their role: nucleus sampling, and diffusion, which brought the brush. Against them stand 22 for trails, 18 for terrain and 6 for scouting. The selection left out beam search, temperature and top-k, so this may say more about the pick than about the field. It is a claim to test alongside Q5: if the walker is the decoding rule, decoding results are exactly the ones that change the walker.</li>
+      <li><strong>"Recovery from wrong turns" is a trail source.</strong> DAgger, scheduled sampling, Samuel, TD-Gammon, AlphaZero and the reasoning models all wear trails at the junctions the walker itself reaches. What separates them is the judge: an expert, a win or loss, or a checkable answer. Model collapse is the same move with no judge at all. No result lets the walker step back. Recovery comes only through trails or outside scouting.</li>
+      <li><strong>Viterbi is scouting, not walking.</strong> Its table is scaffolding and only the best path survives. The role table above has been corrected.</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table class="tagtable">
+        <thead><tr><th>#</th><th>Year</th><th>Result</th><th>Role</th><th>What changed</th><th>Failure it answered <span class="ref">← exposed by row</span></th><th>Move</th><th>Fit</th></tr></thead>
+        <tbody>
+          <tr id="r1"><td>1</td><td>1948</td><td>Shannon&#x27;s n-grams</td><td><span class="chip c-trail">Trails</span></td><td>Trails counted from text; the blaze is next-symbol frequency</td><td>The origin: text treated as a chain of local choices</td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r2"><td>2</td><td>1957</td><td>Bellman&#x27;s equation</td><td><span class="chip c-trail">Trails</span></td><td>A junction&#x27;s worth is where routes from it end</td><td>Choosing a step seems to need the whole future</td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r3"><td>3</td><td>1958</td><td>Perceptron</td><td><span class="chip c-trail">Trails</span></td><td>Trails learned from labelled examples on fixed terrain</td><td>Recognizers wired by hand</td><td>M1</td><td><span class="fit fit-n">Native<small>1 step</small></span></td></tr>
+          <tr id="r4"><td>4</td><td>1959</td><td>Samuel&#x27;s checkers</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn by its own games, with shallow scouting</td><td>An evaluation posted by hand</td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r5"><td>5</td><td>1967</td><td>Viterbi</td><td><span class="chip c-scout">Scouting</span></td><td>Exact scouting over every path, made cheap by dynamic programming; only the best path survives</td><td>Greedy labelling commits too early</td><td>M5</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r6"><td>6</td><td>1969</td><td>Perceptrons (Minsky, Papert)</td><td><span class="chip c-terrain">Terrain</span></td><td>Shows linear terrain cannot tell XOR apart</td><td>Exposes a limit of the perceptron <span class="ref">← 3</span></td><td>M6</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r7"><td>7</td><td>1977</td><td>EM</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn from walks whose route is hidden</td><td>Training data lacks the hidden states</td><td>M1</td><td><span class="fit fit-s">Stretched<small>also builds terrain (mixtures, clusters)</small></span></td></tr>
+          <tr id="r8"><td>8</td><td>1982</td><td>Belief propagation (Pearl)</td><td><span class="chip c-out">Outside</span></td><td>Messages between nodes; no walker</td><td>—</td><td>—</td><td><span class="fit fit-o">Outside<small>the DAAG2 frame</small></span></td></tr>
+          <tr id="r9"><td>9</td><td>1986</td><td>Backpropagation</td><td><span class="chip c-terrain">Terrain</span></td><td>Terrain becomes learnable: hidden layers</td><td>Linear terrain <span class="ref">← 6</span></td><td>M3</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r10"><td>10</td><td>1988</td><td>TD learning</td><td><span class="chip c-trail">Trails</span></td><td>Trails from where routes end, updated step by step from its own guesses</td><td>Bellman needs a model of every next junction <span class="ref">← 2</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r11"><td>11</td><td>1989</td><td>Q-learning</td><td><span class="chip c-trail">Trails</span></td><td>Trails on steps, worn by any walker&#x27;s walks (off-policy)</td><td>TD learns only the trail of the policy that walks <span class="ref">← 10</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r12"><td>12</td><td>1990</td><td>IBM statistical translation</td><td><span class="chip c-trail">Trails</span></td><td>Trails counted from paired human translations</td><td>Translation rules posted by hand</td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r13"><td>13</td><td>1992</td><td>TD-Gammon</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn by its own games</td><td>An evaluation posted by hand <span class="ref">← 4</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r14"><td>14</td><td>1992</td><td>REINFORCE</td><td><span class="chip c-trail">Trails</span></td><td>Blazes pushed directly toward routes that ended well; no value map</td><td>Value tables do not scale to large sets of steps <span class="ref">← 11</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r15"><td>15</td><td>1995</td><td>Support vector machines</td><td><span class="chip c-terrain">Terrain</span></td><td>Kernel terrain with the widest margin</td><td>Neural nets overfit and stall in local minima <span class="ref">← 9</span></td><td>M2</td><td><span class="fit fit-s">Stretched<small>margin and bounds are lost; 1 step</small></span></td></tr>
+          <tr id="r16"><td>16</td><td>1997</td><td>Boosting; random forests (2001)</td><td><span class="chip c-terrain">Terrain</span></td><td>Many weak trails voted together</td><td>Single learners too weak or too unstable</td><td>M2</td><td><span class="fit fit-o">Outside<small>no word for ensembles</small></span></td></tr>
+          <tr id="r17"><td>17</td><td>1997</td><td>LSTM</td><td><span class="chip c-terrain">Terrain</span></td><td>The blaze can depend on road far behind</td><td>Vanishing gradients (Hochreiter 1991): a machinery failure fixed in the terrain</td><td>M2</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r18"><td>18</td><td>1998</td><td>LeNet</td><td><span class="chip c-terrain">Terrain</span></td><td>Shifted shapes count as nearby</td><td>Dense nets on pixels need too many examples</td><td>M2</td><td><span class="fit fit-n">Native<small>1 step</small></span></td></tr>
+          <tr id="r19"><td>19</td><td>2001</td><td>Conditional random fields</td><td><span class="chip c-trail">Trails</span></td><td>Whole paths scored jointly; no blaze sums to one on its own</td><td>Label bias in locally normalized taggers (McCallum et al. 2000)</td><td>M4</td><td><span class="fit fit-s">Stretched<small>no local blaze; decoded by scouting</small></span></td></tr>
+          <tr id="r20"><td>20</td><td>2003</td><td>Neural language model (Bengio)</td><td><span class="chip c-terrain">Terrain</span></td><td>Shared terrain gives blazes at junctions no walker passed</td><td>n-gram sparsity <span class="ref">← 1</span></td><td>M2</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r21"><td>21</td><td>2003</td><td>LDA</td><td><span class="chip c-terrain">Terrain</span></td><td>Topics: terrain for documents as bags of words</td><td>Word counts miss shared themes</td><td>M2</td><td><span class="fit fit-o">Outside<small>no path, no order</small></span></td></tr>
+          <tr id="r22"><td>22</td><td>2006</td><td>MCTS / UCT</td><td><span class="chip c-scout">Scouting</span></td><td>Scouting by random rollouts, with the budget spent where promising</td><td>Alpha-beta needs a hand-posted evaluation and fails in Go</td><td>M5</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r23"><td>23</td><td>2006</td><td>Deep belief nets</td><td><span class="chip c-terrain">Terrain</span></td><td>Terrain built layer by layer by a separate unsupervised process</td><td>Deep nets could not be trained <span class="ref">← 9</span></td><td>M3</td><td><span class="fit fit-s">Stretched<small>the point is trainability</small></span></td></tr>
+          <tr id="r24"><td>24</td><td>2011</td><td>DAgger</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn at the junctions the walker itself reaches, judged by an expert</td><td>Compounding error in behavior cloning (Ross, Bagnell 2010)</td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r25"><td>25</td><td>2012</td><td>AlexNet</td><td><span class="chip c-terrain">Terrain</span></td><td>Terrain and trails worn by one gradient</td><td>Hand-made features <span class="ref">← 15</span></td><td>M3</td><td><span class="fit fit-n">Native<small>1 step</small></span></td></tr>
+          <tr id="r26"><td>26</td><td>2013</td><td>word2vec</td><td><span class="chip c-terrain">Terrain</span></td><td>Terrain for words built cheaply and separately</td><td>Neural language models too costly to train <span class="ref">← 20</span></td><td>M3</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r27"><td>27</td><td>2013</td><td>VAE</td><td><span class="chip c-terrain">Terrain</span></td><td>Latent terrain where nearby means similar; the whole sample made at once</td><td>Intractable likelihoods for latent models</td><td>M2</td><td><span class="fit fit-n">Native<small>1 stroke: the whole picture painted at once</small></span></td></tr>
+          <tr id="r28"><td>28</td><td>2013</td><td>DQN</td><td><span class="chip c-trail">Trails</span></td><td>TD trails over terrain learned from pixels</td><td>RL needed hand-made features <span class="ref">← 13</span></td><td>M3</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r29"><td>29</td><td>2014</td><td>GAN</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn by a learned judge of destinations</td><td>Blurry samples from likelihood training <span class="ref">← 27</span></td><td>M1</td><td><span class="fit fit-s">Stretched<small>one-shot; the game has no word</small></span></td></tr>
+          <tr id="r30"><td>30</td><td>2014</td><td>Sequence to sequence</td><td><span class="chip c-terrain">Terrain</span></td><td>The source sentence read into the walk&#x27;s starting point</td><td>Phrase-based pipelines <span class="ref">← 12</span></td><td>M2</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r31"><td>31</td><td>2014</td><td>Attention (Bahdanau)</td><td><span class="chip c-terrain">Terrain</span></td><td>Each blaze can look back at any part of the input</td><td>One fixed vector for the whole input <span class="ref">← 30</span></td><td>M2</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r32"><td>32</td><td>2014–15</td><td>Dropout, Adam, batch norm</td><td><span class="chip c-out">Outside</span></td><td>The same walker, reached faster and more reliably</td><td>Slow, unstable training</td><td>—</td><td><span class="fit fit-o">Outside<small>machinery</small></span></td></tr>
+          <tr id="r33"><td>33</td><td>2015</td><td>Scheduled sampling</td><td><span class="chip c-trail">Trails</span></td><td>Training walks gradually take the model&#x27;s own steps</td><td>Exposure bias from teacher forcing <span class="ref">← 30</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r34"><td>34</td><td>2015</td><td>ResNet</td><td><span class="chip c-terrain">Terrain</span></td><td>Much deeper learned terrain becomes trainable</td><td>Deeper nets got worse <span class="ref">← 25</span></td><td>M3</td><td><span class="fit fit-s">Stretched<small>the point is trainability</small></span></td></tr>
+          <tr id="r35"><td>35</td><td>2016</td><td>AlphaGo</td><td><span class="chip c-scout">Scouting</span></td><td>Scouting guided by blazes and trail values from human games, then its own</td><td>MCTS alone too weak in Go <span class="ref">← 22</span></td><td>M5</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r36"><td>36</td><td>2017</td><td>Transformer</td><td><span class="chip c-terrain">Terrain</span></td><td>Every blaze reads the whole road behind directly</td><td>Sequential memory in recurrent nets <span class="ref">← 17, 31</span></td><td>M2</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r37"><td>37</td><td>2017</td><td>AlphaZero</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn only by its own games, checked by win or loss</td><td>Human games as a ceiling <span class="ref">← 35</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r38"><td>38</td><td>2017</td><td>RL from human preferences</td><td><span class="chip c-trail">Trails</span></td><td>People comparing finished routes become a source of trails</td><td>Rewards are hard to write by hand <span class="ref">← 14</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r39"><td>39</td><td>2018</td><td>BERT</td><td><span class="chip c-terrain">Terrain</span></td><td>Terrain built by filling blanks, then reused</td><td>Terrain built separately for each task <span class="ref">← 26</span></td><td>M3</td><td><span class="fit fit-s">Stretched<small>sees the road ahead too; no walk</small></span></td></tr>
+          <tr id="r40"><td>40</td><td>2019</td><td>GPT-2</td><td><span class="chip c-trail">Trails</span></td><td>Terrain and trails worn by one pretraining; the start sets the task</td><td>One model per task <span class="ref">← 39</span></td><td>M3</td><td><span class="fit fit-s">Stretched<small>the point is what scale buys</small></span></td></tr>
+          <tr id="r41"><td>41</td><td>2019</td><td>Nucleus sampling</td><td><span class="chip c-walk">Walking</span></td><td>Read only the top of the blaze</td><td>Greedy and beam repeat; full sampling wanders into the tail <span class="ref">← 40</span></td><td>M4</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r42"><td>42</td><td>2020</td><td>Scaling laws</td><td><span class="chip c-out">Outside</span></td><td>How trails and terrain improve with data, size and compute</td><td>No one knew what more compute would buy</td><td>—</td><td><span class="fit fit-o">Outside<small>the frame has no quantities</small></span></td></tr>
+          <tr id="r43"><td>43</td><td>2020</td><td>Diffusion (DDPM)</td><td><span class="chip c-walk">Walking</span></td><td>An image made by many small denoising steps; only the end is kept</td><td>Unstable adversarial training <span class="ref">← 29</span></td><td>M4</td><td><span class="fit fit-n">Native<small>a brush walk: the canvas is the product</small></span></td></tr>
+          <tr id="r44"><td>44</td><td>2021</td><td>CLIP</td><td><span class="chip c-terrain">Terrain</span></td><td>Images and their captions count as nearby</td><td>Fixed label sets <span class="ref">← 25</span></td><td>M2</td><td><span class="fit fit-n">Native<small>1 step</small></span></td></tr>
+          <tr id="r45"><td>45</td><td>2022</td><td>InstructGPT</td><td><span class="chip c-trail">Trails</span></td><td>Trails reshaped by judged routes, held near the old ones by the KL leash</td><td>Pretrained trails follow the web, not the request <span class="ref">← 40</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r46"><td>46</td><td>2022</td><td>Chain of thought</td><td><span class="chip c-scout">Scouting</span></td><td>Part of the walk demoted to scouting</td><td>One-step answers to many-step questions <span class="ref">← 40</span></td><td>M5</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r47"><td>47</td><td>2022</td><td>Speculative decoding</td><td><span class="chip c-scout">Scouting</span></td><td>A small walker drafts, the large one checks; the walk&#x27;s distribution is unchanged</td><td>Walking is sequential and slow</td><td>M5</td><td><span class="fit fit-s">Stretched<small>the point is speed: machinery at walk time</small></span></td></tr>
+          <tr id="r48"><td>48</td><td>2023</td><td>Tree of thoughts</td><td><span class="chip c-scout">Scouting</span></td><td>Scouting with real backtracking over thoughts</td><td>Chain of thought cannot back up <span class="ref">← 46</span></td><td>M5</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r49"><td>49</td><td>2023</td><td>DPO</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn directly from preferred pairs of routes</td><td>RLHF&#x27;s separate reward model and RL loop <span class="ref">← 45</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r50"><td>50</td><td>2024</td><td>Model collapse</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn by its own walks with no judge narrow and fade</td><td>Exposes the limit of training on its own output <span class="ref">← 40</span></td><td>M6</td><td><span class="fit fit-n">Native</span></td></tr>
+          <tr id="r51"><td>51</td><td>2024–25</td><td>o1, DeepSeek-R1</td><td><span class="chip c-trail">Trails</span></td><td>Trails worn on its own scouting walks, judged by checkable answers</td><td>Chain of thought never trained to find answers <span class="ref">← 46</span></td><td>M1</td><td><span class="fit fit-n">Native</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figcap">Years, attributions and the exposed-by links are from memory and still need checking against the original papers, as the method requires. Rows without an arrow answer a failure that is not in the table, or are origins.</p>
+
+    <h3>Q2: the moves a result can make</h3>
+    <p>These come from clustering the "what changed" column, not from the first draft. The draft's "better trails" and "new source of trails" turned out to be one move: no result improved trails without changing their source or the terrain under them. "Recovery from wrong turns" folds into the same move. "Better terrain" splits in two.</p>
+    <dl class="moves">
+      <dt>M1</dt><dd><strong>Wear trails from a new source:</strong> counted, then routes walked, then where routes ended, then the walker's own walks with a judge.</dd><dd class="count">18</dd>
+      <dt>M2</dt><dd><strong>Reshape the terrain:</strong> blazes carry to junctions no walker passed, or see further back along the road.</dd><dd class="count">11</dd>
+      <dt>M3</dt><dd><strong>Change who builds the terrain:</strong> by hand, by a separate learning process, or fused with the trails.</dd><dd class="count">8</dd>
+      <dt>M4</dt><dd><strong>Change what a blaze is, or how it is read:</strong> scored over whole paths, read from its top only, or turned into a stroke over the whole canvas.</dd><dd class="count">3</dd>
+      <dt>M5</dt><dd><strong>Scout:</strong> add scouting, guide it, make it cheaper, or move it inside the walk.</dd><dd class="count">6</dd>
+      <dt>M6</dt><dd><strong>Expose a failure</strong> that the next result answers.</dd><dd class="count">2</dd>
+    </dl>
+    <p class="figcap">The three outside rows make no move: belief propagation, training machinery, scaling laws.</p>
+  </section>
+
+  <section id="boundary">
+    <span class="label">Stress tests</span>
+    <h2>Boundary cases</h2>
+    <div class="cases">
+      <div class="case"><h3>Chain of thought</h3><p>A walk demoted to scouting. The reasoning tokens stop being the product and only the final answer counts. Hidden reasoning makes the demotion visible. Part of a path-type system is turned back into a destination-type one.</p></div>
+      <div class="case"><h3>Reasoning models "backing up"</h3><p>They cannot walk back. They keep walking down a road that says "that was wrong." Real backtracking needs outside scouting, as in tree of thoughts.</p></div>
+      <div class="case"><h3>Off the trail</h3><p>Exposure bias. Trails are worn by routes people took, so once a walk leaves them the blazes are guesses from the terrain alone, and errors compound.</p></div>
+      <div class="case"><h3>Diffusion sampling</h3><p>A brush walk. The strokes are lost but the canvas is built along the way, and every intermediate canvas is a draft of the image. Diffusion language models are painters who fill in words in any order. Exposure bias carries over: a bad early wash spoils everything painted on top of it.</p></div>
+      <div class="case"><h3>MCMC</h3><p>Mixed. The samples along the chain are the result, but burn-in is thrown away.</p></div>
+      <div class="case"><h3>Classification</h3><p>The degenerate walk of one step. It fits, but the frame adds little; the interest lies in the terrain and in how the trail was worn.</p></div>
+      <div class="case"><h3>A* and Dijkstra</h3><p>They output a path, but their own trace is discarded. They are computation, and in this picture they are scouting tools.</p></div>
+      <div class="case"><h3>Tools, retrieval, chat</h3><p>The road is laid by more than one hand. A user's message, a tool's result and a retrieved passage are steps added to the road behind, and the walker carries on from the new position. Since its position is the whole road behind, nothing else changes. The walker still has no map: retrieved text is road, not map. RL's world, choosing the next junction after each action, is the same pattern. (From the user.)</p></div>
+    </div>
+  </section>
+
+  <section id="outside">
+    <span class="label">Scope</span>
+    <h2>What lives outside the walk</h2>
+    <ul>
+      <li><strong>The terrain's own theory.</strong> SVMs and kernels, PCA, clustering, embeddings, architectures, GANs and learning theory are destination-type. They explain how terrain is built and why a trail can be trusted at junctions nobody has passed. They are told as terrain, without being forced into travel.</li>
+      <li><strong>Message passing.</strong> Belief propagation, factor graphs and message-passing networks have no walker, only local messages between nodes. That is the DAAG2 frame, so these results may belong to the sister project.</li>
+      <li><strong>The thesis is a stance.</strong> Much of 1990s and 2000s statistical AI produced answers, not paths. The picture reads the history as a movement from answer-producers to path-producers: classifiers, then generators, then agents. The site should say so openly.</li>
+    </ul>
+  </section>
+
+  <section id="method">
+    <span class="label">Inherited from DAAG2</span>
+    <h2>Method</h2>
+    <ul>
+      <li>Each result written once as plain data and told twice: as travel, and as mechanism.</li>
+      <li>The broken version beside the working one.</li>
+      <li>The view from inside the walker, with roads not taken shown outside its sight.</li>
+      <li>Traces checked by a program; claims checked against the original papers.</li>
+      <li>A map of which result answers the failure another one exposes.</li>
+    </ul>
+  </section>
+
+  <section id="questions">
+    <span class="label">Open</span>
+    <h2>Questions</h2>
+    <ol class="qs">
+      <li><span class="qid">Q1</span><span><strong>Run.</strong> Does the frame hold across the whole field? It holds, with one amendment: 37 of 51 results are native, and the misfits cluster in terrain and in machinery. The amendment is the pen and the brush. See <a href="#test">the test</a>. Still to do: check the years, attributions and exposed-by links against the papers.</span></li>
+      <li><span class="qid">Q2</span><span><strong>Drafted from the test.</strong> Six moves: a new source of trails, reshaping the terrain, changing who builds it, changing the blaze or how it is read, scouting, and exposing a failure. See <a href="#test">the test</a>. Open: is M4, with three members, a move of its own?</span></li>
+      <li><span class="qid">Q3</span><span>Is the terrain's theory part of this project, or a second project with its own frame?</span></li>
+      <li><span class="qid">Q4</span><span>Where is the line with DAAG2? Do the two frames, walks and messages, together cover most of statistical AI?</span></li>
+      <li><span class="qid">Q5</span><span>Is the walker the decoding rule, with the model only supplying blazes? Keeping them apart would remove most of the anthropomorphism.</span></li>
+      <li><span class="qid">Q6</span><span>What is the final form: an explainer site, a map, a reference, or something else?</span></li>
+      <li><span class="qid">Q7</span><span><strong>Answered.</strong> One-shot generators need no sixth word. The walk builds the product as it goes, with a pen (autoregressive) or a brush (diffusion). A VAE is a one-stroke painter. Only the GAN's adversarial game stays outside.</span></li>
+    </ol>
+  </section>
+
+  <section id="next">
+    <span class="label">Next</span>
+    <h2>Next steps</h2>
+    <ol>
+      <li><strong>Grow the app,</strong> <a href="https://claude.ai/artifact/9k1fi8jB8c4z7qWf6pfVyj">The Walker's Dog</a> (<code>index.html</code>). It covers the walk, the blaze, trails, and what the walker looks at before each step, from n-grams to transformers. Next: extend it to the other moves and to the rest of the table, one animated section per result, each named by its paper's title.</li>
+      <li><strong>Verify the test table.</strong> Check years, attributions and exposed-by links against the original papers. Two links already look doubtful: GAN answering VAE's blurry samples may be a later critique, and GPT-2 answering BERT skips GPT-1. Uncertain dates: IBM 1990 or 1993, speculative decoding 2022 or 2023, EM or Baum–Welch.</li>
+      <li><strong>Add the Turing test (1950) as a row</strong> while verifying, and renumber the rows and their references.</li>
+      <li><strong>Settle M4</strong> with the user, then Q3–Q6.</li>
+      <li><strong>Stress-test M1.</strong> It holds 18 of 51 rows. Should it split into the source of trails and the judge?</li>
+    </ol>
+  </section>
+
+  <section id="decisions">
+    <span class="label">Log</span>
+    <h2>Decisions so far</h2>
+    <ul class="log">
+      <li><span class="when">2026-11-20</span><br>Goal set: a compressed representation of statistical AI research, not an explainer of LLMs or of specific techniques.</li>
+      <li><span class="when">2026-11-20</span><br>Nodes and messages rejected as the frame for this project; the walk adopted.</li>
+      <li><span class="when">2026-11-20</span><br>Criterion adopted: in AI the trace is the product; in computation it is scaffolding. This answers the charge that "everything is a walk."</li>
+      <li><span class="when">2026-11-20</span><br>Training is not a second walk in parameter space. Its trace is scaffolding.</li>
+      <li><span class="when">2026-11-20</span><br>The starting-point proposal files retired. This page is the working canvas.</li>
+      <li><span class="when">2026-11-20</span><br>Renamed from Signposts to Trails. Signposts are posted by hand, as in symbolic AI; trails are worn in by many walkers, as in statistical AI. The local sign survives as the blaze.</li>
+      <li><span class="when">2026-11-20</span><br>Terrain and trails named as two different things. "Terrain" chosen over "landscape" to avoid a clash with the loss landscape, which is parameter space.</li>
+      <li><span class="when">2026-11-20</span><br>Project folder renamed to <code>trails</code>.</li>
+      <li><span class="when">2026-11-20</span><br>Q1 run on 51 results: 35 native, 11 stretched, 5 outside. The frame holds. The misfits cluster in terrain and in machinery, plus one-shot generators, which were not predicted (Q7 added).</li>
+      <li><span class="when">2026-11-20</span><br>Fit grades defined as native, stretched and outside. Training methods are tagged by what they change in the finished walker; a method that only makes training cheaper or more reliable is machinery and sits outside the frame. The same test applies at walk time, so speculative decoding counts as stretched.</li>
+      <li><span class="when">2026-11-20</span><br>Viterbi re-tagged from walking to scouting: its table is scaffolding and only the best path survives.</li>
+      <li><span class="when">2026-11-20</span><br>Q2 drafted as six moves. Better trails and a new source of trails merged into one move, and recovery from wrong turns folded into it as trails worn at the walker's own junctions, separated by their judge.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: symbolic AI plants a manicured garden, and statistical AI throws seeds and watches a forest grow. Adopted for terrain, beside signposts and trails for trails. The garden line falls at 2012, not between symbolic and statistical AI, and the result is a grid of four corners, all filled.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: the Turing test judges footprints and asks whether a human made them. Adopted as the oldest form of the criterion and as the imitation judge. Its blind spot, human-looking footprints that lead nowhere, is hallucination.</li>
+      <li><span class="when">2026-11-20</span><br>The session handoff file retired. Next steps now live on this page.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: retrieval and tool use do not break the frame. Their results, like a user's chat message, are steps added to the road behind by another hand. "No map" stands.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: a diffusion walker builds something along the path, like drawing a picture. Criterion generalized: the walk builds the product as it goes, with a pen or a brush, and the test is whether each intermediate state is a draft of the product. Diffusion regraded to native walking and VAE to a native one-stroke painter: now 37 native, 9 stretched, 5 outside. Q7 answered.</li>
+      <li><span class="when">2026-11-20</span><br>Prompts placed: a user prompt is road laid by another hand, for the walker to finish. A text-to-image prompt is a destination named in advance and kept beside the canvas. A system prompt is road that does a signpost's job.</li>
+      <li><span class="when">2026-11-20</span><br>First build: a 2D proof of concept, Thoreau's Walker, chosen over a 3D fog walk to start. It is a letter-counting walker trained on Thoreau's <i>Walking</i>, with four scenes: counted trails, off the trail, reading the blaze, and scouting. Every walk is computed live with a fixed seed. A 3D landscape with height was rejected because it would read as a loss landscape and imply a map.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: the running demo was the wrong direction. The goal is an explanation that uses the walker metaphor to show what each paper or concept brings to the table, not a walker that runs. Thoreau's Walker is set aside.</li>
+      <li><span class="when">2026-11-20</span><br>Generation is not breadth-first search or traversal over possible outputs: it is one path, scoring only the children of the junction it stands on. Search lives in scouting (beam search is pruned breadth-first search), and trails are search already done in training. Over the product's own parts, though, the pen is depth-first and the brush is breadth-first, coarse to fine. Added to Pen and brush as a table.</li>
+      <li><span class="when">2026-11-20</span><br>Second proof of concept from the user: <a href="https://claude.ai/artifact/6hSeFEFK1gftwp4hUpRZPh">Walk in the Park</a> (now <code>archive/walk-in-the-park.html</code>), a three.js animation. A walker in a park carries a notebook. The park's terrain grows from seed, trails wear in under past walkers, and the walker takes five steps, writing a word at each. The ground is flat on purpose, so nothing reads as a landscape of heights.</li>
+      <li><span class="when">2026-11-20</span><br>Format agreed for each result: the same picture before and after, with the one change marked NEW, then the result told in the walk, in the mechanism, and by the failure it answered. The first proof of concept, the Trails Field Guide, covers eight results.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: Walk in the Park misleads for transformers, because a transformer does not carry the walk in its head; it takes the whole prefix again for every token. Adopted: the transformer walker carries nothing, and before every step it sends its dog back down the whole road. The dog sniffs every footprint and brings back a blend (query, key, value, softmax), forgets after each run, and runs only back (the causal mask; running ahead would be scouting). Several dogs are heads, rounds are layers, and scent marks are the KV cache: a faster run, not a shorter one. Lineage: the n-gram walker glances back, the recurrent walker carries a fading pack, Bahdanau's walker has a pack and a dog on the source road, and the transformer drops the pack. Built as a third proof of concept in 2D SVG: <a href="https://claude.ai/artifact/9k1fi8jB8c4z7qWf6pfVyj">The Walker's Dog</a>.</li>
+      <li><span class="when">2026-11-20</span><br>From the user: The Walker's Dog is the best version so far and becomes the app, at <code>index.html</code>, same link. Thoreau's Walker, the Field Guide and Walk in the Park moved to <code>archive/</code>. Results are now named by paper title, not author list, because titles are easier to identify. The project is a git repository.</li>
+      <li><span class="when">2026-11-20</span><br>This canvas archived at the user's request (<code>archive/idea.html</code>). The app, <a href="https://claude.ai/artifact/9k1fi8jB8c4z7qWf6pfVyj">The Walker's Dog</a>, carries the work from here.</li>
+    </ul>
+  </section>
+
+  <p class="note">This page changes as the idea does. Comments on any section are welcome and will be folded in.</p>
+</main>

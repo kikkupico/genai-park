@@ -1,0 +1,440 @@
+<title>The Walker's Dog</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4efe3;--panel:#fbf8f0;--ink:#2b2a26;--muted:#6d675a;--rule:#d9d0bc;
+  --grass:#e6ebd6;--tuft:#b9c79a;--road:#dccb9f;--fp:#6b5a3a;--blaze:#c9822b;
+  --dogA:#b5562e;--dogB:#2f7c78;--dogC:#7a4f8c;--pack:#8a7a55;--ghost:#3d3a33;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
+  --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
+  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
+  --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
+  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+main{max-width:800px;margin:0 auto;padding-block:48px 80px}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:650;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.08;margin:.2em 0 .35em}
+h2{font-size:1.65rem;line-height:1.2;margin:.15em 0 .5em}
+h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 .35em;font-weight:600}
+p{margin:0 0 .9em;max-width:66ch}
+a{color:var(--dogB)}
+.kicker{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+.paper{font-size:.95rem;color:var(--muted);margin:-.2em 0 .4em}
+.paper i{color:var(--ink)}
+.lede{font-size:1.12rem;color:var(--ink)}
+.entry{padding-top:56px;margin-top:40px;border-top:1px solid var(--rule)}
+.part{margin-top:72px;padding:22px 24px;background:var(--panel);border:1px solid var(--rule);border-radius:12px}
+.part h2{margin-top:0}
+figure{margin:18px 0 22px}
+.fig{background:var(--grass);border-radius:14px;overflow:hidden;border:1px solid var(--rule)}
+.fig svg{display:block;width:100%;height:auto}
+figcaption{display:flex;gap:12px;align-items:flex-start;margin-top:8px;font-size:.88rem;color:var(--muted)}
+figcaption span{min-width:0}
+button.replay{flex:none;font:500 .8rem Inter,sans-serif;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:4px 12px;cursor:pointer}
+button.replay:hover{border-color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px 32px}
+.two>div{min-width:0}
+.call{border-left:3px solid var(--blaze);padding:4px 0 4px 16px;margin:18px 0}
+.call p:last-child{margin-bottom:0}
+ul.rules{padding-left:1.1em;margin:0 0 1em}
+ul.rules li{margin-bottom:.4em}
+.tw{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--rule)}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+td:first-child{width:34%;font-weight:500}
+tr.hl td{background:color-mix(in srgb,var(--blaze) 12%,transparent)}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
+/* svg vocabulary */
+.road{fill:none;stroke:var(--road);stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
+.trailbase{fill:none;stroke:var(--road);stroke-linecap:round;opacity:.9}
+.fp{fill:var(--fp)}
+.word{font-family:Caveat,cursive;font-size:22px;font-weight:500;fill:var(--ink)}
+.limb{stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;fill:none}
+.head{fill:var(--ink)}
+.hat{stroke:var(--ink);fill:none;stroke-width:2;stroke-linejoin:round}
+.book{fill:var(--panel);stroke:var(--ink);stroke-width:1.2}
+.dbody{fill:var(--dc)}
+.dleg,.dtail{stroke:var(--dc);stroke-width:2.4;stroke-linecap:round;fill:none}
+.dear{fill:var(--ink);opacity:.45}
+.puff{fill:var(--dc)}
+.fan{fill:none;stroke:var(--blaze);stroke-linecap:round;opacity:.8}
+.flabel{font-family:Caveat,cursive;font-size:21px;fill:var(--ink)}
+.prob{font-family:Inter,sans-serif;font-size:11px;fill:var(--muted)}
+.note{font-family:Caveat,cursive;font-size:25px;fill:var(--ink)}
+.hud{font-family:Inter,sans-serif;font-size:12.5px;fill:var(--muted)}
+.hudb{font-family:Inter,sans-serif;font-size:12.5px;fill:var(--ink);font-weight:600}
+.pack{fill:var(--panel);stroke:var(--pack);stroke-width:1.5}
+.strap{stroke:var(--pack);stroke-dasharray:4 4;fill:none;stroke-width:1.4}
+.cone{fill:var(--blaze);opacity:.18}
+.ghost{fill:var(--ghost)}
+.gate{stroke:var(--fp);stroke-width:2.5;stroke-linecap:round;fill:none}
+.tuft{stroke:var(--tuft);stroke-width:1.4;fill:none;stroke-linecap:round}
+.bubble{fill:var(--panel);stroke:var(--dc);stroke-width:1.4}
+.bar{fill:var(--dc)}
+.barlab{font-family:Inter,sans-serif;font-size:10.5px;fill:var(--muted)}
+</style>
+
+<main>
+  <p class="kicker">Trails</p>
+  <h1>The Walker's Dog</h1>
+  <p class="lede">Why does a transformer take the whole input again for every word it writes? Because its walker remembers nothing. It keeps a dog instead.</p>
+  <p>Each picture below is a small animation. The first three set up the walk; the rest answer one question across seventy years of language models: <em>what does the walker look at before each step?</em></p>
+
+  <!-- 1 -->
+  <section class="entry">
+    <p class="kicker">01 · the walk</p>
+    <h2>The walk is the product</h2>
+    <figure><div class="fig"><svg data-fig="walk" viewBox="0 0 800 260" role="img" aria-label="A walker leaves the gate and writes one word at each footprint."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>One footprint, one word. When the walker stops, the footprints are the sentence.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The walker starts at the gate and writes one word per footprint. Nothing is handed over at the end except the footprints themselves.</p></div>
+      <div><h3>In the mechanism</h3><p>Autoregressive generation. The model emits one token and appends it. That growing sequence is both the input to the next step and the final output.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="entry">
+    <p class="kicker">02 · the blaze</p>
+    <h2>Each step, a blaze</h2>
+    <figure><div class="fig"><svg data-fig="blaze" viewBox="0 0 800 260" role="img" aria-label="At the end of the road three ways fan out with different widths; the walker takes one."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Wider means likelier. The walker reads the blaze and takes one step.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Where the road ends, the ground ahead is marked. Some ways are wide, some faint. The walker picks one and steps onto it.</p></div>
+      <div><h3>In the mechanism</h3><p>At each position the model outputs a probability for every word in its vocabulary. Decoding reads it: take the top one, or sample. A real blaze has tens of thousands of hairline branches; this one shows three.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="entry">
+    <p class="kicker">03 · trails</p>
+    <h2>Trails are worn in by training</h2>
+    <figure><div class="fig"><svg data-fig="trails" viewBox="0 0 800 260" role="img" aria-label="Many faint walkers pass a junction; the branch they use most wears wide."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Earlier walkers wear the grass. The blaze is the wear, read from where the walker stands.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Before our walker arrives, thousands of others have crossed the park. Where they went, the grass wore down. The blaze is how worn each way is, seen from this spot.</p></div>
+      <div><h3>In the mechanism</h3><p>Training on next-word prediction. For every position in every training text, the weights are nudged to make the actual next word likelier. The wear generalises: the walker can read it on roads nobody walked exactly.</p></div>
+    </div>
+  </section>
+
+  <div class="part">
+    <p class="kicker">The question</p>
+    <h2>What does the walker look at before each step?</h2>
+    <p>The blaze depends on where the walker stands, and "where" means the road so far. Each family of models answers differently how much of that road the walker gets to see. Three answers follow.</p>
+  </div>
+
+  <!-- 4 -->
+  <section class="entry">
+    <p class="kicker">04 · the n-gram walker</p>
+    <h2>Glance back: the n-gram walker</h2>
+    <p class="paper"><i>A Mathematical Theory of Communication</i> (1948) → <i>A Neural Probabilistic Language Model</i> (2003)</p>
+    <figure><div class="fig"><svg data-fig="ngram" viewBox="0 0 800 260" role="img" aria-label="The walker looks back over only the last two footprints; earlier ones fade from view."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Only the last two footprints are in view. By the time it matters, "wildness" is out of sight.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The walker turns round and looks at just the last few footprints. Everything before them might as well not exist.</p></div>
+      <div><h3>In the mechanism</h3><p>The Markov assumption: the next word depends only on the previous <i>n</i>−1. Shannon's word approximations and classic n-gram counts work this way. The 2003 neural model replaced counts with learned word vectors but kept the fixed window.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="entry">
+    <p class="kicker">05 · the recurrent walker</p>
+    <h2>Carry a pack: the recurrent walker</h2>
+    <p class="paper"><i>Finding Structure in Time</i> (1990) → <i>Long Short-Term Memory</i> (1997)</p>
+    <figure><div class="fig"><svg data-fig="pack" viewBox="0 0 800 260" role="img" aria-label="The walker never looks back; each word goes into a fixed-size pack where older words fade."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>The road behind goes dark. Everything known about it must fit in the pack, and old things fade.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The walker never looks back. Each footprint goes into a pack of fixed size. New things push old things down, and old things fade. By the end, "wildness" is a smudge.</p></div>
+      <div><h3>In the mechanism</h3><p>A hidden state, updated each step from the last state and the new word. The LSTM's gates control the fading, so things last longer, but the pack stays fixed-size. And training must walk in order: step 5 needs the pack from step 4.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="entry">
+    <p class="kicker">06 · the transformer walker</p>
+    <h2>Send the dog: the transformer walker</h2>
+    <p class="paper"><i>Attention Is All You Need</i> (2017)</p>
+    <figure><div class="fig"><svg data-fig="dog" viewBox="0 0 800 260" role="img" aria-label="Before every step, the walker's dog runs back down the whole road sniffing each footprint, then returns. Each run is longer."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Before every word, the dog runs the whole road. Each run is one footprint longer, so the cost per word keeps growing.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The walker carries nothing. Before every step it sends its dog back down the whole road. The dog sniffs every footprint and runs back, and only then does the walker step. One footprint later, the dog goes again.</p></div>
+      <div><h3>In the mechanism</h3><p>No state passes between steps. The prediction at each position is computed from all the tokens before it, through self-attention. That is why the whole input is needed for every token: the prefix is the only memory there is.</p></div>
+    </div>
+    <div class="call">
+      <p><b>Why give up the pack?</b> Training speed. With no pack, every footprint of a training text can send its dog at the same moment, so a whole text trains in parallel. A pack forces the walk to be replayed in order. It also removes the bottleneck: the road keeps every word exactly, and the dog decides at each step what matters now.</p>
+    </div>
+    <h3>Two rules for the dog</h3>
+    <ul class="rules">
+      <li><b>It forgets.</b> Each run starts fresh. A dog that remembered earlier runs would be a pack again.</li>
+      <li><b>It runs only back</b>, never ahead of the walker. That is the causal mask. Running ahead to try out futures is scouting, which is a different thing.</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="entry">
+    <p class="kicker">07 · query, key, value</p>
+    <h2>The nose: what the dog brings back</h2>
+    <p class="paper">Scaled dot-product attention, from <i>Attention Is All You Need</i> (2017)</p>
+    <figure><div class="fig"><svg data-fig="nose" viewBox="0 0 800 260" role="img" aria-label="The dog sniffs every footprint; some smell much stronger. It returns with a blend, and the blaze opens."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Every footprint gets sniffed, but some smell far stronger. The dog brings back a blend, and the blaze opens from it. Weights are illustrative.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The dog doesn't fetch one footprint. It sniffs all of them, and to its nose some smell much stronger than others. It brings back a blend, mostly of what smelled strongest. This nose is trained for "what is the walk about?", so "preservation" and "wildness" come back strong.</p></div>
+      <div><h3>In the mechanism</h3><p>Each earlier token offers a key (its scent) and a value (what can be fetched). The current position has a query (the scent this dog hunts for). Query against key gives a match, a softmax turns matches into weights, and the dog returns the weighted sum of values. The nose is learned weights: terrain, worn in by training.</p></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="entry">
+    <p class="kicker">08 · heads and layers</p>
+    <h2>A pack of dogs, in relays</h2>
+    <p class="paper">Multi-head attention and stacked layers, from <i>Attention Is All You Need</i> (2017)</p>
+    <figure><div class="fig"><svg data-fig="relay" viewBox="0 0 800 260" role="img" aria-label="Three dogs with different noses run together; their findings are written on the footprints; a second, faster round sniffs the notes."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Three noses per round. After round 1, the findings are written on the footprints, and round 2 sniffs those notes.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>One nose isn't enough. The walker keeps several dogs, each trained to a different scent, and they run together. Their findings are written onto the footprints. A second round then sniffs the annotated road. Only after the last round does the blaze open.</p></div>
+      <div><h3>In the mechanism</h3><p>Several dogs per round is multi-head attention; rounds are layers. Each layer updates every position's representation, and the next layer attends over the updated ones. Each footprint's notes were written by its own dogs, looking only further back. GPT-3 (<i>Language Models are Few-Shot Learners</i>, 2020) runs 96 rounds of 96 dogs.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="entry">
+    <p class="kicker">09 · the KV cache</p>
+    <h2>Scent marks: a faster run, not a shorter one</h2>
+    <figure><div class="fig"><svg data-fig="cache" viewBox="0 0 800 260" role="img" aria-label="On the first run the dog sniffs each footprint slowly and leaves a mark. On the next run it reads the marks at speed and only stops at the new footprint."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Marks make the second run quicker. The dog still goes all the way back.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Each time the dog works a footprint, it leaves a mark. Next step, it reads the marks at a run and stops properly only at the newest footprint. The run is faster, but it still covers the whole road.</p></div>
+      <div><h3>In the mechanism</h3><p>Keys and values for earlier tokens are stored. Because of the causal mask, an earlier token's keys and values never change when later tokens arrive, so they are computed once. The cache removes recomputation, not reading: attention per step still grows with length. Chat APIs take the whole conversation each call for the same reason; prompt caching keeps the marks between calls.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="entry">
+    <p class="kicker">10 · lineage</p>
+    <h2>Who looks at what</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Paper</th><th>Before each step, the walker…</th><th>Cost per step</th></tr></thead>
+      <tbody>
+        <tr><td><i>A Mathematical Theory of Communication</i> · 1948</td><td>glances back at the last few footprints.</td><td>fixed</td></tr>
+        <tr><td><i>A Neural Probabilistic Language Model</i> · 2003</td><td>glances back the same way, but reads footprints through learned word vectors, so similar words count alike.</td><td>fixed</td></tr>
+        <tr><td><i>Finding Structure in Time</i> · 1990<br><i>Long Short-Term Memory</i> · 1997</td><td>never looks back; consults a fixed-size pack that fades.</td><td>fixed</td></tr>
+        <tr><td><i>Sequence to Sequence Learning with Neural Networks</i> · 2014</td><td>translating: the whole source sentence is squeezed into one pack before the walk starts.</td><td>fixed</td></tr>
+        <tr><td><i>Neural Machine Translation by Jointly Learning to Align and Translate</i> · 2014</td><td>still carries a pack, but now a dog sniffs the source sentence's road before each step.</td><td>grows with the source</td></tr>
+        <tr class="hl"><td><i>Attention Is All You Need</i> · 2017</td><td>drops the pack. Dogs for everything: many noses, many rounds, back down the whole road, every step.</td><td>grows with the road</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>
+    Part of <a href="https://claude.ai/artifact/6C5vV6FxgUCXuRJRYnTDG2">Trails</a>. Sentence from Thoreau, <i>Walking</i> (1862).
+  </footer>
+</main>
+
+<script>
+(()=>{
+const NS='http://www.w3.org/2000/svg';
+const el=(tag,a={},p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+const lerp=(a,b,u)=>a+(b-a)*u;
+const W=['in','wildness','is','the','preservation','of','the','world'];
+const DX=84,X0=104,Y0=146,AMP=12;
+const R=s=>({x:X0+s*DX,y:Y0+AMP*Math.sin(s*1.1)});
+const f1=n=>n.toFixed(1);
+function roadD(a,b,F=R){if(b<=a+1e-3)return 'M0 0';let d='';const n=Math.max(2,Math.ceil((b-a)/.08));for(let k=0;k<=n;k++){const p=F(a+(b-a)*k/n);d+=(k?'L':'M')+f1(p.x)+' '+f1(p.y)}return d}
+function place(e,x,y,flip=1){e.setAttribute('transform',`translate(${f1(x)} ${f1(y)}) scale(${flip} 1)`)}
+function tufts(g,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;for(let i=0;i<46;i++){const x=r()*800,y=r()*260;if(Math.abs(y-Y0)<26&&x<720)continue;el('path',{d:`M${f1(x-3)} ${f1(y)}l2 -5M${f1(x)} ${f1(y)}v-6M${f1(x+3)} ${f1(y)}l-2 -5`,class:'tuft'},g)}}
+function gate(g){const p=R(-1);el('path',{d:`M${p.x-11} ${p.y+14}V${p.y-18}M${p.x+11} ${p.y+14}V${p.y-18}M${p.x-14} ${p.y-13}H${p.x+14}M${p.x-14} ${p.y-4}H${p.x+14}`,class:'gate'},g)}
+function posts(g,words=W){return words.map((w,i)=>{const p=R(i);const gg=el('g',{},g);el('ellipse',{cx:p.x,cy:p.y,rx:4.5,ry:6.5,class:'fp'},gg);const t=el('text',{x:p.x,y:p.y+38,class:'word','text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
+const rev=(s,i)=>clamp((s-i)/.12+1);
+function walker(g){const w=el('g',{},g);
+  el('path',{d:'M-5 0L0 -15L5 0',class:'limb'},w);
+  el('path',{d:'M0 -15V-31',class:'limb'},w);
+  el('path',{d:'M0 -26L8 -20',class:'limb'},w);
+  el('rect',{x:6,y:-27,width:8,height:10,rx:1,class:'book'},w);
+  el('circle',{cx:0,cy:-36,r:5,class:'head'},w);
+  el('path',{d:'M-9 -40H9M-5.5 -40L-4.5 -46H4.5L5.5 -40',class:'hat'},w);
+  return w}
+function dog(g,color){const d=el('g',{style:`--dc:${color}`},g);
+  d.legs=[-7,-3,6,10].map(x=>({x,e:el('line',{x1:x,y1:-7,x2:x,y2:0,class:'dleg'},d)}));
+  el('path',{d:'M-9 -10q-6 -3 -8 -10',class:'dtail'},d);
+  el('ellipse',{cx:1.5,cy:-10,rx:11,ry:5.5,class:'dbody'},d);
+  el('circle',{cx:13,cy:-16,r:4.8,class:'dbody'},d);
+  el('path',{d:'M16 -18l6 2.5l-6 2z',class:'dbody'},d);
+  el('path',{d:'M10.5 -20l-2.5 7l4 -2z',class:'dear'},d);
+  return d}
+function setDog(d,x,y,dir,mv,t){place(d,x,y,dir);d.legs.forEach((l,i)=>{const a=mv?Math.sin(t*22+(i%2)*Math.PI)*3.2:0;l.e.setAttribute('x2',f1(l.x+a))})}
+const DOGC=['var(--dogA)','var(--dogB)','var(--dogC)'];
+class Trip{
+  constructor(t,s){this.t=t;this.s=s;this.dir=1;this.kf=[{t,s,dir:1,mv:false}];this.ev=[];this.tag=0}
+  go(s,v,sniff=false,kind='pass'){const t0=this.t,s0=this.s,dt=Math.abs(s-s0)*DX/v;
+    if(sniff){const lo=Math.min(s,s0)-.3,hi=Math.max(s,s0)+.3;for(let i=Math.ceil(lo);i<=Math.floor(hi);i++){if(i<0)continue;const u=clamp(Math.abs(s0-i)/Math.abs(s0-s));this.ev.push({post:i,t:t0+u*dt,kind,tag:this.tag})}}
+    this.t+=dt;this.s=s;this.dir=s<s0?-1:1;this.kf.push({t:this.t,s,dir:this.dir,mv:true});return this}
+  wait(d){if(d>0){this.t+=d;this.kf.push({t:this.t,s:this.s,dir:this.dir,mv:false})}return this}
+  sniff(i,kind='slow'){this.ev.push({post:i,t:this.t,kind,tag:this.tag});return this}
+  at(t){const k=this.kf;if(t<=k[0].t)return{s:k[0].s,dir:1,mv:false};for(let i=1;i<k.length;i++)if(t<k[i].t){const a=k[i-1],b=k[i];return{s:lerp(a.s,b.s,(t-a.t)/(b.t-a.t)),dir:b.dir,mv:b.mv}}const l=k[k.length-1];return{s:l.s,dir:1,mv:false}}
+  last(post,t,tag){let r=null;for(const e of this.ev)if(e.post===post&&e.t<=t&&(tag==null||e.tag===tag)&&(!r||e.t>r.t))r=e;return r}
+}
+function puff(c,x,y,e,t,maxR,base,life=.8){if(!e){c.style.opacity=0;return}const f=(t-e.t)/life;if(f<0||f>=1){c.style.opacity=0;return}c.setAttribute('cx',f1(x));c.setAttribute('cy',f1(y));c.setAttribute('r',f1(4+maxR*ease(f)));c.style.opacity=base*(1-f)}
+function walkS(t,per,s0,s1,move=.62){const n=Math.max(0,t)/per,i=Math.floor(n);return Math.min(s0+i+ease(clamp((n-i)/move)),s1)}
+function fan(g,o,to,opts,L=110){const base=Math.atan2(to.y-o.y,to.x-o.x),angs=[base,base-.55,base+.55];
+  const items=opts.map(([w,p],i)=>{const a=angs[i],e={x:o.x+L*Math.cos(a),y:o.y+L*Math.sin(a)};const gg=el('g',{},g);
+    const line=el('path',{d:`M${f1(o.x)} ${f1(o.y)}L${f1(e.x)} ${f1(e.y)}`,class:'fan','stroke-width':f1(3+26*p),'stroke-dasharray':`${L} ${L+60}`,'stroke-dashoffset':L},gg);
+    const lab=el('text',{x:f1(e.x+14*Math.cos(a)+4),y:f1(e.y+14*Math.sin(a)+6),class:'flabel'},gg);lab.append(w);
+    const pr=el('tspan',{class:'prob',dx:5},lab);pr.textContent=p.toFixed(2);return{gg,line,lab}});
+  return{set(grow,label,choose,gone){items.forEach((it,i)=>{it.line.setAttribute('stroke-dashoffset',f1(L*(1-grow)));it.line.style.visibility=grow>0?'visible':'hidden';it.lab.style.opacity=label;it.gg.style.opacity=(i===0?1:1-.8*choose)*(1-gone)})}}}
+function layers(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const road=el('path',{class:'road',d:'M0 0'},bg);gate(bg);return{bg,road,mid:el('g',{},svg),top:el('g',{},svg)}}
+function txt(g,x,y,cls,anchor='start'){return el('text',{x,y,class:cls,'text-anchor':anchor},g)}
+
+const FIGS={
+/* 1 · the walk */
+walk:{dur:8.9,hold:2.6,init(svg){const L=layers(svg,11);this.L=L;this.p=posts(L.mid);this.w=walker(L.top);this.note=txt(L.top,400,244,'note','middle')},
+  draw(t){const s=walkS(t,1.05,-1,7);this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    const q=R(s);place(this.w,q.x,q.y);this.note.textContent=W.filter((_,i)=>s>=i-.02).join(' ')}},
+
+/* 2 · the blaze */
+blaze:{dur:5.4,hold:2.2,init(svg){const L=layers(svg,23);this.L=L;this.fan=fan(L.mid,R(3),R(4),[['preservation',.40],['world',.35],['end',.25]]);this.p=posts(L.mid);this.w=walker(L.top);
+    this.hud=txt(L.top,24,32,'hud');this.hud.textContent='after “in wildness is the”, the blaze:'},
+  draw(t){const s=3+ease(seg(t,3.2,4.2));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    this.fan.set(ease(seg(t,.3,1.3)),seg(t,1.1,1.7),seg(t,2.5,2.9),seg(t,4.2,4.9));const q=R(s);place(this.w,q.x,q.y)}},
+
+/* 3 · trails */
+trails:{dur:9.8,hold:2.4,init(svg){const bg=el('g',{},svg);tufts(bg,37);this.J={x:300,y:140};const J=this.J;
+    this.ends=[{x:690,y:56,w:'preservation',p:.6},{x:700,y:146,w:'world',p:.3},{x:690,y:232,w:'end',p:.1}];
+    this.C={x:450,y:140};const Bz=(b,u)=>{const E=this.ends[b],C=this.C;return{x:(1-u)**2*J.x+2*(1-u)*u*C.x+u*u*E.x,y:(1-u)**2*J.y+2*(1-u)*u*C.y+u*u*E.y}};this.Bz=Bz;
+    el('path',{d:`M24 ${J.y}H${J.x}`,class:'road'},bg);
+    this.br=this.ends.map((E,b)=>el('path',{d:roadD(0,1,u=>Bz(b,u)),class:'trailbase','stroke-width':2},bg));
+    const lab=txt(bg,40,J.y-22,'note');lab.textContent='in wildness is the …';lab.style.fontSize='22px';
+    this.lbl=this.ends.map(E=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(E.w);const s=el('tspan',{class:'prob',dx:6},t);s.textContent=Math.round(E.p*100)+'% of walkers';t.style.opacity=0;return t});
+    const pattern=[0,1,0,0,2,0,1,0,1,0];this.N=44;this.gh=[];
+    for(let i=0;i<this.N;i++)this.gh.push({t0:.3+i*.135,b:pattern[(i*7)%10],c:el('circle',{r:4.2,class:'ghost'},svg)});
+    this.w=walker(svg);this.hud=txt(svg,24,30,'hud');},
+  draw(t){const V=300,S1=276,S2=470,J=this.J;const cnt=[0,0,0];
+    for(const g of this.gh){const d=(t-g.t0)*V;if(d<0){g.c.style.opacity=0;continue}let p;
+      if(d<S1)p={x:J.x-S1+d,y:J.y};else{cnt[g.b]++;const u=(d-S1)/S2;if(u>=1){g.c.style.opacity=0;continue}p=this.Bz(g.b,u)}
+      g.c.setAttribute('cx',f1(p.x));g.c.setAttribute('cy',f1(p.y-6));g.c.style.opacity=.42}
+    this.br.forEach((b,i)=>b.setAttribute('stroke-width',f1(2+cnt[i]*.62)));
+    const end=seg(t,8.6,9.4);this.lbl.forEach(l=>l.style.opacity=end);this.w.style.opacity=end;place(this.w,J.x-14,J.y);
+    this.hud.textContent=t<8.6?`walkers so far: ${cnt[0]+cnt[1]+cnt[2]}`:'the blaze here is just this wear'}},
+
+/* 4 · n-gram */
+ngram:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,41);this.L=L;this.cone=el('path',{class:'cone',d:'M0 0'},L.mid);this.p=posts(L.mid);this.w=walker(L.top);
+    this.hud=txt(L.top,24,32,'hud');this.hud.append('in view:');this.hudb=el('tspan',{class:'hudb',dx:6},this.hud)},
+  draw(t){const s=walkS(t,1.1,-1,7),sb=s-1.72;this.L.road.setAttribute('d',roadD(-1,s));
+    this.p.forEach((p,i)=>p.style.opacity=rev(s,i)*(i>=sb-.05?1:.18));const q=R(s),b=R(Math.max(sb,-1));
+    this.cone.setAttribute('d',s<-.2?'M0 0':`M${f1(q.x-2)} ${f1(q.y-34)}L${f1(b.x-6)} ${f1(b.y-30)}L${f1(b.x-6)} ${f1(b.y+52)}L${f1(q.x-2)} ${f1(q.y+4)}Z`);
+    place(this.w,q.x,q.y,-1);
+        this.hudb.textContent='“'+W.filter((_,i)=>i<=s+.02&&i>=sb-.05).join(' ')+'”'}},
+
+/* 5 · pack */
+pack:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,53);this.L=L;
+    el('rect',{x:250,y:16,width:300,height:56,rx:12,class:'pack'},L.mid);
+    const cp=el('clipPath',{id:'packclip'},svg);el('rect',{x:252,y:18,width:296,height:52,rx:11},cp);
+    this.chips=el('g',{'clip-path':'url(#packclip)'},L.mid);this.ch=W.map(w=>{const t=txt(this.chips,0,52,'flabel','end');t.textContent=w;return t});
+    const lab=txt(L.mid,240,49,'hud','end');lab.textContent='the pack';
+    this.strap=el('path',{class:'strap',d:'M0 0'},L.mid);this.p=posts(L.mid);this.w=walker(L.top)},
+  draw(t){const s=walkS(t,1.1,-1,7);this.L.road.setAttribute('d',roadD(-1,s));
+    this.p.forEach((p,i)=>p.style.opacity=rev(s,i)*(i>s-.55?1:.14));
+    let right=540;for(let j=W.length-1;j>=0;j--){const c=this.ch[j],age=s-j;if(age<-.02){c.style.opacity=0;continue}const a=Math.max(age,0),sc=Math.max(.5,Math.pow(.86,a));
+      c.setAttribute('x',f1(right));c.style.fontSize=f1(24*sc)+'px';c.style.opacity=Math.pow(.6,a)*rev(s,j);right-=(W[j].length*9.5+12)*sc*clamp(age+1)}
+    const q=R(s);place(this.w,q.x,q.y);this.strap.setAttribute('d',`M${f1(q.x-2)} ${f1(q.y-28)}Q${f1((q.x+400)/2)} ${f1(q.y-70)} 400 72`)}},
+
+/* 6 · the dog */
+dog:{hold:2.8,init(svg){const L=layers(svg,67);this.L=L;
+    this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[0]}`},L.mid));
+    this.bars=W.map((_,k)=>{const x=R(k).x;const g=el('g',{style:`--dc:${DOGC[0]}`},L.mid);const r=el('rect',{x:x-7,width:14,y:250,height:0,rx:2,class:'bar'},g);const tl=txt(g,x,246,'barlab','middle');g.style.opacity=0;return{g,r,tl,k}});
+    const bl=txt(L.mid,22,250,'barlab');bl.textContent='sniffs per step →';
+    this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[0]);
+    const tr=new Trip(.8,1-.24);this.steps=[];
+    for(let k=2;k<=7;k++){const r0=tr.t;tr.go(-.4,430,true).go(k-1-.24,430);const a=tr.t;tr.go(k-.24,DX/.7);this.steps.push({k,r0,a,b:tr.t});tr.wait(.35)}
+    this.tr=tr;this.dur=tr.t+.2;this.hud=txt(L.top,24,32,'hudb');this.hud2=txt(L.top,24,50,'hud')},
+  draw(t){let s=1,cur=null,total=0;
+    for(const st of this.steps){if(t>=st.r0)total+=st.k;if(t>=st.b){s=st.k;continue}cur=st;if(t>st.a)s=st.k-1+ease(seg(t,st.a,st.b));break}
+    this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    const q=R(s);place(this.w,q.x,q.y);const d=this.tr.at(t),dp=R(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);
+    this.pf.forEach((c,i)=>{const p=R(i);puff(c,p.x,p.y-2,this.tr.last(i,t),t,13,.5)});
+    for(const st of this.steps){const b=this.bars[st.k];const u=seg(t,st.r0,st.a);b.g.style.opacity=u>0?1:0;const h=st.k*5*u;b.r.setAttribute('y',f1(250-h));b.r.setAttribute('height',f1(h));b.tl.setAttribute('y',f1(246-h));b.tl.textContent=st.k}
+    if(cur){this.hud.textContent=`Writing word ${cur.k+1}: the dog sniffs all ${cur.k} footprints first`}else this.hud.textContent='Done: every word cost a full run';
+    this.hud2.textContent=`sniffs so far: ${total}`}},
+
+/* 7 · the nose */
+nose:{hold:2.6,init(svg){const L=layers(svg,71);this.L=L;this.wts=[.03,.30,.04,.03,.40,.08,.12];
+    this.fan=fan(L.mid,R(6),R(7),[['world',.55],['wild',.25],['end',.20]],95);
+    this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[1]}`},L.mid));
+    this.bars=this.wts.map((w,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[1]}`},L.mid);const r=el('rect',{x:p.x-6,width:12,y:p.y-60,height:0,rx:2,class:'bar'},g);return{r,base:p.y-60,h:w*92}});
+    this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[1]);
+    this.bub=el('g',{style:`--dc:${DOGC[1]}`},L.top);el('rect',{x:-92,y:-50,width:184,height:30,rx:15,class:'bubble'},this.bub);
+    const bt=txt(this.bub,0,-29,'flabel','middle');[['preservation',21],['wildness',17],['the',12]].forEach(([w,sz],i)=>{const sp=el('tspan',{dx:i?6:0},bt);sp.textContent=w;sp.style.fontSize=sz+'px'});
+    const tr=new Trip(.7,6-.24);tr.go(-.4,250,true);this.turn=tr.t;tr.go(6-.24,330);this.back=tr.t;tr.wait(2.6);tr.go(7-.24,DX/.8);this.tr=tr;this.dur=this.back+4.1;
+    this.hud=txt(L.top,24,32,'hud');this.hud.append('this dog’s nose: ');const hb=el('tspan',{class:'hudb'},this.hud);hb.textContent='what is the walk about?'},
+  draw(t){const B=this.back;const s=6+ease(seg(t,B+2.6,B+3.4));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    const d=this.tr.at(t),dp=R(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);
+    this.pf.forEach((c,i)=>{const p=R(i),w=this.wts[i]||0;puff(c,p.x,p.y-2,this.tr.last(i,t),t,6+40*w,.25+1.1*w,1.1)});
+    this.bars.forEach((b,i)=>{const e=this.tr.last(i,t);const h=e?b.h*ease(seg(t,e.t,e.t+.5)):0;b.r.setAttribute('y',f1(b.base-h));b.r.setAttribute('height',f1(h))});
+    const bo=seg(t,this.turn,this.turn+.3)*(1-seg(t,B+.1,B+.5));this.bub.style.opacity=bo;place(this.bub,clamp(dp.x,110,690),dp.y);
+    this.fan.set(ease(seg(t,B+.2,B+1)),seg(t,B+.9,B+1.4),seg(t,B+2,B+2.4),seg(t,B+3.3,B+3.9));const q=R(s);place(this.w,q.x,q.y)}},
+
+/* 8 · relays */
+relay:{hold:2.6,init(svg){const L=layers(svg,83);this.L=L;
+    this.W1=[[.02,.38,.02,.02,.44,.04,.08],[.02,.02,.10,.06,.05,.30,.45],[.42,.10,.30,.05,.05,.04,.04]];
+    this.W2=[[.02,.20,.02,.02,.66,.03,.05],[.02,.04,.04,.04,.10,.16,.60],[.10,.40,.20,.05,.15,.05,.05]];
+    this.fan=fan(L.mid,R(6),R(7),[['world',.62],['wild',.22],['end',.16]],95);
+    this.pf=[0,1,2].map(j=>W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[j]}`},L.mid)));
+    this.dots=[0,1,2].map(j=>W.slice(0,7).map((_,i)=>{const p=R(i);const c=el('circle',{cx:p.x+(j-1)*8,cy:p.y+17,r:3.2,class:'puff',style:`--dc:${DOGC[j]}`},L.mid);c.style.opacity=0;return c}));
+    this.p=posts(L.mid);this.w=walker(L.top);this.home=[0,1,2].map(j=>6-.26-j*.2);
+    this.dg=[2,1,0].map(j=>dog(L.top,DOGC[j])).reverse();
+    this.trs=[0,1,2].map(j=>{const tr=new Trip(0,this.home[j]);tr.wait(.5+j*.28);tr.tag=1;tr.go(-.4,320,true).go(this.home[j],320);return tr});
+    this.r1=Math.max(...this.trs.map(t=>t.t));
+    this.trs.forEach((tr,j)=>{tr.wait(this.r1+.9+j*.18-tr.t);tr.tag=2;tr.go(-.4,600,true).go(this.home[j],600)});
+    this.r2=Math.max(...this.trs.map(t=>t.t));this.dur=this.r2+3.9;this.hud=txt(L.top,24,32,'hudb');this.hud2=txt(L.top,24,50,'hud')},
+  draw(t){const r1=this.r1,r2=this.r2;const s=6+ease(seg(t,r2+2.6,r2+3.4));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    this.trs.forEach((tr,j)=>{const d=tr.at(t),dp=R(d.s);setDog(this.dg[j],dp.x,dp.y+8+(j-1)*2,d.dir,d.mv,t);
+      this.pf[j].forEach((c,i)=>{const e=tr.last(i,t);if(!e||i>6){c.style.opacity=0;return}const w=(e.tag===1?this.W1:this.W2)[j][i];const p=R(i);puff(c,p.x+(j-1)*6,p.y-2+(j-1)*4,e,t,4+30*w,.2+1.1*w,1)});
+      this.dots[j].forEach((c,i)=>c.style.opacity=seg(t,r1-.2,r1+.4)*clamp(this.W1[j][i]*2.4))});
+    this.fan.set(ease(seg(t,r2+.2,r2+1)),seg(t,r2+.9,r2+1.4),seg(t,r2+2,r2+2.4),seg(t,r2+3.3,r2+3.9));const q=R(s);place(this.w,q.x,q.y);
+    if(t<r1){this.hud.textContent='Round 1: three dogs, three noses';this.hud2.textContent='rust: what is it about? · teal: what comes next in the grammar? · plum: where are we in the sentence?'}
+    else if(t<r2){this.hud.textContent='Round 2: the dogs sniff the notes left by round 1';this.hud2.textContent='the dots under each footprint are round 1’s findings'}
+    else{this.hud.textContent='Then the blaze';this.hud2.textContent='the last round’s findings set it'}}},
+
+/* 9 · scent marks */
+cache:{hold:2.8,init(svg){const L=layers(svg,97);this.L=L;
+    this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[0]}`},L.mid));
+    this.mk=W.map((_,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[0]}`},L.mid);[-3.5,3.5].forEach((dx,k)=>el('circle',{cx:p.x+dx,cy:p.y+17+(k?-1.5:0),r:2.3,class:'puff'},g));el('circle',{cx:p.x,cy:p.y+21,r:3.3,class:'puff'},g);g.style.opacity=0;return g});
+    this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[0]);
+    const home=5-.24,tr=new Trip(.6,home);this.A0=tr.t;
+    for(let i=5;i>=0;i--){tr.go(i,230);tr.sniff(i,'slow');tr.wait(.34)}
+    tr.go(home,430);this.A1=tr.t;tr.go(6-.24,DX/.7);this.S=this.A1;tr.wait(.6);
+    this.B0=tr.t;tr.go(6,260);tr.sniff(6,'slow');tr.wait(.34);tr.go(5.6,1100);tr.go(-.4,1100,true);tr.go(6-.24,1100);this.B1=tr.t;
+    this.tr=tr;this.dur=tr.t+.3;this.hud=txt(L.top,24,32,'hudb');this.hud2=txt(L.top,24,50,'hud')},
+  draw(t){const s=5+ease(seg(t,this.S,this.S+.7));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    const q=R(s);place(this.w,q.x,q.y);const d=this.tr.at(t),dp=R(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);
+    this.pf.forEach((c,i)=>{const p=R(i),e=this.tr.last(i,t);puff(c,p.x,p.y-2,e,t,e&&e.kind==='slow'?18:7,e&&e.kind==='slow'?.6:.4)});
+    this.mk.forEach((m,i)=>{const e=this.tr.ev.find(e=>e.post===i&&e.kind==='slow');m.style.opacity=e?seg(t,e.t+.15,e.t+.4):0});
+    const A=(this.A1-this.A0).toFixed(1),B=(this.B1-this.B0).toFixed(1);
+    if(t<this.A1){this.hud.textContent='No marks yet: sniff each footprint properly, leave a mark';this.hud2.textContent=''}
+    else if(t<this.B0){this.hud.textContent=`That run took ${A} s`;this.hud2.textContent='the walker writes the next word'}
+    else if(t<this.B1){this.hud.textContent='Next word: stop at the new footprint, read the marks at a run';this.hud2.textContent=`first run: ${A} s`}
+    else{this.hud.textContent=`That run took ${B} s, and still went all the way back`;this.hud2.textContent=`first run: ${A} s`}}}
+};
+
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const live=[];
+document.querySelectorAll('svg[data-fig]').forEach(svg=>{const def=FIGS[svg.dataset.fig];def.init(svg);
+  const st={def,start:performance.now(),vis:false,playing:!reduce};live.push(st);
+  const btn=svg.closest('figure').querySelector('.replay');btn.onclick=()=>{st.start=performance.now();st.playing=true};
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!st.vis){st.start=performance.now()}st.vis=e.isIntersecting}),{threshold:.3}).observe(svg);
+  def.draw(def.dur)});
+function frame(now){for(const st of live){if(!st.vis)continue;const D=st.def.dur+st.def.hold;let t=(now-st.start)/1000;
+  if(!st.playing)t=st.def.dur;else if(reduce){if(t>D){st.playing=false;t=st.def.dur}}else t%=D;st.def.draw(Math.min(t,st.def.dur))}
+  requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+})();
+</script>
