@@ -7,32 +7,55 @@
   --bg:#f4efe3;--panel:#fbf8f0;--ink:#2b2a26;--muted:#6d675a;--rule:#d9d0bc;
   --grass:#e6ebd6;--tuft:#b9c79a;--road:#dccb9f;--fp:#6b5a3a;--blaze:#c9822b;
   --dogA:#b5562e;--dogB:#2f7c78;--dogC:#7a4f8c;--pack:#8a7a55;--ghost:#3d3a33;
+  --given:#a9bcd0;--givenInk:#3f6a9a;--good:#3f7f3a;--bad:#b23a2e;
+  --wear:#9a7442;--gravel:#efeadf;--cutEdge:#8c8573;
+  --th-trails:#b5562e;--th-ground:#4f7a3a;--th-sight:#2f7c78;--th-brush:#7a4f8c;--th-hand:#3f6a9a;--th-scout:#b07a14;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
   --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
-  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;color-scheme:dark}}
+  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;
+  --given:#3e5268;--givenInk:#8fb6e0;--good:#7cc46f;--bad:#ec7a6c;--wear:#c9a066;--gravel:#4a4740;--cutEdge:#a39d90;
+  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1d1c19;--panel:#262520;--ink:#ece6d6;--muted:#a39b88;--rule:#3a372f;
   --grass:#232b1d;--tuft:#3c4a2f;--road:#5d5136;--fp:#e0cd9e;--blaze:#e0a050;
-  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;color-scheme:dark}
+  --dogA:#e27f55;--dogB:#5cb8b0;--dogC:#b88fcb;--pack:#b3a37a;--ghost:#e6dfcc;
+  --given:#3e5268;--givenInk:#8fb6e0;--good:#7cc46f;--bad:#ec7a6c;--wear:#c9a066;--gravel:#4a4740;--cutEdge:#a39d90;
+  --th-trails:#e27f55;--th-ground:#8fbf6c;--th-sight:#5cb8b0;--th-brush:#b88fcb;--th-hand:#8fb6e0;--th-scout:#e3b05c;color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
 main{max-width:800px;margin:0 auto;padding-block:48px 80px}
 h1,h2{font-family:Fraunces,Georgia,serif;font-weight:650;text-wrap:balance;letter-spacing:-.01em}
-h1{font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.08;margin:.2em 0 .35em}
-h2{font-size:1.65rem;line-height:1.2;margin:.15em 0 .5em}
+h1{font-size:clamp(2.3rem,7vw,3.4rem);line-height:1.05;margin:.1em 0 .1em}
+h2{font-size:1.65rem;line-height:1.2;margin:.15em 0 .35em}
 h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 .35em;font-weight:600}
 p{margin:0 0 .9em;max-width:66ch}
-a{color:var(--dogB)}
-.kicker{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
-.paper{font-size:.95rem;color:var(--muted);margin:-.2em 0 .4em}
+a{color:var(--th-sight)}
+.sub{font-family:Caveat,cursive;font-size:clamp(1.5rem,4.2vw,1.95rem);line-height:1.2;color:var(--blaze);margin:0 0 1em}
+.lede{font-size:1.12rem}
+.kicker{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kicker .yr{color:var(--ink);font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--th,var(--muted));flex:none}
+.paper{font-size:.95rem;color:var(--muted);margin:0 0 .4em}
 .paper i{color:var(--ink)}
-.sub{font-family:Caveat,cursive;font-size:clamp(1.5rem,4.2vw,1.95rem);line-height:1.2;color:var(--blaze);margin:-.15em 0 1em}
-.lede{font-size:1.12rem;color:var(--ink)}
-.entry{padding-top:56px;margin-top:40px;border-top:1px solid var(--rule)}
+.entry{padding-top:52px;margin-top:40px;border-top:1px solid var(--rule)}
+.entry.timeline{border-top:3px solid var(--th,var(--rule))}
 .part{margin-top:72px;padding:22px 24px;background:var(--panel);border:1px solid var(--rule);border-radius:12px}
 .part h2{margin-top:0}
+.part p:last-child{margin-bottom:0}
+.words{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px 18px;margin:16px 0 0;padding:0;list-style:none}
+.words li{min-width:0;font-size:.9rem;color:var(--muted)}
+.words b{display:block;color:var(--ink);font-family:Fraunces,Georgia,serif;font-size:1.05rem}
+nav.tl{margin:28px 0 8px}
+nav.tl ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px 14px}
+nav.tl li{min-width:0}
+nav.tl a{display:flex;gap:8px;align-items:baseline;text-decoration:none;color:var(--ink);font-size:.88rem;padding:4px 0;border-bottom:1px dotted var(--rule)}
+nav.tl a:hover{border-bottom-color:var(--muted)}
+nav.tl .dot{transform:translateY(1px)}
+nav.tl b{font-variant-numeric:tabular-nums;min-width:2.6em}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:14px 0 0;font-size:.8rem;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
 figure{margin:18px 0 22px}
 .fig{background:var(--grass);border-radius:14px;overflow:hidden;border:1px solid var(--rule)}
 .fig svg{display:block;width:100%;height:auto}
@@ -42,22 +65,37 @@ button.replay{flex:none;font:500 .8rem Inter,sans-serif;color:var(--ink);backgro
 button.replay:hover{border-color:var(--muted)}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px 32px}
 .two>div{min-width:0}
+.open{margin:14px 0 0;padding:12px 16px;background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--th,var(--blaze));border-radius:8px}
+.open p{margin:0}
+.open a{white-space:nowrap}
 .call{border-left:3px solid var(--blaze);padding:4px 0 4px 16px;margin:18px 0}
 .call p:last-child{margin-bottom:0}
 ul.rules{padding-left:1.1em;margin:0 0 1em}
 ul.rules li{margin-bottom:.4em}
 .tw{overflow-x:auto;margin:16px 0}
-table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:.92rem}
 th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--rule)}
 th{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-td:first-child{width:34%;font-weight:500}
-tr.hl td{background:color-mix(in srgb,var(--blaze) 12%,transparent)}
+td:first-child{font-weight:500}
+.meter{display:flex;height:12px;border-radius:6px;overflow:hidden;min-width:140px;background:var(--rule)}
+.meter i{display:block;height:100%}
+.meter .mt{background:var(--th-trails)}
+.meter .ms{background:var(--th-scout);background-image:repeating-linear-gradient(90deg,transparent 0 5px,rgba(255,255,255,.35) 5px 7px)}
 footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-size:.9rem;color:var(--muted)}
 /* svg vocabulary */
 .road{fill:none;stroke:var(--road);stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
+.givenroad{fill:none;stroke:var(--given);stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
+.scoutroad{fill:none;stroke:var(--blaze);stroke-width:3;stroke-dasharray:7 6;stroke-linecap:round}
 .trailbase{fill:none;stroke:var(--road);stroke-linecap:round;opacity:.9}
+.oldtrail{fill:none;stroke:var(--road);stroke-linecap:round;opacity:.35}
+.inkline{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;opacity:.7}
 .fp{fill:var(--fp)}
+.fp.given{fill:var(--givenInk)}
+.fp.scout{fill:none;stroke:var(--blaze);stroke-width:1.6;stroke-dasharray:3 2}
 .word{font-family:Caveat,cursive;font-size:22px;font-weight:500;fill:var(--ink)}
+.word.given{fill:var(--givenInk)}
+.word.scout{fill:var(--blaze)}
+.word.strong{font-weight:700}
 .limb{stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;fill:none}
 .head{fill:var(--ink)}
 .hat{stroke:var(--ink);fill:none;stroke-width:2;stroke-linejoin:round}
@@ -66,14 +104,25 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .dleg,.dtail{stroke:var(--dc);stroke-width:2.4;stroke-linecap:round;fill:none}
 .dear{fill:var(--ink);opacity:.45}
 .puff{fill:var(--dc)}
-.fan{fill:none;stroke:var(--blaze);stroke-linecap:round;opacity:.8}
+.fan,.worn{fill:none;stroke:var(--wear);stroke-linecap:round;filter:url(#rough)}
+.cutedge{fill:none;stroke:var(--cutEdge);stroke-linejoin:miter}
+.cutfill{fill:none;stroke:var(--gravel);stroke-linejoin:miter}
+.plaza{fill:var(--gravel);stroke:var(--cutEdge);stroke-width:2}
+.sign{font-family:Caveat,cursive;font-size:19px;fill:var(--ink)}
+.heading{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.legend-sw{display:inline-block;width:34px;height:10px;border-radius:2px;vertical-align:middle;margin-right:6px}
 .flabel{font-family:Caveat,cursive;font-size:21px;fill:var(--ink)}
 .prob{font-family:Inter,sans-serif;font-size:11px;fill:var(--muted)}
 .note{font-family:Caveat,cursive;font-size:25px;fill:var(--ink)}
+.hand{font-family:Caveat,cursive;font-size:20px;fill:var(--muted)}
 .hud{font-family:Inter,sans-serif;font-size:12.5px;fill:var(--muted)}
 .hudb{font-family:Inter,sans-serif;font-size:12.5px;fill:var(--ink);font-weight:600}
 .pack{fill:var(--panel);stroke:var(--pack);stroke-width:1.5}
+.panel{fill:var(--panel);stroke:var(--rule);stroke-width:1.2}
 .strap{stroke:var(--pack);stroke-dasharray:4 4;fill:none;stroke-width:1.4}
+.leash{stroke:var(--muted);stroke-dasharray:3 4;fill:none;stroke-width:1.6}
+.glance{stroke:var(--blaze);stroke-dasharray:4 4;fill:none;stroke-width:1.5}
+.align{stroke:var(--dogB);fill:none;stroke-linecap:round}
 .cone{fill:var(--blaze);opacity:.18}
 .ghost{fill:var(--ghost)}
 .gate{stroke:var(--fp);stroke-width:2.5;stroke-linecap:round;fill:none}
@@ -81,160 +130,373 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .bubble{fill:var(--panel);stroke:var(--dc);stroke-width:1.4}
 .bar{fill:var(--dc)}
 .barlab{font-family:Inter,sans-serif;font-size:10.5px;fill:var(--muted)}
+.stamp{font-family:Caveat,cursive;font-size:22px;font-weight:700}
+.good{fill:var(--good)}.bad{fill:var(--bad)}
+.vdot{fill:var(--th-ground)}
+.vlab{font-family:Caveat,cursive;font-size:18px;fill:var(--ink)}
+.ring{fill:none;stroke:var(--blaze);stroke-width:2}
+.card{fill:var(--panel);stroke:var(--blaze);stroke-width:1.5}
+.frame{fill:none;stroke:var(--ink);stroke-width:1.2;opacity:.6}
+.house{fill:var(--fp)}
 </style>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <main>
   <h1>GenAI Park</h1>
   <p class="sub">Where understanding generative AI is a walk in the park. Literally.</p>
-  <p class="lede">Why does a transformer take the whole input again for every word it writes? Because its walker remembers nothing. It keeps a dog instead.</p>
-  <p>Each picture below is a small animation. The first three set up the walk; the rest answer one question across seventy years of language models: <em>what does the walker look at before each step?</em></p>
+  <p class="lede">Every generative model, from Shannon's word counts to today's chatbots and image painters, can be drawn as one picture: a walker in a park, making something one step at a time. This guide traces how that walker changed over seventy-five years, one idea at a time.</p>
 
-  <!-- 1 -->
+  <nav class="tl" aria-label="Timeline">
+    <ol>
+      <li><a href="#e1948" style="--th:var(--th-trails)"><span class="dot"></span><b>1948</b>Count the footprints</a></li>
+      <li><a href="#e1950" style="--th:var(--th-trails)"><span class="dot"></span><b>1950</b>Judge the footprints</a></li>
+      <li><a href="#e1966" style="--th:var(--th-trails)"><span class="dot"></span><b>1966</b>Cut the paths by hand</a></li>
+      <li><a href="#e1989" style="--th:var(--th-ground)"><span class="dot"></span><b>1989</b>A garden, worn in</a></li>
+      <li><a href="#e1990" style="--th:var(--th-sight)"><span class="dot"></span><b>1990</b>Carry a pack</a></li>
+      <li><a href="#e2000" style="--th:var(--th-ground)"><span class="dot"></span><b>2000</b>Similar words, similar ground</a></li>
+      <li><a href="#e2013" style="--th:var(--th-brush)"><span class="dot"></span><b>2013</b>Paint in one stroke</a></li>
+      <li><a href="#e2014" style="--th:var(--th-sight)"><span class="dot"></span><b>2014</b>A dog on the other road</a></li>
+      <li><a href="#e2017" style="--th:var(--th-sight)"><span class="dot"></span><b>2017</b>Drop the pack, keep the dog</a></li>
+      <li><a href="#e2018" style="--th:var(--th-hand)"><span class="dot"></span><b>2018</b>Hand over the road</a></li>
+      <li><a href="#e2020" style="--th:var(--th-brush)"><span class="dot"></span><b>2020</b>Paint in drafts</a></li>
+      <li><a href="#e2021" style="--th:var(--th-hand)"><span class="dot"></span><b>2021</b>Name the destination</a></li>
+      <li><a href="#e2022a" style="--th:var(--th-trails)"><span class="dot"></span><b>2022</b>Judge where walks end</a></li>
+      <li><a href="#e2022b" style="--th:var(--th-scout)"><span class="dot"></span><b>2022</b>Scout before answering</a></li>
+      <li><a href="#e2023a" style="--th:var(--th-hand)"><span class="dot"></span><b>2023</b>Other hands lay road</a></li>
+      <li><a href="#e2023b" style="--th:var(--th-trails)"><span class="dot"></span><b>2023</b>Trails worn by walkers</a></li>
+    </ol>
+    <div class="legend">
+      <span style="--th:var(--th-trails)"><span class="dot"></span>Where the trails come from</span>
+      <span style="--th:var(--th-ground)"><span class="dot"></span>The ground</span>
+      <span style="--th:var(--th-sight)"><span class="dot"></span>What the walker sees</span>
+      <span style="--th:var(--th-brush)"><span class="dot"></span>Pen and brush</span>
+      <span style="--th:var(--th-hand)"><span class="dot"></span>Handed to the walker</span>
+      <span style="--th:var(--th-scout)"><span class="dot"></span>Looking ahead</span>
+    </div>
+  </nav>
+
+  <div class="part">
+    <p class="kicker">The park</p>
+    <h2>Six words for the whole field</h2>
+    <p>Three short animations set up the picture. The other three arrive where history needs them.</p>
+    <ul class="words">
+      <li><b>Walk</b>the product, built one step at a time</li>
+      <li><b>Blaze</b>the marks ahead: how likely each next step is</li>
+      <li><b>Trails</b>worn in by earlier walkers: training</li>
+      <li><b>Ground</b>what the walker can tell apart</li>
+      <li><b>Cut path</b>laid by hand: rules, hand-picked features</li>
+      <li><b>Scouting</b>walks taken only to choose, then dropped</li>
+    </ul>
+  </div>
+
   <section class="entry">
-    <p class="kicker">01 · the walk</p>
+    <p class="kicker">the walk</p>
     <h2>The walk is the product</h2>
     <figure><div class="fig"><svg data-fig="walk" viewBox="0 0 800 260" role="img" aria-label="A walker leaves the gate and writes one word at each footprint."></svg></div>
       <figcaption><button class="replay">Replay</button><span>One footprint, one word. When the walker stops, the footprints are the sentence.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>The walker starts at the gate and writes one word per footprint. Nothing is handed over at the end except the footprints themselves.</p></div>
-      <div><h3>In the mechanism</h3><p>Autoregressive generation. The model emits one token and appends it. That growing sequence is both the input to the next step and the final output.</p></div>
+      <div><h3>In the walk</h3><p>The walker starts at the gate and writes one word per footprint. Nothing is handed over at the end except the footprints themselves. A step once taken stays taken. The park has many gates: a walk can begin with any first word, or wherever someone hands over a stretch of road.</p></div>
+      <div><h3>In the mechanism</h3><p>Generation one token at a time. Each token is appended to the sequence, and that growing sequence is both the input to the next step and the final output.</p></div>
     </div>
   </section>
 
-  <!-- 2 -->
   <section class="entry">
-    <p class="kicker">02 · the blaze</p>
+    <p class="kicker">the blaze</p>
     <h2>Each step, a blaze</h2>
     <figure><div class="fig"><svg data-fig="blaze" viewBox="0 0 800 260" role="img" aria-label="At the end of the road three ways fan out with different widths; the walker takes one."></svg></div>
-      <figcaption><button class="replay">Replay</button><span>Wider means likelier. The walker reads the blaze and takes one step.</span></figcaption></figure>
+      <figcaption><button class="replay">Replay</button><span>The more trodden a way, the likelier. The walker reads the blaze and takes one step.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>Where the road ends, the ground ahead is marked. Some ways are wide, some faint. The walker picks one and steps onto it.</p></div>
-      <div><h3>In the mechanism</h3><p>At each position the model outputs a probability for every word in its vocabulary. Decoding reads it: take the top one, or sample. A real blaze has tens of thousands of hairline branches; this one shows three.</p></div>
+      <div><h3>In the walk</h3><p>Where the road ends, the ground ahead is marked. Some ways are well trodden, some barely marked. The walker sees only these marks and the road behind it. There is no map of the park.</p></div>
+      <div><h3>In the mechanism</h3><p>At each step the model outputs a probability for every possible next token. Decoding reads it: take the top one, or sample. A real blaze has tens of thousands of hairline branches; this one shows three.</p></div>
+    </div>
+    <figure><div class="fig"><svg data-fig="heading" viewBox="0 0 800 260" role="img" aria-label="Two walkers reach the same footprint, 'the', by different roads; each turns a different way, and the blaze differs."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Where you stand is the last word. Which way you face is everything before it.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The blaze isn't printed on the ground. Two walkers can reach the same footprint, "the", by different roads, and each arrives facing a different way. The trodden ways fan out widest in the direction the walker faces, so the same spot gives a different blaze.</p></div>
+      <div><h3>In the mechanism</h3><p>At each step the model sums up the road so far as one long vector: a direction. Every word has a direction too, and a word's likelihood follows how closely it lines up with the one the walker faces (a dot product, then a softmax). The real compass has thousands of dimensions; the picture uses two.</p></div>
     </div>
   </section>
 
-  <!-- 3 -->
   <section class="entry">
-    <p class="kicker">03 · trails</p>
+    <p class="kicker">trails</p>
     <h2>Trails are worn in by training</h2>
     <figure><div class="fig"><svg data-fig="trails" viewBox="0 0 800 260" role="img" aria-label="Many faint walkers pass a junction; the branch they use most wears wide."></svg></div>
       <figcaption><button class="replay">Replay</button><span>Earlier walkers wear the grass. The blaze is the wear, read from where the walker stands.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>Before our walker arrives, thousands of others have crossed the park. Where they went, the grass wore down. The blaze is how worn each way is, seen from this spot.</p></div>
-      <div><h3>In the mechanism</h3><p>Training on next-word prediction. For every position in every training text, the weights are nudged to make the actual next word likelier. The wear generalises: the walker can read it on roads nobody walked exactly.</p></div>
+      <div><h3>In the walk</h3><p>Before our walker arrives, many others have crossed the park. Where they went, the grass wore down. The blaze is how worn each way is, seen from this spot. The rest of the story is mostly about where the trails come from, and what the walker can see when it reads them.</p></div>
+      <div><h3>In the mechanism</h3><p>Training. For every position in every training example, the model is nudged to make what actually came next a little likelier. Who the earlier walkers are, people, judges or the model itself, changes over the decades.</p></div>
     </div>
+    <div class="call"><p><b>Cut paths and worn trails.</b> <span class="legend-sw" style="background:var(--gravel);border:2px solid var(--cutEdge)"></span>A cut path is laid by hand: crisp edges, its width a designer's decision. <span class="legend-sw" style="background:var(--wear)"></span>A worn trail is made by walkers: soft edges, and the likelier a way, the more trodden it is. Early systems cut their paths; modern ones wear them; for decades, many did both.</p></div>
   </section>
 
   <div class="part">
-    <p class="kicker">The question</p>
-    <h2>What does the walker look at before each step?</h2>
-    <p>The blaze depends on where the walker stands, and "where" means the road so far. Each family of models answers differently how much of that road the walker gets to see. Three answers follow.</p>
+    <p class="kicker">The timeline</p>
+    <h2>Seventy-five years of walkers</h2>
+    <p>Each entry is one idea, named by its paper. The picture shows what that idea changed in the park; the box at the end names the problem it left for the next one.</p>
   </div>
 
-  <!-- 4 -->
-  <section class="entry">
-    <p class="kicker">04 · the n-gram walker</p>
-    <h2>Glance back: the n-gram walker</h2>
-    <p class="paper"><i>A Mathematical Theory of Communication</i> (1948) → <i>A Neural Probabilistic Language Model</i> (2003)</p>
+  <!-- 1948 -->
+  <section class="entry timeline" id="e1948" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1948</span> · Where the trails come from</p>
+    <h2>Count the footprints, glance back</h2>
+    <p class="paper"><i>A Mathematical Theory of Communication</i> (1948)</p>
     <figure><div class="fig"><svg data-fig="ngram" viewBox="0 0 800 260" role="img" aria-label="The walker looks back over only the last two footprints; earlier ones fade from view."></svg></div>
       <figcaption><button class="replay">Replay</button><span>Only the last two footprints are in view. By the time it matters, "wildness" is out of sight.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>The walker turns round and looks at just the last few footprints. Everything before them might as well not exist.</p></div>
-      <div><h3>In the mechanism</h3><p>The Markov assumption: the next word depends only on the previous <i>n</i>−1. Shannon's word approximations and classic n-gram counts work this way. The 2003 neural model replaced counts with learned word vectors but kept the fixed window.</p></div>
+      <div><h3>In the walk</h3><p>The first trails are counts. For each pair or triple of words, how often did people step from here to there? The walker turns round, looks at the last few footprints, and reads the blaze from the tally.</p></div>
+      <div><h3>In the mechanism</h3><p>Shannon generated English by choosing each word in proportion to how often it followed the previous word in real text. That is an n-gram model: the next word depends only on the last <i>n</i>−1.</p></div>
     </div>
+    <figure><div class="fig"><svg data-fig="merge" viewBox="0 0 800 260" role="img" aria-label="Two different roads both end at 'the'; Shannon's walker faces the same way at the end of both, so both get one identical blaze."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Shannon's walker sees only the last word, so every road ending in "the" reaches the same junction, facing the same way, with the same blaze.</span></figcaption></figure>
+    <div class="open"><h3>Left open</h3><p>The walker sees only a few footprints back. And at a junction nobody has walked, there are no counts and so no blaze: a tally can't tell that "cat" is like "dog". <a href="#e2000">→ 2000</a></p></div>
   </section>
 
-  <!-- 5 -->
-  <section class="entry">
-    <p class="kicker">05 · the recurrent walker</p>
-    <h2>Carry a pack: the recurrent walker</h2>
+  <!-- 1950 -->
+  <section class="entry timeline" id="e1950" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1950</span> · Where the trails come from</p>
+    <h2>Judge the footprints</h2>
+    <p class="paper"><i>Computing Machinery and Intelligence</i> (1950)</p>
+    <figure><div class="fig"><svg data-fig="judge" viewBox="0 0 800 260" role="img" aria-label="A judge inspects two sets of footprints and passes both as human; only one leads somewhere real."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>The judge reads footprints and passes both. Only one of them leads somewhere real.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Turing's judge looks only at footprints and asks: did a person make these? It never asks where the walk ended. That standard, footprints that pass for human, became what the field trains toward.</p></div>
+      <div><h3>In the mechanism</h3><p>The imitation game. Its modern form is maximum-likelihood training: wear the trails so the walker's footprints match human ones, step by step. Most entries up to 2020 train this way. The GAN (2013 entry) made the judge literal: a second network that judges footprints and nothing else.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Footprints can look human and lead nowhere. That is what a hallucination is. Judging where walks end has to wait. <a href="#e2022a">→ 2022</a></p></div>
+  </section>
+
+  <!-- 1966 -->
+  <section class="entry timeline" id="e1966" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1966</span> · Where the trails come from</p>
+    <h2>Cut the paths by hand</h2>
+    <p class="paper"><i>ELIZA: A Computer Program for the Study of Natural Language Communication Between Man and Machine</i> (1966)</p>
+    <figure><div class="fig"><svg data-fig="eliza" viewBox="0 0 800 260" role="img" aria-label="A user types 'I am sad'; a hand-cut path chosen by a rule leads the walker to write 'How long have you been sad?'"></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Every path was cut by hand. A rule matches the user's words and the walker follows the path it points to, copying "sad" across.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>A different kind of park: a formal garden. Every path was cut by hand, and a signpost at each junction names the pattern it answers. Nothing is worn; nobody counted anything. The walker matches what it was handed against the signs and follows the path the matching sign points to.</p></div>
+      <div><h3>In the mechanism</h3><p>ELIZA's script was a list of keywords and decomposition patterns, each with reassembly rules that reused parts of the input. "I am <i>X</i>" could become "How long have you been <i>X</i>?" No probabilities, no data: rules written by hand. The same approach ran through decades of symbolic AI.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Every path has to be cut by someone. Step off the cut paths and there is nothing at all. Real language is far too big a park to lay out by hand. <a href="#e1989">→ 1989</a></p></div>
+  </section>
+
+  <!-- 1989 -->
+  <section class="entry timeline" id="e1989" style="--th:var(--th-ground)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1989</span> · The ground</p>
+    <h2>A garden, worn in</h2>
+    <p class="paper"><i>A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition</i> (1989)</p>
+    <figure><div class="fig"><svg data-fig="hmm" viewBox="0 0 800 260" role="img" aria-label="Paths between sound stations are cut by hand; walkers then wear them, and how worn each path gets is learned."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>The paths are cut by hand: which sound may follow which. How worn each one gets is learned from recordings. Numbers are illustrative.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The two kinds of path meet. Designers still lay out the garden, deciding which stations exist and which paths join them. But they no longer decide how likely each path is. Walkers wear that in: here, thousands of recorded voices saying "speech".</p></div>
+      <div><h3>In the mechanism</h3><p>A hidden Markov model is a generative model: it describes how a sequence of sounds is produced by walking through hidden states. Designers chose the states and allowed transitions; the probabilities were learned from data with the Baum–Welch algorithm. This hand-laid structure with learned numbers was how statistical AI worked until deep learning, around 2012.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Worn trails can only form on paths someone cut. The ground itself, which states exist and what counts as similar, is still laid out by hand. <a href="#e2000">→ 2000</a></p></div>
+  </section>
+
+  <!-- 1990 -->
+  <section class="entry timeline" id="e1990" style="--th:var(--th-sight)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1990</span> · What the walker sees</p>
+    <h2>Carry a pack</h2>
     <p class="paper"><i>Finding Structure in Time</i> (1990) → <i>Long Short-Term Memory</i> (1997)</p>
     <figure><div class="fig"><svg data-fig="pack" viewBox="0 0 800 260" role="img" aria-label="The walker never looks back; each word goes into a fixed-size pack where older words fade."></svg></div>
       <figcaption><button class="replay">Replay</button><span>The road behind goes dark. Everything known about it must fit in the pack, and old things fade.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>The walker never looks back. Each footprint goes into a pack of fixed size. New things push old things down, and old things fade. By the end, "wildness" is a smudge.</p></div>
-      <div><h3>In the mechanism</h3><p>A hidden state, updated each step from the last state and the new word. The LSTM's gates control the fading, so things last longer, but the pack stays fixed-size. And training must walk in order: step 5 needs the pack from step 4.</p></div>
+      <div><h3>In the walk</h3><p>The walker stops looking back. Instead, each footprint goes into a pack of fixed size that it carries. New things push old things down, and old things fade. By the end, "wildness" is a smudge.</p></div>
+      <div><h3>In the mechanism</h3><p>A recurrent network keeps a hidden state, updated each step from the last state and the new word. The LSTM's gates control the fading, so things last longer, but the pack stays fixed-size.</p></div>
     </div>
+    <div class="open"><h3>Left open</h3><p>The pack is small and leaky, and training must replay every walk in order, because step 5 needs the pack from step 4. That makes training slow to scale. <a href="#e2014">→ 2014</a></p></div>
   </section>
 
-  <!-- 6 -->
-  <section class="entry">
-    <p class="kicker">06 · the transformer walker</p>
-    <h2>Send the dog: the transformer walker</h2>
+  <!-- 2000 -->
+  <section class="entry timeline" id="e2000" style="--th:var(--th-ground)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2000</span> · The ground</p>
+    <h2>Similar words, similar ground</h2>
+    <p class="paper"><i>A Neural Probabilistic Language Model</i> (2000) → <i>Efficient Estimation of Word Representations in Vector Space</i> (2013)</p>
+    <figure><div class="fig"><svg data-fig="ground" viewBox="0 0 800 260" role="img" aria-label="On the ground, dog and cat lie close together, so a blaze worn after 'the dog was' carries to 'the cat was', where no walker has been."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>"Dog" and "cat" stand on nearby ground, so the blaze carries to a junction nobody walked.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The ground itself gets shape. Words are placed so that similar words lie close together. A blaze worn in after "the dog was" now carries over to "the cat was", a junction no walker passed, because the two stand on similar ground. Here the ground stops being laid out by hand and starts to grow from data.</p></div>
+      <div><h3>In the mechanism</h3><p>Each word becomes a learned vector, and a neural network predicts the next word from the vectors of the previous few. Similar words get similar vectors, so evidence is shared between them. word2vec (2013) made such vectors cheap to learn at scale.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Better ground, but the walker still glances back only a few footprints. Seeing further stays with the pack, and later the dog. <a href="#e2014">→ 2014</a></p></div>
+  </section>
+
+  <!-- 2013 -->
+  <section class="entry timeline" id="e2013" style="--th:var(--th-brush)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2013</span> · Pen and brush</p>
+    <h2>Paint in one stroke</h2>
+    <p class="paper"><i>Auto-Encoding Variational Bayes</i> (2013) · <i>Generative Adversarial Nets</i> (2014)</p>
+    <figure><div class="fig"><svg data-fig="stroke" viewBox="0 0 800 260" role="img" aria-label="A painter goes from a random seed to a finished picture in a single stroke."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>From a random seed to a finished picture in one stroke. No drafts in between.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Images need a different walker: a painter, whose product is the canvas rather than the footprints. These first painters make the whole picture in a single stroke from a random seed. It is hardly a walk at all, just one step.</p></div>
+      <div><h3>In the mechanism</h3><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>One stroke can't correct itself. VAE pictures came out blurry; GANs were unstable to train and prone to painting the same few pictures. The painter needed drafts. <a href="#e2020">→ 2020</a></p></div>
+  </section>
+
+  <!-- 2014 -->
+  <section class="entry timeline" id="e2014" style="--th:var(--th-sight)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2014</span> · What the walker sees</p>
+    <h2>A dog on the other road</h2>
+    <p class="paper"><i>Sequence to Sequence Learning with Neural Networks</i> (2014) → <i>Neural Machine Translation by Jointly Learning to Align and Translate</i> (2014)</p>
+    <figure><div class="fig"><svg data-fig="align" viewBox="0 0 800 260" role="img" aria-label="Translating, the walker's dog runs along the source sentence before each step, sniffing hardest at the matching word."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Before each English word, the dog works the French road. The lines show where the scent was strongest; "wild" and "world" cross over.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Translating means two roads: the source sentence, and the walk being written. At first the whole source was squeezed into one pack before the walk began. Then the walker got a dog. Before each step, the dog runs along the source road, sniffs every word, and comes back with a blend, mostly of what smelled strongest.</p></div>
+      <div><h3>In the mechanism</h3><p>Sequence-to-sequence models encode the source into one fixed vector and decode from it. Attention lets the decoder, at every step, take a fresh weighted mix of all the source positions. The weights are recomputed each step; the lines in the picture are those weights.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>The dog only works the source road. On its own road the walker still carries a pack, and training still walks in order. <a href="#e2017">→ 2017</a></p></div>
+  </section>
+
+  <!-- 2017 -->
+  <section class="entry timeline" id="e2017" style="--th:var(--th-sight)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2017</span> · What the walker sees</p>
+    <h2>Drop the pack, keep the dog</h2>
     <p class="paper"><i>Attention Is All You Need</i> (2017)</p>
     <figure><div class="fig"><svg data-fig="dog" viewBox="0 0 800 260" role="img" aria-label="Before every step, the walker's dog runs back down the whole road sniffing each footprint, then returns. Each run is longer."></svg></div>
       <figcaption><button class="replay">Replay</button><span>Before every word, the dog runs the whole road. Each run is one footprint longer, so the cost per word keeps growing.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>The walker carries nothing. Before every step it sends its dog back down the whole road. The dog sniffs every footprint and runs back, and only then does the walker step. One footprint later, the dog goes again.</p></div>
-      <div><h3>In the mechanism</h3><p>No state passes between steps. The prediction at each position is computed from all the tokens before it, through self-attention. That is why the whole input is needed for every token: the prefix is the only memory there is.</p></div>
+      <div><h3>In the walk</h3><p>The walker carries nothing at all. Before every step it sends its dog back down its own road. The dog sniffs every footprint and runs back, and only then does the walker step. One footprint later, the dog goes again. This is why these models take the whole input again for every word: the road is the only memory there is.</p></div>
+      <div><h3>In the mechanism</h3><p>No state passes between steps. Each new token is computed from all the tokens before it through self-attention. A transformer runs many dogs at once, each with its own nose (heads), in several relay rounds (layers). It also caches each footprint's scent so later runs go faster, but every run still covers the whole road.</p></div>
     </div>
-    <div class="call">
-      <p><b>Why give up the pack?</b> Training speed. With no pack, every footprint of a training text can send its dog at the same moment, so a whole text trains in parallel. A pack forces the walk to be replayed in order. It also removes the bottleneck: the road keeps every word exactly, and the dog decides at each step what matters now.</p>
-    </div>
-    <h3>Two rules for the dog</h3>
-    <ul class="rules">
-      <li><b>It forgets.</b> Each run starts fresh. A dog that remembered earlier runs would be a pack again.</li>
-      <li><b>It runs only back</b>, never ahead of the walker. That is the causal mask. Running ahead to try out futures is scouting, which is a different thing.</li>
-    </ul>
-  </section>
-
-  <!-- 7 -->
-  <section class="entry">
-    <p class="kicker">07 · query, key, value</p>
-    <h2>The nose: what the dog brings back</h2>
-    <p class="paper">Scaled dot-product attention, from <i>Attention Is All You Need</i> (2017)</p>
     <figure><div class="fig"><svg data-fig="nose" viewBox="0 0 800 260" role="img" aria-label="The dog sniffs every footprint; some smell much stronger. It returns with a blend, and the blaze opens."></svg></div>
-      <figcaption><button class="replay">Replay</button><span>Every footprint gets sniffed, but some smell far stronger. The dog brings back a blend, and the blaze opens from it. Weights are illustrative.</span></figcaption></figure>
-    <div class="two">
-      <div><h3>In the walk</h3><p>The dog doesn't fetch one footprint. It sniffs all of them, and to its nose some smell much stronger than others. It brings back a blend, mostly of what smelled strongest. This nose is trained for "what is the walk about?", so "preservation" and "wildness" come back strong.</p></div>
-      <div><h3>In the mechanism</h3><p>Each earlier token offers a key (its scent) and a value (what can be fetched). The current position has a query (the scent this dog hunts for). Query against key gives a match, a softmax turns matches into weights, and the dog returns the weighted sum of values. The nose is learned weights: terrain, worn in by training.</p></div>
+      <figcaption><button class="replay">Replay</button><span>The nose. Every footprint is sniffed, some far more strongly, and the blend the dog brings back opens the blaze. Weights are illustrative.</span></figcaption></figure>
+    <div class="call">
+      <p><b>Why give up the pack?</b> Training speed. With no pack, every footprint of a training text can send its dog at the same moment, so a whole text trains in parallel, and the field could finally train on enormous amounts of text. Two rules keep it honest: the dog forgets after each run (otherwise it would be a pack again), and it runs only back, never ahead of the walker.</p>
     </div>
+    <div class="open"><h3>Left open</h3><p>The walker can now see its whole road, and it can be trained on almost anything written. What happens when it is? <a href="#e2018">→ 2018</a></p></div>
   </section>
 
-  <!-- 8 -->
-  <section class="entry">
-    <p class="kicker">08 · heads and layers</p>
-    <h2>A pack of dogs, in relays</h2>
-    <p class="paper">Multi-head attention and stacked layers, from <i>Attention Is All You Need</i> (2017)</p>
-    <figure><div class="fig"><svg data-fig="relay" viewBox="0 0 800 260" role="img" aria-label="Three dogs with different noses run together; their findings are written on the footprints; a second, faster round sniffs the notes."></svg></div>
-      <figcaption><button class="replay">Replay</button><span>Three noses per round. After round 1, the findings are written on the footprints, and round 2 sniffs those notes.</span></figcaption></figure>
+  <!-- 2018 -->
+  <section class="entry timeline" id="e2018" style="--th:var(--th-hand)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2018–2020</span> · Handed to the walker</p>
+    <h2>Wear the whole park, then hand over the road</h2>
+    <p class="paper"><i>Improving Language Understanding by Generative Pre-Training</i> (2018) → <i>Language Models are Unsupervised Multitask Learners</i> (2019) → <i>Language Models are Few-Shot Learners</i> (2020)</p>
+    <figure><div class="fig"><svg data-fig="prompt" viewBox="0 0 800 260" role="img" aria-label="A user lays the first stretch of road with examples; the walker starts at its end and continues the pattern."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Someone else lays the first stretch of road. The walker starts where it ends and continues it.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>One nose isn't enough. The walker keeps several dogs, each trained to a different scent, and they run together. Their findings are written onto the footprints. A second round then sniffs the annotated road. Only after the last round does the blaze open.</p></div>
-      <div><h3>In the mechanism</h3><p>Several dogs per round is multi-head attention; rounds are layers. Each layer updates every position's representation, and the next layer attends over the updated ones. Each footprint's notes were written by its own dogs, looking only further back. GPT-3 (<i>Language Models are Few-Shot Learners</i>, 2020) runs 96 rounds of 96 dogs.</p></div>
+      <div><h3>In the walk</h3><p>Wear trails across most of what people have written, and the walker can continue nearly any road. So a task becomes road: someone lays the first stretch, an instruction or a few examples, and the walker finishes it. The prompt is not a command; it is road behind the walker.</p></div>
+      <div><h3>In the mechanism</h3><p>Pretraining a transformer to predict the next token on a vast corpus. GPT-2 showed that tasks can be posed as text to continue. GPT-3 showed that a few examples in the prompt work without any retraining, which is called in-context learning.</p></div>
     </div>
+    <div class="open"><h3>Left open</h3><p>The walker continues roads the way people did, helpful or not, true or not. It has been trained on footprints, not on whether a walk ended well. <a href="#e2022a">→ 2022</a></p></div>
   </section>
 
-  <!-- 9 -->
-  <section class="entry">
-    <p class="kicker">09 · the KV cache</p>
-    <h2>Scent marks: a faster run, not a shorter one</h2>
-    <figure><div class="fig"><svg data-fig="cache" viewBox="0 0 800 260" role="img" aria-label="On the first run the dog sniffs each footprint slowly and leaves a mark. On the next run it reads the marks at speed and only stops at the new footprint."></svg></div>
-      <figcaption><button class="replay">Replay</button><span>Marks make the second run quicker. The dog still goes all the way back.</span></figcaption></figure>
+  <!-- 2020 -->
+  <section class="entry timeline" id="e2020" style="--th:var(--th-brush)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2020</span> · Pen and brush</p>
+    <h2>Paint in drafts</h2>
+    <p class="paper"><i>Deep Unsupervised Learning using Nonequilibrium Thermodynamics</i> (2015) → <i>Denoising Diffusion Probabilistic Models</i> (2020)</p>
+    <figure><div class="fig"><svg data-fig="diffusion" viewBox="0 0 800 260" role="img" aria-label="A painter walks from pure noise to a finished picture; every footprint leaves a cleaner draft."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Every footprint leaves a draft: composition first, detail last. The last draft is the product.</span></figcaption></figure>
     <div class="two">
-      <div><h3>In the walk</h3><p>Each time the dog works a footprint, it leaves a mark. Next step, it reads the marks at a run and stops properly only at the newest footprint. The run is faster, but it still covers the whole road.</p></div>
-      <div><h3>In the mechanism</h3><p>Keys and values for earlier tokens are stored. Because of the causal mask, an earlier token's keys and values never change when later tokens arrive, so they are computed once. The cache removes recomputation, not reading: attention per step still grows with length. Chat APIs take the whole conversation each call for the same reason; prompt caching keeps the marks between calls.</p></div>
+      <div><h3>In the walk</h3><p>The painter learns to walk. It starts from a canvas of pure noise and at each step paints a slightly cleaner version. A pen finishes each word before the next. A brush touches every part of the picture a little on each pass, coarse to fine. Either way, every intermediate state is a draft of the product.</p></div>
+      <div><h3>In the mechanism</h3><p>Training adds noise to real images bit by bit, and a network learns to undo one bit. Generation starts from pure noise and runs the undoing for many steps. The 2015 paper set out the idea; the 2020 paper made it produce high-quality images.</p></div>
     </div>
+    <div class="open"><h3>Left open</h3><p>The painter paints a plausible picture. But which picture? <a href="#e2021">→ 2021</a></p></div>
   </section>
 
-  <!-- 10 -->
-  <section class="entry">
-    <p class="kicker">10 · lineage</p>
-    <h2>Who looks at what</h2>
+  <!-- 2021 -->
+  <section class="entry timeline" id="e2021" style="--th:var(--th-hand)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2021</span> · Handed to the walker</p>
+    <h2>Name the destination</h2>
+    <p class="paper"><i>Classifier-Free Diffusion Guidance</i> (2021)</p>
+    <figure><div class="fig"><svg data-fig="guide" viewBox="0 0 800 260" role="img" aria-label="Two painters glance at the same destination card before every stroke; the one who looks harder paints closer to it."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>The card is never painted. Both painters glance at it before every stroke; the right one looks harder.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>A text-to-image painter is handed a destination: a card saying what the picture should be. The card is never painted. The painter keeps it beside the canvas and glances at it before every stroke. Guidance sets how hard it looks: closer to the card, at the cost of variety.</p></div>
+      <div><h3>In the mechanism</h3><p>One network is trained both with and without the text prompt. At each denoising step the two predictions are compared, and the difference is amplified by the guidance scale. This replaced an earlier method that needed a separate image classifier.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Road or card, the walker only gets what it's handed at the start. Nobody has yet told it how its walks turned out. <a href="#e2022a">→ 2022</a></p></div>
+  </section>
+
+  <!-- 2022a -->
+  <section class="entry timeline" id="e2022a" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2022</span> · Where the trails come from</p>
+    <h2>Judge where walks end</h2>
+    <p class="paper"><i>Deep Reinforcement Learning from Human Preferences</i> (2017) → <i>Training language models to follow instructions with human feedback</i> (2022)</p>
+    <figure><div class="fig"><svg data-fig="rlhf" viewBox="0 0 800 260" role="img" aria-label="Several complete walks are judged at their ends; trails widen toward the good ones, held on a leash near the old trails."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>A judge marks where whole walks ended. Trails widen toward the good ones, but a leash keeps them near the old trails.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>A new source of trails. Instead of copying footprints, the walker takes whole walks, and a judge marks how each one ended. The trails are re-worn toward walks that ended well. A leash keeps them near the old trails, so the walker doesn't wander off the ground it knows.</p></div>
+      <div><h3>In the mechanism</h3><p>People compare pairs of outputs, and a reward model learns their preferences. The language model is then tuned with reinforcement learning to score higher, with a penalty (the KL term) for drifting from the pretrained model. The 2017 paper introduced learning a reward from human comparisons, for simulated robots and games; InstructGPT applied the method, leash included, to following instructions.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>The judge rewards how walks end, but the walker still can't look ahead before it steps, and a wrong step midway stays. <a href="#e2022b">→ 2022</a></p></div>
+  </section>
+
+  <!-- 2022b -->
+  <section class="entry timeline" id="e2022b" style="--th:var(--th-scout)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2022</span> · Looking ahead</p>
+    <h2>Scout before answering</h2>
+    <p class="paper"><i>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</i> (2022) → <i>Tree of Thoughts: Deliberate Problem Solving with Large Language Models</i> (2023) → <i>DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</i> (2025)</p>
+    <figure><div class="fig"><svg data-fig="scout" viewBox="0 0 800 260" role="img" aria-label="The walker writes working steps before the answer; afterwards the working steps are set aside as scouting and only the answer counts."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Working footprints first, then the answer. Once the answer is written, the working has done its job: it was scouting.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>The walker can't see ahead, so it walks ahead on scratch paper: footprints that work the problem out before the answer. Once the answer is written, those footprints stop being the product. Scouting means walks taken only to choose the real one. Tree of Thoughts scouts several branches and drops the bad ones. Reasoning models are trained, by judging only the final answer, to scout long and well.</p></div>
+      <div><h3>In the mechanism</h3><p>Prompting, and later training, a model to write intermediate reasoning before its answer improves accuracy on multi-step problems. Tree of Thoughts runs a search over partial reasoning. DeepSeek-R1 trained long reasoning with reinforcement learning, rewarding only checkable final answers.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>A walker can't take back a footprint: "backing up" means walking on down a road that says "that was wrong". And no amount of scouting finds a fact the walker never saw. <a href="#e2023a">→ 2023</a></p></div>
+  </section>
+
+  <!-- 2023a -->
+  <section class="entry timeline" id="e2023a" style="--th:var(--th-hand)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2023</span> · Handed to the walker</p>
+    <h2>Let other hands lay road</h2>
+    <p class="paper"><i>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</i> (2020) → <i>Toolformer: Language Models Can Teach Themselves to Use Tools</i> (2023)</p>
+    <figure><div class="fig"><svg data-fig="tools" viewBox="0 0 800 260" role="img" aria-label="The walker calls for a search; another hand lays a stretch of road with the result, and the walker carries on."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>The walker asks; another hand lays a stretch of road; the walker carries on from there.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Midway, the walker can call for help: a search, a calculator, a database. Another hand lays a stretch of road with the result, and the walker carries on from the new end. It still has no map. What it gets is more road, not a view of the park. A chat works the same way: each of your messages is road laid by another hand.</p></div>
+      <div><h3>In the mechanism</h3><p>Retrieval-augmented generation fetches relevant passages and adds them to the model's input. Toolformer trained a model to write API calls into its own text, with the results spliced in. Either way the model reads the whole road again, including the new stretch.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>As more of the world's writing is walked by walkers, the next walkers' trails get worn by their footprints. <a href="#e2023b">→ 2023</a></p></div>
+  </section>
+
+  <!-- 2023b -->
+  <section class="entry timeline" id="e2023b" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2023</span> · Where the trails come from</p>
+    <h2>Trails worn by walkers' own footprints</h2>
+    <p class="paper"><i>The Curse of Recursion: Training on Generated Data Makes Models Forget</i> (2023)</p>
+    <figure><div class="fig"><svg data-fig="collapse" viewBox="0 0 800 260" role="img" aria-label="Over generations trained on each other's footprints, the common trail widens and the rare trails fade away."></svg></div>
+      <figcaption><button class="replay">Replay</button><span>Each generation is trained on the last one's footprints. Common ways widen; rare ways fade until nobody walks them. Rates are illustrative.</span></figcaption></figure>
+    <div class="two">
+      <div><h3>In the walk</h3><p>Train each generation of walkers on footprints left by the one before, and the trails narrow. The common way gets wider; rare ways fade until nobody walks them. Self-play game players escape this, because a win or a loss keeps correcting their trails. Here nothing does.</p></div>
+      <div><h3>In the mechanism</h3><p>Training repeatedly on model-generated data loses the tails of the original distribution first, then drifts toward a narrow version of it. The authors call this model collapse. Keeping some original human data in the mix slows it down.</p></div>
+    </div>
+    <div class="open"><h3>Left open</h3><p>Still open: where will the next trails come from?</p></div>
+  </section>
+
+  <div class="part" id="story">
+    <p class="kicker">The story so far</p>
+    <h2>Two motions across the decades</h2>
+    <p><b>Where the trails come from</b> has moved steadily away from human hands. These overlap in time; the order is how much human-made road each one needs.</p>
     <div class="tw"><table>
-      <thead><tr><th>Paper</th><th>Before each step, the walker…</th><th>Cost per step</th></tr></thead>
+      <thead><tr><th>Trails worn by</th><th>In this guide</th></tr></thead>
       <tbody>
-        <tr><td><i>A Mathematical Theory of Communication</i> · 1948</td><td>glances back at the last few footprints.</td><td>fixed</td></tr>
-        <tr><td><i>A Neural Probabilistic Language Model</i> · 2003</td><td>glances back the same way, but reads footprints through learned word vectors, so similar words count alike.</td><td>fixed</td></tr>
-        <tr><td><i>Finding Structure in Time</i> · 1990<br><i>Long Short-Term Memory</i> · 1997</td><td>never looks back; consults a fixed-size pack that fades.</td><td>fixed</td></tr>
-        <tr><td><i>Sequence to Sequence Learning with Neural Networks</i> · 2014</td><td>translating: the whole source sentence is squeezed into one pack before the walk starts.</td><td>fixed</td></tr>
-        <tr><td><i>Neural Machine Translation by Jointly Learning to Align and Translate</i> · 2014</td><td>still carries a pack, but now a dog sniffs the source sentence's road before each step.</td><td>grows with the source</td></tr>
-        <tr class="hl"><td><i>Attention Is All You Need</i> · 2017</td><td>drops the pack. Dogs for everything: many noses, many rounds, back down the whole road, every step.</td><td>grows with the road</td></tr>
+        <tr><td>Nobody: paths cut by hand</td><td>1966 ELIZA</td></tr>
+        <tr><td>Counting what people wrote or said</td><td>1948 n-grams · 1989 speech recognition, on hand-cut paths</td></tr>
+        <tr><td>Routes people walked</td><td>2000 neural language model · 2014 translation · 2018–2020 pretraining</td></tr>
+        <tr><td>Where routes ended, judged by people</td><td>2017 → 2022 human feedback</td></tr>
+        <tr><td>The walker's own walks, with a judge</td><td>2025 reasoning trained on checkable answers</td></tr>
+        <tr><td>The walker's own walks, with no judge</td><td>2023 model collapse</td></tr>
       </tbody>
     </table></div>
-  </section>
+    <p><b>Follow the trail, or look ahead.</b> Learning and search are the two methods that keep scaling. In the park they are wearing trails and scouting, and the field keeps swinging between them. The bars are impressions, not measurements.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Walker</th><th>Trails vs. scouting</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Backgammon by self-play, 1992</td><td><div class="meter"><i class="mt" style="width:80%"></i><i class="ms" style="width:20%"></i></div></td><td>worn trails, shallow scouting</td></tr>
+        <tr><td>Chess engines, 1997</td><td><div class="meter"><i class="mt" style="width:15%"></i><i class="ms" style="width:85%"></i></div></td><td>hand-posted signs, deep scouting</td></tr>
+        <tr><td>Go by self-play, 2017</td><td><div class="meter"><i class="mt" style="width:50%"></i><i class="ms" style="width:50%"></i></div></td><td>both</td></tr>
+        <tr><td>Language models, 2018–2022</td><td><div class="meter"><i class="mt" style="width:100%"></i></div></td><td>trails only</td></tr>
+        <tr><td>Reasoning models, 2024 on</td><td><div class="meter"><i class="mt" style="width:60%"></i><i class="ms" style="width:40%"></i></div></td><td>scouting returns, written in tokens</td></tr>
+      </tbody>
+    </table></div>
+    <div class="legend"><span><span class="dot" style="background:var(--th-trails)"></span>following worn trails</span><span><span class="dot" style="background:var(--th-scout)"></span>scouting ahead</span></div>
+  </div>
 
   <footer>
-    Background notes: <a href="https://claude.ai/artifact/6C5vV6FxgUCXuRJRYnTDG2">the Trails canvas</a> (archived). Sentence from Thoreau, <i>Walking</i> (1862).
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). Background notes: <a href="https://claude.ai/artifact/6C5vV6FxgUCXuRJRYnTDG2">the Trails canvas</a> (archived).
   </footer>
 </main>
 
@@ -253,8 +515,10 @@ const f1=n=>n.toFixed(1);
 function roadD(a,b,F=R){if(b<=a+1e-3)return 'M0 0';let d='';const n=Math.max(2,Math.ceil((b-a)/.08));for(let k=0;k<=n;k++){const p=F(a+(b-a)*k/n);d+=(k?'L':'M')+f1(p.x)+' '+f1(p.y)}return d}
 function place(e,x,y,flip=1){e.setAttribute('transform',`translate(${f1(x)} ${f1(y)}) scale(${flip} 1)`)}
 function tufts(g,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;for(let i=0;i<46;i++){const x=r()*800,y=r()*260;if(Math.abs(y-Y0)<26&&x<720)continue;el('path',{d:`M${f1(x-3)} ${f1(y)}l2 -5M${f1(x)} ${f1(y)}v-6M${f1(x+3)} ${f1(y)}l-2 -5`,class:'tuft'},g)}}
-function gate(g){const p=R(-1);el('path',{d:`M${p.x-11} ${p.y+14}V${p.y-18}M${p.x+11} ${p.y+14}V${p.y-18}M${p.x-14} ${p.y-13}H${p.x+14}M${p.x-14} ${p.y-4}H${p.x+14}`,class:'gate'},g)}
-function posts(g,words=W){return words.map((w,i)=>{const p=R(i);const gg=el('g',{},g);el('ellipse',{cx:p.x,cy:p.y,rx:4.5,ry:6.5,class:'fp'},gg);const t=el('text',{x:p.x,y:p.y+38,class:'word','text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
+function gate(g){const one=(x,y,o)=>{const e=el('path',{d:`M${x-11} ${y+14}V${y-18}M${x+11} ${y+14}V${y-18}M${x-14} ${y-13}H${x+14}M${x-14} ${y-4}H${x+14}`,class:'gate'},g);e.style.opacity=o};
+  const p=R(-1);one(p.x,p.y,1);[-58,58].forEach(dy=>{const y=p.y+dy;one(p.x,y,.45);el('path',{d:`M${p.x+14} ${y}q28 ${f1(-dy*.06)} 60 ${f1(-dy*.22)}`,class:'worn','stroke-width':5,'stroke-opacity':.4},g)})}
+function opts_pmax(o){return Math.max(...o.map(x=>x[1]))}
+function posts(g,words=W,F=R,cls=[]){return words.map((w,i)=>{const p=F(i);const c=cls[i]||'';const gg=el('g',{},g);el('ellipse',{cx:p.x,cy:p.y,rx:4.5,ry:6.5,class:'fp '+c},gg);const t=el('text',{x:p.x,y:p.y+38,class:'word '+c,'text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
 const rev=(s,i)=>clamp((s-i)/.12+1);
 function walker(g){const w=el('g',{},g);
   el('path',{d:'M-5 0L0 -15L5 0',class:'limb'},w);
@@ -287,13 +551,295 @@ class Trip{
 function puff(c,x,y,e,t,maxR,base,life=.8){if(!e){c.style.opacity=0;return}const f=(t-e.t)/life;if(f<0||f>=1){c.style.opacity=0;return}c.setAttribute('cx',f1(x));c.setAttribute('cy',f1(y));c.setAttribute('r',f1(4+maxR*ease(f)));c.style.opacity=base*(1-f)}
 function walkS(t,per,s0,s1,move=.62){const n=Math.max(0,t)/per,i=Math.floor(n);return Math.min(s0+i+ease(clamp((n-i)/move)),s1)}
 function fan(g,o,to,opts,L=110){const base=Math.atan2(to.y-o.y,to.x-o.x),angs=[base,base-.55,base+.55];
-  const items=opts.map(([w,p],i)=>{const a=angs[i],e={x:o.x+L*Math.cos(a),y:o.y+L*Math.sin(a)};const gg=el('g',{},g);
-    const line=el('path',{d:`M${f1(o.x)} ${f1(o.y)}L${f1(e.x)} ${f1(e.y)}`,class:'fan','stroke-width':f1(3+26*p),'stroke-dasharray':`${L} ${L+60}`,'stroke-dashoffset':L},gg);
+  const pm=opts_pmax(opts);const items=opts.map(([w,p],i)=>{const a=angs[i],e={x:o.x+L*Math.cos(a),y:o.y+L*Math.sin(a)};const gg=el('g',{},g);
+    const line=el('path',{d:`M${f1(o.x)} ${f1(o.y)}L${f1(e.x)} ${f1(e.y)}`,class:'fan','stroke-width':f1(3+14*p),'stroke-opacity':f1(.2+.8*p/pm),'stroke-dasharray':`${L} ${L+60}`,'stroke-dashoffset':L},gg);
     const lab=el('text',{x:f1(e.x+14*Math.cos(a)+4),y:f1(e.y+14*Math.sin(a)+6),class:'flabel'},gg);lab.append(w);
     const pr=el('tspan',{class:'prob',dx:5},lab);pr.textContent=p.toFixed(2);return{gg,line,lab}});
   return{set(grow,label,choose,gone){items.forEach((it,i)=>{it.line.setAttribute('stroke-dashoffset',f1(L*(1-grow)));it.line.style.visibility=grow>0?'visible':'hidden';it.lab.style.opacity=label;it.gg.style.opacity=(i===0?1:1-.8*choose)*(1-gone)})}}}
 function layers(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const road=el('path',{class:'road',d:'M0 0'},bg);gate(bg);return{bg,road,mid:el('g',{},svg),top:el('g',{},svg)}}
 function txt(g,x,y,cls,anchor='start'){return el('text',{x,y,class:cls,'text-anchor':anchor},g)}
+
+
+/* ---- painting helpers ---- */
+const lerpC=(a,b,u)=>a.map((x,i)=>x+(b[i]-x)*clamp(u));
+function scene(u,v){let c=lerpC([150,190,228],[236,214,178],v/.65);
+  if(Math.hypot(u-.78,(v-.24)*1.6)<.1)c=[246,200,90];
+  const hill=.66+.07*Math.sin(u*3.4+.4);if(v>hill)c=lerpC([110,158,78],[70,112,52],(v-hill)/(1-hill));
+  if(Math.abs(u-.3)<.025&&v>.42&&v<hill+.03)c=[112,82,52];
+  if(Math.hypot(u-.3,(v-.36)*1.25)<.12)c=[58,112,62];
+  return c}
+function noiseArr(n,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;return Array.from({length:n},()=>[r()*255,r()*255,r()*255])}
+function draft(nx,ny,block,amt,noise,tf=scene){const out=[];for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){
+  const bi=Math.min(Math.floor(i/block)*block+block/2,nx-.5),bj=Math.min(Math.floor(j/block)*block+block/2,ny-.5);
+  out.push(lerpC(tf(bi/nx,bj/ny),noise[j*nx+i],amt))}return out}
+function canvasGrid(g,x,y,w,h,nx,ny){const cw=w/nx,ch=h/ny,cells=[];
+  for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const c=el('rect',{x:f1(x+i*cw),y:f1(y+j*ch),width:f1(cw+.5),height:f1(ch+.5)},g);c.style.fill='var(--panel)';cells.push(c)}
+  el('rect',{x,y,width:w,height:h,class:'frame'},g);
+  return{set(cols){cells.forEach((c,k)=>{if(!cols){c.style.fill='var(--panel)';return}const q=cols[k];c.style.fill=`rgb(${q[0]|0},${q[1]|0},${q[2]|0})`})}}}
+function bez(P,C,E,u){return{x:(1-u)**2*P.x+2*(1-u)*u*C.x+u*u*E.x,y:(1-u)**2*P.y+2*(1-u)*u*C.y+u*u*E.y}}
+function stampT(g,x,y,ok,label){const t=txt(g,x,y,'stamp '+(ok?'good':'bad'));t.textContent=label;t.style.opacity=0;return t}
+
+function headingSetup(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const S={x:430,y:140};
+  const roads=[{words:['in','wildness','is','the'],R:s=>({x:S.x-(3-s)*96,y:S.y-(3-s)*20}),th:-38},
+               {words:['I','went','to','the'],R:s=>({x:S.x-(3-s)*96,y:S.y+(3-s)*24}),th:38}];
+  const C=[['preservation',-56],['world',-27],['end',0],['woods',27],['lake',56]];
+  const br=C.map(([w,a])=>{const r=a*Math.PI/180,e={x:S.x+150*Math.cos(r),y:S.y+92*Math.sin(r)};
+    const line=el('path',{d:`M${S.x} ${S.y}L${f1(e.x)} ${f1(e.y)}`,class:'fan'},bg);line.style.opacity=0;
+    const lab=txt(bg,f1(S.x+168*Math.cos(r)),f1(S.y+103*Math.sin(r)+6),'flabel');lab.append(w);const pr=el('tspan',{class:'prob',dx:5},lab);return{line,lab,pr,r}});
+  roads.forEach(rd=>{rd.path=el('path',{class:'road',d:'M0 0'},bg);rd.p=posts(bg,rd.words,rd.R)});
+  const arrow=el('path',{class:'heading',d:'M0 0'},bg);return{bg,S,roads,C,br,arrow}}
+function setBlaze(H,th,vis){const q=H.br.map(b=>Math.exp(3.2*Math.cos(b.r-th*Math.PI/180))),z=q.reduce((a,b)=>a+b),p=q.map(x=>x/z),pm=Math.max(...p);
+  H.br.forEach((b,i)=>{b.line.setAttribute('stroke-width',f1(2+18*p[i]));b.line.setAttribute('stroke-opacity',f1(.12+.88*p[i]/pm));b.line.style.opacity=vis;
+    b.lab.style.opacity=.35+.65*vis*(p[i]/pm);b.pr.textContent=vis>.01?p[i].toFixed(2):''});
+  const r=th*Math.PI/180,S=H.S,L=46,e={x:S.x+L*Math.cos(r),y:S.y+L*Math.sin(r)};
+  H.arrow.setAttribute('d',`M${S.x} ${S.y}L${f1(e.x)} ${f1(e.y)}M${f1(e.x-9*Math.cos(r-.5))} ${f1(e.y-9*Math.sin(r-.5))}L${f1(e.x)} ${f1(e.y)}L${f1(e.x-9*Math.cos(r+.5))} ${f1(e.y-9*Math.sin(r+.5))}`);H.arrow.style.opacity=vis}
+
+const NEWFIGS={
+/* 1950 · judge */
+judge:{dur:9,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,101);
+    const RA=s=>({x:120+s*92,y:74}),RB=s=>({x:120+s*92,y:176});this.RA=RA;this.RB=RB;
+    el('path',{class:'road',d:roadD(-.7,4.3,RA)},bg);el('path',{class:'road',d:roadD(-.7,4.3,RB)},bg);
+    this.pa=posts(bg,['Walking','was','written','by','Thoreau'],RA);this.pb=posts(bg,['Walking','was','written','by','Emerson'],RB);
+    [...this.pa,...this.pb].forEach(p=>p.style.opacity=1);
+    const ea=RA(4.75),eb=RB(4.75);
+    this.endA=el('g',{},svg);el('path',{d:`M${ea.x-12} ${ea.y+9}v-15l12 -11l12 11v15z`,class:'house'},this.endA);
+    const ta=txt(this.endA,ea.x+22,ea.y+6,'stamp good');ta.textContent='leads somewhere real';
+    this.endB=el('g',{},svg);el('path',{d:`M${eb.x-14} ${eb.y}h26`,class:'leash'},this.endB);
+    const tb=txt(this.endB,eb.x+22,eb.y+6,'stamp bad');tb.textContent='leads nowhere';
+    this.endA.style.opacity=0;this.endB.style.opacity=0;
+    this.sA=stampT(svg,26,RA(0).y-30,true,'passes as human ✓');this.sB=stampT(svg,26,RB(0).y-30,true,'passes as human ✓');
+    this.mag=el('g',{},svg);el('circle',{cx:0,cy:0,r:19,class:'ring'},this.mag);el('path',{d:'M13 13l12 12',class:'ring','stroke-width':4},this.mag);
+    this.hud=txt(svg,780,30,'hud','end');this.hud.textContent='the judge sees only the footprints'},
+  draw(t){let p;
+    if(t<3.4){p=this.RA(clamp((t-.4)/2.8)*4)}else{p=this.RB(clamp((t-3.8)/2.8)*4)}
+    place(this.mag,p.x,p.y-2);this.mag.style.opacity=1-seg(t,6.8,7.2);
+    this.sA.style.opacity=seg(t,3.1,3.4);this.sB.style.opacity=seg(t,6.5,6.8);
+    this.endA.style.opacity=seg(t,7.2,7.8);this.endB.style.opacity=seg(t,7.6,8.2);
+    this.hud.textContent=t<7.2?'the judge sees only the footprints':'where the walks ended, which the judge never checks'}},
+
+/* 2000 · ground */
+ground:{dur:6.2,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,107);
+    el('rect',{x:20,y:20,width:226,height:220,rx:12,class:'panel'},bg);
+    const lab=txt(bg,34,42,'hud');lab.textContent='the ground: word vectors';
+    const V={dog:[118,118],cat:[146,140],horse:[96,150],car:[196,74],truck:[214,98],happy:[70,206],sad:[110,214]};this.V=V;
+    this.vd={};for(const k in V){const [x,y]=V[k];el('circle',{cx:x,cy:y,r:4.5,class:'vdot'},bg);const t=txt(bg,x+8,y+5,'vlab');t.textContent=k}
+    this.ringD=el('circle',{cx:V.dog[0],cy:V.dog[1],r:12,class:'ring'},bg);this.ringC=el('circle',{cx:V.cat[0],cy:V.cat[1],r:12,class:'ring'},bg);
+    this.link=el('path',{d:`M${V.dog[0]} ${V.dog[1]}L${V.cat[0]} ${V.cat[1]}`,class:'glance'},bg);
+    const RT=s=>({x:310+s*80,y:68}),RB=s=>({x:310+s*80,y:192});
+    el('path',{class:'road',d:roadD(-.5,2,RT)},bg);this.bRoad=el('path',{class:'road',d:roadD(-.5,2,RB)},bg);
+    this.pt=posts(bg,['the','dog','was'],RT);this.pb=posts(bg,['the','cat','was'],RB);this.pt.forEach(p=>p.style.opacity=1);
+    const opts=[['asleep',.45],['hungry',.35],['lost',.20]];
+    this.ft=fan(bg,RT(2),RT(3),opts,78);this.fb=fan(bg,RB(2),RB(3),opts,78);
+    this.hT=txt(bg,RT(-.5).x,RT(0).y-26,'hand');this.hT.textContent='worn in by many walkers';
+    this.hB=txt(bg,RB(-.5).x,RB(0).y-26,'hand');
+    this.q=txt(bg,RB(2).x+22,RB(2).y+7,'note');this.q.textContent='?'},
+  draw(t){const bOn=seg(t,1.2,1.8);this.bRoad.style.opacity=bOn;this.pb.forEach(p=>p.style.opacity=bOn);
+    this.ft.set(ease(seg(t,.2,1)),seg(t,.8,1.2),0,0);
+    const hl=seg(t,2.1,2.6);this.ringD.style.opacity=hl;this.ringC.style.opacity=seg(t,2.5,3);this.link.style.opacity=seg(t,2.8,3.2);
+    const fb=ease(seg(t,3.4,4.6));this.fb.set(fb,seg(t,4.4,4.9),0,0);
+    this.q.style.opacity=bOn*(1-seg(t,3.3,3.6));
+    this.hB.textContent=t<3.4?'no walker has been here':'carried over: similar ground';this.hB.style.opacity=bOn}},
+
+/* 2013 · one stroke */
+stroke:{dur:3.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,113);
+    this.road=el('path',{class:'road',d:'M0 0'},bg);
+    const seed=canvasGrid(bg,92,150,44,44,4,4);seed.set(noiseArr(16,7));const sl=txt(bg,114,214,'hand','middle');sl.textContent='random seed';
+    const cp=el('clipPath',{id:'wipeclip'},svg);this.clip=el('rect',{x:380,y:30,width:0,height:180},cp);
+    el('rect',{x:380,y:30,width:300,height:180,class:'panel'},bg);
+    const cg=el('g',{'clip-path':'url(#wipeclip)'},bg);const cv=canvasGrid(cg,380,30,300,180,30,18);cv.set(draft(30,18,1,0,noiseArr(540,3)));
+    el('rect',{x:380,y:30,width:300,height:180,class:'frame'},bg);
+    this.w=walker(svg);this.hud=txt(svg,24,30,'hud');this.hud.textContent='a painter: the product is the canvas, not the footprints';
+    this.lab=txt(svg,530,240,'hand','middle');this.lab.textContent='one stroke, no drafts'},
+  draw(t){const u=ease(seg(t,.8,1.7));const x=lerp(160,350,u),y=220-Math.sin(u*Math.PI)*70;place(this.w,x,y);
+    this.road.setAttribute('d',`M150 220L${f1(lerp(150,350,u))} 220`);
+    this.clip.setAttribute('width',f1(300*ease(seg(t,1.5,2.1))));this.lab.style.opacity=seg(t,2.2,2.7)}},
+
+/* 2014 · align */
+align:{hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,127);
+    const RS=s=>({x:330+s*130,y:72}),RT=s=>({x:330+s*130,y:186});this.RS=RS;this.RT=RT;
+    el('path',{class:'givenroad',d:roadD(-.6,2.7,RS)},bg);this.road=el('path',{class:'road',d:'M0 0'},bg);
+    const a=txt(bg,30,77,'hud');a.textContent='source road (French)';const b=txt(bg,30,191,'hud');b.textContent='the walk (English)';
+    this.Wt=[[.80,.10,.10],[.06,.14,.80],[.10,.80,.10]];
+    this.lines=this.Wt.map(()=>[0,1,2].map(()=>el('path',{class:'align',d:'M0 0'},bg)));
+    this.ps=posts(bg,['le','monde','sauvage'],RS,['given','given','given']);this.ps.forEach(p=>p.style.opacity=1);
+    this.pt=posts(bg,['the','wild','world'],RT);
+    this.pf=[0,1,2].map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[1]}`},bg));
+    this.w=walker(svg);this.d=dog(svg,DOGC[1]);
+    const tr=new Trip(.6,2.6);this.steps=[];
+    for(let k=0;k<3;k++){tr.tag=k;const r0=tr.t;tr.go(-.4,330,true).go(2.6,420);const a2=tr.t;this.steps.push({k,r0,a:a2,b:a2+.7});tr.wait(1.05)}
+    this.tr=tr;this.dur=tr.t+.2},
+  draw(t){let s=-1;for(const st of this.steps){if(t>=st.b){s=st.k;continue}if(t>st.a)s=st.k-1+ease(seg(t,st.a,st.b));break}
+    this.road.setAttribute('d',roadD(-1,s,this.RT));this.pt.forEach((p,i)=>p.style.opacity=rev(s,i));
+    const q=this.RT(s);place(this.w,q.x,q.y);const d=this.tr.at(t),dp=this.RS(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);
+    this.pf.forEach((c,i)=>{const e=this.tr.last(i,t);const w=e?this.Wt[e.tag][i]:0;const p=this.RS(i);puff(c,p.x,p.y-2,e,t,6+34*w,.25+1*w,1)});
+    this.lines.forEach((row,k)=>row.forEach((ln,i)=>{const on=seg(t,this.steps[k].b-.1,this.steps[k].b+.4);const A=this.RT(k),B=this.RS(i);const w=this.Wt[k][i];
+      ln.setAttribute('d',`M${A.x} ${A.y-12}L${B.x} ${B.y+12}`);ln.setAttribute('stroke-width',f1(.5+7*w));ln.style.opacity=on*(.15+.75*w)}))}},
+
+/* 2018 · prompt */
+prompt:{dur:6.8,hold:2.6,init(svg){const L=layers(svg,131);this.L=L;
+    this.given=el('path',{class:'givenroad',d:'M0 0'},L.bg);
+    this.fan=fan(L.mid,R(4),R(5),[['chat',.70],['chien',.18],['cheval',.12]],100);
+    this.p=posts(L.mid,['cheese','fromage','dog','chien','cat','chat'],R,['given','given','given','given','given','']);
+    const x0=R(-.6).x,x1=R(4.3).x;this.br=el('path',{d:`M${x0} 70v-8H${x1}v8`,class:'leash'},L.mid);
+    this.hl=txt(L.mid,(x0+x1)/2,52,'hand','middle');this.hl.textContent='road laid by the user: two examples and a cue';
+    this.w=walker(L.top)},
+  draw(t){const g=t<.3?-1:Math.min(4.3,-1+(t-.3)/.45);this.given.setAttribute('d',roadD(-1,g));
+    const s=4+ease(seg(t,5.3,6.1));this.L.road.setAttribute('d',s>4.01?roadD(4,s):'M0 0');
+    this.p.forEach((p,i)=>{if(i<5){const u=seg(t,.3+i*.45,.6+i*.45);p.style.opacity=u;p.setAttribute('transform',`translate(0 ${f1(-12*(1-u))})`)}else p.style.opacity=rev(s,i)});
+    this.br.style.opacity=this.hl.style.opacity=seg(t,1.8,2.4);
+    this.fan.set(ease(seg(t,3.1,4)),seg(t,3.9,4.4),seg(t,4.8,5.1),seg(t,6.1,6.6));
+    const q=R(s);place(this.w,q.x,q.y);this.w.style.opacity=seg(t,2.5,2.9)}},
+
+/* 2020 · diffusion */
+diffusion:{dur:6.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,137);
+    const RD=s=>({x:130+s*118,y:206});this.RD=RD;this.road=el('path',{class:'road',d:'M0 0'},bg);
+    this.p=posts(bg,['pure noise','','','','','done'],RD);
+    const nz=noiseArr(160,11),blocks=[16,8,4,2,1,1],amt=[1,.7,.45,.25,.1,0];
+    this.th=blocks.map((b,k)=>{const c=RD(k);const g=el('g',{},bg);const cv=canvasGrid(g,c.x-48,52,96,60,16,10);cv.set(draft(16,10,b,amt[k],nz));
+      el('path',{d:`M${c.x} 116V${c.y-30}`,class:'leash'},g);g.style.opacity=0;return g});
+    this.w=walker(svg);this.hud=txt(svg,24,30,'hud');this.hud.textContent='every footprint leaves a draft'},
+  draw(t){const s=walkS(t,1.05,-1,5);this.road.setAttribute('d',roadD(-1,s,this.RD));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
+    this.th.forEach((g,k)=>{const u=rev(s,k);g.style.opacity=u});const q=this.RD(s);place(this.w,q.x,q.y)}},
+
+/* 2021 · guidance */
+guide:{dur:6.6,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,139);
+    el('rect',{x:290,y:12,width:220,height:40,rx:8,class:'card'},bg);const c=txt(bg,400,39,'note','middle');c.textContent='a tree on a hill, sunny';c.style.fontSize='23px';
+    const nz=noiseArr(160,5);const mute=(u,v)=>lerpC(scene(u,v),[150,148,140],.5);
+    const boost=(u,v)=>{const s=scene(u,v),m=(s[0]+s[1]+s[2])/3;return s.map(x=>clamp(m+(x-m)*1.45,0,255))};
+    const blocks=[16,8,4,2,1,1],amt=[1,.7,.45,.25,.1,0];
+    this.dL=blocks.map((b,k)=>draft(16,10,b,amt[k],nz,mute));this.dR=blocks.map((b,k)=>draft(16,10,b,amt[k],nz,boost));
+    this.cL=canvasGrid(bg,70,78,176,110,16,10);this.cR=canvasGrid(bg,554,78,176,110,16,10);
+    const a=txt(bg,158,214,'hand','middle');a.textContent='glances lightly';const b=txt(bg,642,214,'hand','middle');b.textContent='glances hard';
+    this.gL=el('path',{d:'M282 196L360 54',class:'glance'},bg);this.gR=el('path',{d:'M518 196L440 54',class:'glance','stroke-width':3},bg);
+    this.wL=walker(svg);place(this.wL,282,236);this.wR=walker(svg);place(this.wR,518,236,-1);this.k=-1},
+  draw(t){const k=Math.min(5,Math.max(0,Math.floor((t-.4)/1.05)));if(k!==this.k){this.k=k;this.cL.set(this.dL[k]);this.cR.set(this.dR[k])}
+    const ph=((t-.4)/1.05)%1;const g=t>.4&&k<5?1-clamp(ph/.5):0;this.gL.style.opacity=.6*g;this.gR.style.opacity=g}},
+
+/* 2022 · human feedback */
+rlhf:{dur:7,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,149);
+    const J={x:190,y:140},C={x:350,y:140};this.J=J;
+    el('path',{d:`M20 ${J.y}H${J.x}`,class:'givenroad'},bg);const rq=txt(bg,30,J.y-22,'hand');rq.textContent='a request';
+    this.E=[42,104,176,238].map(y=>({x:640,y}));this.w0=[7,10,8,5];this.w1=[15,4,12,2];this.ok=[true,false,true,false];
+    this.E.forEach((E,i)=>el('path',{d:roadD(0,1,u=>bez(J,C,E,u)),class:'oldtrail','stroke-width':this.w0[i]},bg));
+    this.tr=this.E.map((E,i)=>el('path',{d:roadD(0,1,u=>bez(J,C,E,u)),class:'worn','stroke-width':this.w0[i]},bg));
+    this.ink=this.E.map(E=>el('path',{d:roadD(0,1,u=>bez(J,C,E,u)),class:'inkline','stroke-dasharray':'520 600','stroke-dashoffset':520},bg));
+    this.st=this.E.map((E,i)=>stampT(bg,E.x+14,E.y+7,this.ok[i],this.ok[i]?'✓ ended well':'✗ ended badly'));
+    el('path',{d:`M${J.x-60} ${J.y+4}v-22`,class:'gate'},bg);this.leash=el('path',{d:`M${J.x-60} ${J.y-14}Q${J.x-30} ${J.y-2} ${J.x+6} ${J.y-22}`,class:'leash'},bg);
+    this.ll=txt(bg,24,236,'hand');this.ll.textContent='the leash: stay near the old trails';
+    this.w=walker(svg);place(this.w,J.x,J.y);this.hud=txt(svg,24,30,'hud')},
+  draw(t){this.ink.forEach((p,i)=>{p.setAttribute('stroke-dashoffset',f1(520*(1-ease(seg(t,.4+i*.5,1.2+i*.5)))));p.style.opacity=.75*(1-seg(t,5.6,6.2))});
+    this.st.forEach((s,i)=>s.style.opacity=seg(t,3+i*.25,3.3+i*.25));
+    const m=ease(seg(t,4.2,5.6));this.tr.forEach((p,i)=>{const w=lerp(this.w0[i],this.w1[i],m);p.setAttribute('stroke-width',f1(w));p.setAttribute('stroke-opacity',f1(.15+.85*w/15))});
+    const l=seg(t,5.8,6.4);this.leash.style.opacity=l;this.ll.style.opacity=l;
+    this.hud.textContent=t<2.9?'the walker takes whole walks':t<4.2?'a judge marks where each one ended':t<5.8?'the trails are re-worn toward good endings':'but held near the old trails'}},
+
+/* 2022 · scouting */
+scout:{dur:7.4,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,151);
+    const RK=s=>({x:90+s*152,y:146+8*Math.sin(s*1.2)});this.RK=RK;
+    el('path',{class:'givenroad',d:roadD(-.5,0,RK)},bg);this.road=el('path',{class:'road',d:'M0 0'},bg);this.sr=el('path',{class:'scoutroad',d:'M0 0'},bg);
+    this.p=posts(bg,['17 × 24 =','17 × 20 = 340','17 × 4 = 68','340 + 68 =','408'],RK,['given','scout','scout','scout','strong']);this.p[0].style.opacity=1;
+    const x0=RK(.6).x,x1=RK(3.4).x;this.br=el('path',{d:`M${x0} 88v-8H${x1}v8`,class:'leash'},bg);
+    this.bl=txt(bg,(x0+x1)/2,70,'hand','middle');this.bl.textContent='scouting: used to reach the answer, then set aside';
+    this.al=txt(bg,RK(4).x,RK(4).y-56,'hand','middle');this.al.textContent='the product';
+    this.w=walker(svg)},
+  draw(t){const s=walkS(t-.6,1.05,0,4);this.road.setAttribute('d',roadD(0,s,this.RK));this.sr.setAttribute('d',s>.25?roadD(.2,Math.min(s,3),this.RK):'M0 0');
+    const fade=seg(t,5.6,6.4);this.p.forEach((p,i)=>{if(!i)return;p.style.opacity=rev(s,i)*(i<4?1-.65*fade:1)});this.sr.style.opacity=1-.6*fade;
+    this.br.style.opacity=this.bl.style.opacity=fade;this.al.style.opacity=seg(t,6.2,6.8);const q=this.RK(s);place(this.w,q.x,q.y)}},
+
+/* 2023 · tools */
+tools:{dur:8.2,hold:2.6,init(svg){const L=layers(svg,157);this.L=L;
+    this.given=el('path',{class:'givenroad',d:roadD(3.45,4.55)},L.bg);this.road2=el('path',{class:'road',d:'M0 0'},L.bg);
+    this.p=posts(L.mid,['Walking','appeared','in','[search]','→ 1862','1862'],R,['','','','','given','strong']);
+    this.hl=txt(L.mid,R(4).x,R(4).y-58,'hand','middle');this.hl.textContent='laid by a search tool';
+    this.wait=txt(L.mid,R(3).x,R(3).y-58,'hand','middle');this.wait.textContent='waiting…';
+    this.w=walker(L.top)},
+  draw(t){let s;if(t<4.4)s=walkS(t,1.1,-1,3);else if(t<5.9)s=3;else if(t<6.6)s=3+ease(seg(t,5.9,6.6));else s=4+ease(seg(t,6.9,7.6));
+    this.L.road.setAttribute('d',roadD(-1,Math.min(s,3.45)));this.road2.setAttribute('d',s>4.5?roadD(4.55,s):'M0 0');
+    const g=seg(t,5,5.6);this.given.style.opacity=g;
+    this.p.forEach((p,i)=>{if(i===4){p.style.opacity=g;p.setAttribute('transform',`translate(0 ${f1(-12*(1-g))})`)}else p.style.opacity=rev(s,i)});
+    this.hl.style.opacity=g;this.wait.style.opacity=seg(t,4.4,4.6)*(1-seg(t,5,5.3));const q=R(s);place(this.w,q.x,q.y)}},
+
+/* heading & merge share a compass */
+heading:{dur:15.4,hold:1.2,init(svg){this.H=headingSetup(svg,171);this.w=walker(svg);this.d=dog(svg,DOGC[0]);
+    this.trs=this.H.roads.map((rd,k)=>{const tr=new Trip(k*7.7+3.3,2.78);tr.go(-.3,420,true).go(2.78,420);return tr});
+    this.hud=txt(svg,24,30,'hudb');this.hud2=txt(svg,24,48,'hud');this.hud2.textContent='same spot, different road: a different heading, a different blaze'},
+  draw(t){const k=t<7.7?0:1,u=t-k*7.7,H=this.H,rd=H.roads[k],o=H.roads[1-k];
+    const s=walkS(u,.8,-1,3),fade=k?1:1-seg(u,7.1,7.6);
+    rd.path.setAttribute('d',roadD(-1,s,rd.R));rd.path.style.opacity=fade;rd.p.forEach((p,i)=>p.style.opacity=rev(s,i)*fade);
+    o.path.style.opacity=0;o.p.forEach(p=>p.style.opacity=0);
+    const q=rd.R(s);place(this.w,q.x,q.y);this.w.style.opacity=fade;
+    const tr=this.trs[k],d=tr.at(t),dp=rd.R(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);this.d.style.opacity=(t>=tr.kf[0].t&&t<=tr.t+.05)?1:0;
+    const base=Math.atan2(rd.R(3).y-rd.R(2).y,rd.R(3).x-rd.R(2).x)*180/Math.PI;
+    setBlaze(H,lerp(base,rd.th,ease(seg(u,4.7,5.4))),seg(u,4.7,5.3)*fade);
+    this.hud.textContent=k?'Road 2: “I went to the”':'Road 1: “in wildness is the”'}},
+
+merge:{dur:7.6,hold:2.6,init(svg){this.H=headingSetup(svg,173);this.wa=walker(svg);this.wb=walker(svg);this.hud=txt(svg,24,30,'hudb');this.hud2=txt(svg,24,48,'hud');this.hud.textContent='Shannon’s walker sees only the last word'},
+  draw(t){const H=this.H,[A,B]=H.roads;const sa=walkS(t,.75,-1,3),sb=walkS(t-3.6,.75,-1,3);
+    A.path.setAttribute('d',roadD(-1,sa,A.R));A.p.forEach((p,i)=>p.style.opacity=rev(sa,i));
+    B.path.setAttribute('d',t>3.6?roadD(-1,sb,B.R):'M0 0');B.p.forEach((p,i)=>p.style.opacity=t>3.6?rev(sb,i):0);
+    let q=A.R(sa);place(this.wa,q.x,q.y);this.wa.style.opacity=1-seg(t,6.3,6.6);q=B.R(sb);place(this.wb,q.x,q.y);this.wb.style.opacity=seg(t,3.6,3.9);
+    setBlaze(H,0,Math.max(seg(t,3.05,3.4)*(1-seg(t,3.6,3.9)),seg(t,6.6,7)));
+    this.hud2.textContent=t<6.6?(t<3.6?'road 1 reaches “the”':'road 2 reaches “the”'):'both roads, one junction: same heading, same blaze'}},
+
+/* 1966 · ELIZA */
+eliza:{dur:8.4,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,181);const Y=150,J={x:300,y:Y};
+    const cut=(d,w)=>{el('path',{d,class:'cutedge','stroke-width':w+4},bg);el('path',{d,class:'cutfill','stroke-width':w},bg)};
+    cut(`M${J.x} ${Y}L${J.x+60} ${Y-66}H560`,12);cut(`M${J.x} ${Y}L${J.x+60} ${Y+66}H560`,12);cut(`M${J.x-6} ${Y}H770`,20);
+    const RU=s=>({x:70+s*80,y:Y});el('path',{class:'givenroad',d:roadD(-.6,2.6,RU)},bg);
+    this.pu=posts(bg,['I','am','sad'],RU,['given','given','given']);
+    this.hu=txt(bg,150,Y-30,'hand','middle');this.hu.textContent='typed by the user';
+    const s1=txt(bg,372,Y-86,'sign');s1.textContent='“… my mother …” → Tell me about your family.';
+    const s2=txt(bg,372,Y+94,'sign');s2.textContent='anything else → Please go on.';
+    this.rule=txt(bg,24,34,'hudb');this.rule.textContent='rule matched:  I am ___  →  How long have you been ___?';
+    this.ring=el('circle',{cx:J.x,cy:Y,r:16,class:'ring'},bg);
+    const RM=s=>({x:350+s*76,y:Y});this.RM=RM;this.pm=posts(bg,['How','long','have','you','been','sad?'],RM);
+    this.r1=el('circle',{cx:RU(2).x,cy:Y,r:13,class:'ring'},bg);this.r2=el('circle',{cx:RM(5).x,cy:Y,r:13,class:'ring'},bg);
+    this.w=walker(svg)},
+  draw(t){this.pu.forEach((p,i)=>p.style.opacity=seg(t,.2+i*.4,.5+i*.4));this.hu.style.opacity=seg(t,1,1.4);
+    const r=seg(t,1.7,2.1);this.rule.style.opacity=r;this.ring.style.opacity=r;
+    const s=walkS(t-2.3,.8,-1,5);this.pm.forEach((p,i)=>p.style.opacity=rev(s,i));const q=this.RM(s);place(this.w,q.x,q.y);this.w.style.opacity=seg(t,2,2.3);
+    const c=seg(t,6.5,6.9);this.r1.style.opacity=c;this.r2.style.opacity=c}},
+
+/* 1989 · HMM garden */
+hmm:{dur:8.6,hold:2.6,init(svg){const bg=el('g',{},svg);tufts(bg,191);
+    const st=['s','p','ee','ch'],X=i=>150+i*165,Y=168;
+    const cut=(d,w)=>{el('path',{d,class:'cutedge','stroke-width':w+4},bg);el('path',{d,class:'cutfill','stroke-width':w},bg)};
+    const loopD=i=>`M${X(i)-12} ${Y-14}C${X(i)-46} ${Y-100} ${X(i)+46} ${Y-100} ${X(i)+12} ${Y-14}`;
+    const fwdD=i=>i<3?`M${X(i)+18} ${Y}H${X(i+1)-18}`:`M${X(3)+18} ${Y}H780`;
+    cut(`M30 ${Y}H${X(0)-18}`,12);for(let i=0;i<4;i++){cut(loopD(i),9);cut(fwdD(i),12)}
+    this.pl=[.7,.55,.8,.6];this.wl=[];this.wf=[];
+    for(let i=0;i<4;i++){this.wl.push(el('path',{d:loopD(i),class:'worn','stroke-width':6,'stroke-opacity':0},bg));this.wf.push(el('path',{d:fwdD(i),class:'worn','stroke-width':8,'stroke-opacity':0},bg))}
+    st.forEach((w,i)=>{el('circle',{cx:X(i),cy:Y,r:19,class:'plaza'},bg);const t=txt(bg,X(i),Y+7,'flabel','middle');t.textContent=w});
+    this.lab=[];for(let i=0;i<4;i++){const a=txt(bg,X(i),Y-94,'prob','middle');a.textContent=`stay ${this.pl[i].toFixed(2)}`;const b=txt(bg,X(i)+82,Y+26,'prob','middle');b.textContent=`next ${(1-this.pl[i]).toFixed(2)}`;this.lab.push(a,b)}
+    let sd=9;const r=()=>(sd=(sd*16807)%2147483647)/2147483647;this.gh=[];
+    for(let g=0;g<14;g++){const pts=[[30,Y]];
+      for(let i=0;i<4;i++){pts.push([X(i),Y]);let n=0;while(r()<this.pl[i]&&n<2){n++;for(let k=1;k<=12;k++){const u=k/12,P=[X(i),Y],c1=[X(i)-46,Y-100],c2=[X(i)+46,Y-100];
+        pts.push([0,1].map(j=>(1-u)**3*P[j]+3*(1-u)**2*u*c1[j]+3*(1-u)*u*u*c2[j]+u**3*P[j]))}}}
+      pts.push([780,Y]);const cum=[0];for(let k=1;k<pts.length;k++)cum.push(cum[k-1]+Math.hypot(pts[k][0]-pts[k-1][0],pts[k][1]-pts[k-1][1]));
+      this.gh.push({t0:.9+g*.26,pts,cum,c:el('circle',{r:4,class:'ghost'},bg)})}
+    this.h1=txt(svg,24,30,'hand');this.h1.textContent='paths cut by hand: which sound may follow which';
+    this.h2=txt(svg,24,52,'hand');this.h2.textContent='how worn each one gets: learned from recordings'},
+  draw(t){for(const g of this.gh){const d=(t-g.t0)*420,L=g.cum[g.cum.length-1];if(d<0||d>=L){g.c.style.opacity=0;continue}
+      let k=1;while(g.cum[k]<d)k++;const u=(d-g.cum[k-1])/((g.cum[k]-g.cum[k-1])||1),a=g.pts[k-1],b=g.pts[k];
+      g.c.setAttribute('cx',f1(lerp(a[0],b[0],u)));g.c.setAttribute('cy',f1(lerp(a[1],b[1],u)-5));g.c.style.opacity=.45}
+    const w=seg(t,1.2,7.2);this.wl.forEach((e,i)=>e.setAttribute('stroke-opacity',f1(w*this.pl[i])));this.wf.forEach((e,i)=>e.setAttribute('stroke-opacity',f1(w*(1-this.pl[i]))));
+    this.h2.style.opacity=seg(t,1.4,1.9);this.lab.forEach(l=>l.style.opacity=seg(t,7.2,7.7))}},
+
+/* 2023 · collapse */
+collapse:{dur:8.4,hold:2.6,init(svg){const bg=el('g',{},svg);tufts(bg,163);
+    const J={x:220,y:140},C={x:380,y:140};el('path',{d:`M24 ${J.y}H${J.x}`,class:'road'},bg);
+    const lt=txt(bg,40,J.y-22,'note');lt.textContent='the wild …';lt.style.fontSize='22px';
+    this.E=[44,108,172,236].map(y=>({x:640,y}));this.words=['world','west','rose','geese'];
+    let p=[.45,.30,.15,.10];this.gens=[p];for(let g=1;g<5;g++){const q=p.map(x=>Math.pow(x,1.8)),z=q.reduce((a,b)=>a+b);p=q.map(x=>x/z);this.gens.push(p)}
+    this.br=this.E.map(E=>el('path',{d:roadD(0,1,u=>bez(J,C,E,u)),class:'worn'},bg));
+    this.lb=this.E.map((E,i)=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(this.words[i]);const s=el('tspan',{class:'prob',dx:6},t);return{t,s}});
+    this.hud=txt(svg,24,30,'hudb');this.hud2=txt(svg,24,48,'hud')},
+  draw(t){const x=clamp((t-.8)/1.6,0,4),g=Math.floor(x),u=ease(clamp((x-g)/.55));const a=this.gens[g],b=this.gens[Math.min(4,g+1)];
+    const p=a.map((v,i)=>lerp(v,b[i],u));
+    const pmx=Math.max(...p);this.br.forEach((e,i)=>{e.setAttribute('stroke-width',f1(2+26*p[i]));e.setAttribute('stroke-opacity',f1(.15+.85*p[i]/pmx));e.style.opacity=clamp(p[i]*14)});
+    this.lb.forEach((l,i)=>{l.s.textContent=p[i]<.005?'gone':Math.round(p[i]*100)+'%';l.t.style.opacity=.35+.65*clamp(p[i]*12)});
+    const G=Math.round(x)+1;this.hud.textContent=`Generation ${G}`;this.hud2.textContent=G===1?'trained on human footprints':`trained on generation ${G-1}’s footprints`}}
+};
 
 const FIGS={
 /* 1 · the walk */
@@ -312,9 +858,9 @@ trails:{dur:9.8,hold:2.4,init(svg){const bg=el('g',{},svg);tufts(bg,37);this.J={
     this.ends=[{x:690,y:56,w:'preservation',p:.6},{x:700,y:146,w:'world',p:.3},{x:690,y:232,w:'end',p:.1}];
     this.C={x:450,y:140};const Bz=(b,u)=>{const E=this.ends[b],C=this.C;return{x:(1-u)**2*J.x+2*(1-u)*u*C.x+u*u*E.x,y:(1-u)**2*J.y+2*(1-u)*u*C.y+u*u*E.y}};this.Bz=Bz;
     el('path',{d:`M24 ${J.y}H${J.x}`,class:'road'},bg);
-    this.br=this.ends.map((E,b)=>el('path',{d:roadD(0,1,u=>Bz(b,u)),class:'trailbase','stroke-width':2},bg));
+    this.br=this.ends.map((E,b)=>el('path',{d:roadD(0,1,u=>Bz(b,u)),class:'worn','stroke-width':2,'stroke-opacity':.15},bg));
     const lab=txt(bg,40,J.y-22,'note');lab.textContent='in wildness is the …';lab.style.fontSize='22px';
-    this.lbl=this.ends.map(E=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(E.w);const s=el('tspan',{class:'prob',dx:6},t);s.textContent=Math.round(E.p*100)+'% of walkers';t.style.opacity=0;return t});
+    this.lbl=this.ends.map(E=>{const t=txt(bg,E.x+12,E.y+6,'flabel');t.append(E.w);const s=el('tspan',{class:'prob',dx:6},t);s.textContent=Math.round(E.p*100)+'%';t.style.opacity=0;return t});
     const pattern=[0,1,0,0,2,0,1,0,1,0];this.N=44;this.gh=[];
     for(let i=0;i<this.N;i++)this.gh.push({t0:.3+i*.135,b:pattern[(i*7)%10],c:el('circle',{r:4.2,class:'ghost'},svg)});
     this.w=walker(svg);this.hud=txt(svg,24,30,'hud');},
@@ -322,7 +868,7 @@ trails:{dur:9.8,hold:2.4,init(svg){const bg=el('g',{},svg);tufts(bg,37);this.J={
     for(const g of this.gh){const d=(t-g.t0)*V;if(d<0){g.c.style.opacity=0;continue}let p;
       if(d<S1)p={x:J.x-S1+d,y:J.y};else{cnt[g.b]++;const u=(d-S1)/S2;if(u>=1){g.c.style.opacity=0;continue}p=this.Bz(g.b,u)}
       g.c.setAttribute('cx',f1(p.x));g.c.setAttribute('cy',f1(p.y-6));g.c.style.opacity=.42}
-    this.br.forEach((b,i)=>b.setAttribute('stroke-width',f1(2+cnt[i]*.62)));
+    this.br.forEach((b,i)=>{b.setAttribute('stroke-width',f1(2+cnt[i]*.42));b.setAttribute('stroke-opacity',f1(.15+.85*Math.min(1,cnt[i]/26)))});
     const end=seg(t,8.6,9.4);this.lbl.forEach(l=>l.style.opacity=end);this.w.style.opacity=end;place(this.w,J.x-14,J.y);
     this.hud.textContent=t<8.6?`walkers so far: ${cnt[0]+cnt[1]+cnt[2]}`:'the blaze here is just this wear'}},
 
@@ -383,48 +929,9 @@ nose:{hold:2.6,init(svg){const L=layers(svg,71);this.L=L;this.wts=[.03,.30,.04,.
     const bo=seg(t,this.turn,this.turn+.3)*(1-seg(t,B+.1,B+.5));this.bub.style.opacity=bo;place(this.bub,clamp(dp.x,110,690),dp.y);
     this.fan.set(ease(seg(t,B+.2,B+1)),seg(t,B+.9,B+1.4),seg(t,B+2,B+2.4),seg(t,B+3.3,B+3.9));const q=R(s);place(this.w,q.x,q.y)}},
 
-/* 8 · relays */
-relay:{hold:2.6,init(svg){const L=layers(svg,83);this.L=L;
-    this.W1=[[.02,.38,.02,.02,.44,.04,.08],[.02,.02,.10,.06,.05,.30,.45],[.42,.10,.30,.05,.05,.04,.04]];
-    this.W2=[[.02,.20,.02,.02,.66,.03,.05],[.02,.04,.04,.04,.10,.16,.60],[.10,.40,.20,.05,.15,.05,.05]];
-    this.fan=fan(L.mid,R(6),R(7),[['world',.62],['wild',.22],['end',.16]],95);
-    this.pf=[0,1,2].map(j=>W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[j]}`},L.mid)));
-    this.dots=[0,1,2].map(j=>W.slice(0,7).map((_,i)=>{const p=R(i);const c=el('circle',{cx:p.x+(j-1)*8,cy:p.y+17,r:3.2,class:'puff',style:`--dc:${DOGC[j]}`},L.mid);c.style.opacity=0;return c}));
-    this.p=posts(L.mid);this.w=walker(L.top);this.home=[0,1,2].map(j=>6-.26-j*.2);
-    this.dg=[2,1,0].map(j=>dog(L.top,DOGC[j])).reverse();
-    this.trs=[0,1,2].map(j=>{const tr=new Trip(0,this.home[j]);tr.wait(.5+j*.28);tr.tag=1;tr.go(-.4,320,true).go(this.home[j],320);return tr});
-    this.r1=Math.max(...this.trs.map(t=>t.t));
-    this.trs.forEach((tr,j)=>{tr.wait(this.r1+.9+j*.18-tr.t);tr.tag=2;tr.go(-.4,600,true).go(this.home[j],600)});
-    this.r2=Math.max(...this.trs.map(t=>t.t));this.dur=this.r2+3.9;this.hud=txt(L.top,24,32,'hudb');this.hud2=txt(L.top,24,50,'hud')},
-  draw(t){const r1=this.r1,r2=this.r2;const s=6+ease(seg(t,r2+2.6,r2+3.4));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
-    this.trs.forEach((tr,j)=>{const d=tr.at(t),dp=R(d.s);setDog(this.dg[j],dp.x,dp.y+8+(j-1)*2,d.dir,d.mv,t);
-      this.pf[j].forEach((c,i)=>{const e=tr.last(i,t);if(!e||i>6){c.style.opacity=0;return}const w=(e.tag===1?this.W1:this.W2)[j][i];const p=R(i);puff(c,p.x+(j-1)*6,p.y-2+(j-1)*4,e,t,4+30*w,.2+1.1*w,1)});
-      this.dots[j].forEach((c,i)=>c.style.opacity=seg(t,r1-.2,r1+.4)*clamp(this.W1[j][i]*2.4))});
-    this.fan.set(ease(seg(t,r2+.2,r2+1)),seg(t,r2+.9,r2+1.4),seg(t,r2+2,r2+2.4),seg(t,r2+3.3,r2+3.9));const q=R(s);place(this.w,q.x,q.y);
-    if(t<r1){this.hud.textContent='Round 1: three dogs, three noses';this.hud2.textContent='rust: what is it about? · teal: what comes next in the grammar? · plum: where are we in the sentence?'}
-    else if(t<r2){this.hud.textContent='Round 2: the dogs sniff the notes left by round 1';this.hud2.textContent='the dots under each footprint are round 1’s findings'}
-    else{this.hud.textContent='Then the blaze';this.hud2.textContent='the last round’s findings set it'}}},
 
-/* 9 · scent marks */
-cache:{hold:2.8,init(svg){const L=layers(svg,97);this.L=L;
-    this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[0]}`},L.mid));
-    this.mk=W.map((_,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[0]}`},L.mid);[-3.5,3.5].forEach((dx,k)=>el('circle',{cx:p.x+dx,cy:p.y+17+(k?-1.5:0),r:2.3,class:'puff'},g));el('circle',{cx:p.x,cy:p.y+21,r:3.3,class:'puff'},g);g.style.opacity=0;return g});
-    this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[0]);
-    const home=5-.24,tr=new Trip(.6,home);this.A0=tr.t;
-    for(let i=5;i>=0;i--){tr.go(i,230);tr.sniff(i,'slow');tr.wait(.34)}
-    tr.go(home,430);this.A1=tr.t;tr.go(6-.24,DX/.7);this.S=this.A1;tr.wait(.6);
-    this.B0=tr.t;tr.go(6,260);tr.sniff(6,'slow');tr.wait(.34);tr.go(5.6,1100);tr.go(-.4,1100,true);tr.go(6-.24,1100);this.B1=tr.t;
-    this.tr=tr;this.dur=tr.t+.3;this.hud=txt(L.top,24,32,'hudb');this.hud2=txt(L.top,24,50,'hud')},
-  draw(t){const s=5+ease(seg(t,this.S,this.S+.7));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
-    const q=R(s);place(this.w,q.x,q.y);const d=this.tr.at(t),dp=R(d.s);setDog(this.d,dp.x,dp.y+8,d.dir,d.mv,t);
-    this.pf.forEach((c,i)=>{const p=R(i),e=this.tr.last(i,t);puff(c,p.x,p.y-2,e,t,e&&e.kind==='slow'?18:7,e&&e.kind==='slow'?.6:.4)});
-    this.mk.forEach((m,i)=>{const e=this.tr.ev.find(e=>e.post===i&&e.kind==='slow');m.style.opacity=e?seg(t,e.t+.15,e.t+.4):0});
-    const A=(this.A1-this.A0).toFixed(1),B=(this.B1-this.B0).toFixed(1);
-    if(t<this.A1){this.hud.textContent='No marks yet: sniff each footprint properly, leave a mark';this.hud2.textContent=''}
-    else if(t<this.B0){this.hud.textContent=`That run took ${A} s`;this.hud2.textContent='the walker writes the next word'}
-    else if(t<this.B1){this.hud.textContent='Next word: stop at the new footprint, read the marks at a run';this.hud2.textContent=`first run: ${A} s`}
-    else{this.hud.textContent=`That run took ${B} s, and still went all the way back`;this.hud2.textContent=`first run: ${A} s`}}}
 };
+Object.assign(FIGS,NEWFIGS);
 
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const live=[];
