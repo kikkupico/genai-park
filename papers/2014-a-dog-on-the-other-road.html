@@ -16,7 +16,7 @@
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 11 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 11 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-sight)">
     <p class="kicker"><span class="dot"></span><span class="yr">2014</span> · <span class="i">What the walker sees</span><span class="m">Context and memory</span></p>
@@ -33,7 +33,7 @@
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Translating means two roads: the source sentence, and the walk being written. At first the whole source was squeezed into one pack before the walk began. Then the walker got a dog. Before each step, the dog runs along the source road, sniffs every word, and comes back with a blend, mostly of what smelled strongest.</p></div>
       <div><h3>In the mechanism</h3><div class="i"><p>Sequence-to-sequence models encode the source into one fixed vector and decode from it. Attention lets the decoder, at every step, take a fresh weighted mix of all the source positions. The weights are recomputed each step; the lines in the picture are those weights.</p></div><div class="m"><p>Encoder states \(h_1,\dots,h_{|x|}\); decoder state \(s_i\). Sequence to sequence compresses the source into one vector \(v\). Attention gives each step its own context:</p>
-\[c_i=\sum_{j}\alpha_{ij}h_j,\qquad \alpha_{ij}=\operatorname{softmax}_j\big(a(s_{i-1},h_j)\big)\]
+<div class="eqx" data-say="Each output step&#x27;s context is a weighted sum of all encoder states, with weights from a softmax over alignment scores.">\[c_i=\sum_{j}\alpha_{ij}h_j,\qquad \alpha_{ij}=\operatorname{softmax}_j\big(a(s_{i-1},h_j)\big)\]</div>
 <p>The lines in the figure are the largest \(\alpha_{ij}\).</p></div></div>
     </div>
     <section class="more">
@@ -43,10 +43,10 @@
 <div class="tw"><table class="mini"><thead><tr><th>Writing "European" in "the European Economic Area"</th><th>la</th><th>zone</th><th>économique</th><th>européenne</th></tr></thead><tbody>
 <tr><td>Dog's weights (illustrative)</td><td>.02</td><td>.06</td><td>.12</td><td>.80</td></tr></tbody></table></div>
 <p>The weights are recomputed for every English word, and plotted together they form an alignment chart, which the paper used to show that the model had learned on its own that French puts adjectives after the noun. Nobody gave it that rule.</p></div><div class="m"><p><b>Sequence to sequence.</b> An encoder LSTM reads \(x\); its final state \(v\) initializes a decoder LSTM, so</p>
-\[p(y\mid x)=\prod_{i=1}^{|y|} p(y_i \mid v, y_{&lt;i}),\qquad v\in\mathbb{R}^d \text{ fixed for every } i.\]
+<div class="eqx" data-say="The translation is generated one word at a time, each conditioned on a single fixed vector that summarizes the source, and on the words so far.">\[p(y\mid x)=\prod_{i=1}^{|y|} p(y_i \mid v, y_{&lt;i}),\qquad v\in\mathbb{R}^d \text{ fixed for every } i.\]</div>
 <p>All information about the source has to pass through \(v\), whatever the sentence length. Reversing the order of the source tokens improved results noticeably, by shortening the path between the first source and first target words.</p>
 <p><b>Attention.</b> The second paper showed that quality degraded on long sentences, consistent with that bottleneck. Its encoder is a bidirectional RNN, and it keeps every annotation \(h_j\). At decoder step \(i\):</p>
-\[\begin{aligned} e_{ij} &amp;= a(s_{i-1}, h_j) = v_a^\top \tanh(W_a s_{i-1} + U_a h_j)\\ \alpha_{ij} &amp;= \frac{\exp(e_{ij})}{\sum_{k}\exp(e_{ik})}\\ c_i &amp;= \sum_{j}\alpha_{ij} h_j\\ s_i &amp;= f(s_{i-1}, y_{i-1}, c_i),\qquad p(y_i\mid y_{&lt;i},x) = g(y_{i-1}, s_i, c_i)\end{aligned}\]
+<div class="eqx" data-say="Score each encoder state against the previous decoder state, normalize the scores into weights, take the weighted sum as the context, and use it to update the decoder and predict the next word.">\[\begin{aligned} e_{ij} &amp;= a(s_{i-1}, h_j) = v_a^\top \tanh(W_a s_{i-1} + U_a h_j)\\ \alpha_{ij} &amp;= \frac{\exp(e_{ij})}{\sum_{k}\exp(e_{ik})}\\ c_i &amp;= \sum_{j}\alpha_{ij} h_j\\ s_i &amp;= f(s_{i-1}, y_{i-1}, c_i),\qquad p(y_i\mid y_{&lt;i},x) = g(y_{i-1}, s_i, c_i)\end{aligned}\]</div>
 <div class="tw"><table class="mini"><thead><tr><th>Generating "European" in "the European Economic Area"</th><th>la</th><th>zone</th><th>économique</th><th>européenne</th></tr></thead><tbody>
 <tr><td>\(\alpha_{ij}\) (illustrative)</td><td>.02</td><td>.06</td><td>.12</td><td>.80</td></tr></tbody></table></div>
 <p>Each row \(\alpha_{i\cdot}\) sums to one and is recomputed at every output step. Plotted as a matrix, \(\alpha\) is a soft alignment, which the paper used to show that the model learned French adjective–noun reordering without being told.</p></div>

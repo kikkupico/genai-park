@@ -234,3 +234,25 @@ svg.msk .hand{font-size:13px}
 svg.msk .mroad.given{stroke:var(--givenInk,var(--blaze));stroke-width:3;opacity:.5}
 .mcell{fill:var(--blaze);stroke:var(--rule);stroke-width:1}
 .mcell.neg{fill:var(--muted)}
+/* notation cheatsheet */
+.notebtn{appearance:none;border:1px solid var(--rule);background:transparent;color:var(--ink);font:500 .78rem Inter,system-ui,sans-serif;padding:4px 12px;border-radius:999px;cursor:pointer}
+.notebtn:hover{border-color:var(--muted)}
+.notedlg{width:min(600px,calc(100% - 32px));max-height:min(80vh,760px);padding:0 22px 20px;background:var(--panel);color:var(--ink);border:1px solid var(--rule);border-radius:12px;overflow:auto}
+.notedlg::backdrop{background:rgba(0,0,0,.45)}
+.notehead{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:16px 0 8px;background:var(--panel)}
+.notehead h2{margin:0;font-family:Inter,system-ui,sans-serif;font-size:1.15rem;font-weight:600}
+.noteclose{appearance:none;border:0;background:transparent;color:var(--muted);font-size:1.5rem;line-height:1;cursor:pointer;padding:2px 6px}
+.notedlg h3{margin:16px 0 6px;font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.notedlg dl{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:6px 16px;margin:0;font-size:.92rem}
+.notedlg dt{color:var(--ink);white-space:nowrap}
+.notedlg dd{margin:0;color:var(--muted)}
+/* formula popover */
+body[data-reg="m"] main .katex{cursor:help}
+.eqx{border-radius:6px}
+.eqx:focus-visible{outline:2px solid var(--blaze);outline-offset:2px}
+.mpop{position:absolute;z-index:30;width:min(440px,calc(100vw - 16px));max-height:min(60vh,520px);overflow:auto;padding:12px 16px;background:var(--panel);color:var(--ink);border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.18);font-size:.9rem}
+.mpop .say{margin:0 0 10px;color:var(--ink);line-height:1.45}
+.mpop dl{display:grid;grid-template-columns:max-content 1fr;gap:5px 14px;margin:0}
+.mpop dt{white-space:nowrap}
+.mpop dd{margin:0;color:var(--muted)}
+.notetip{margin:0 0 4px;color:var(--muted);font-size:.85rem}

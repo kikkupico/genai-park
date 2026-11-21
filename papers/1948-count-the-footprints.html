@@ -16,7 +16,7 @@
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 1 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 1 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-trails)">
     <p class="kicker"><span class="dot"></span><span class="yr">1948</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
@@ -31,7 +31,7 @@
       <figcaption><button class="replay">Replay</button><span><span class="i">Only the last two footprints are in view. By the time it matters, "wildness" is out of sight.</span><span class="m">An \(n\)-gram model conditions only on \(x_{t-n+1:t-1}\). Anything earlier, such as "wildness", has no effect on the prediction.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>The first trails are counts. For each pair or triple of words, how often did people step from here to there? The walker turns round, looks at the last few footprints, and reads the blaze from the tally.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p>Shannon generated English by choosing each word in proportion to how often it followed the previous word in real text. That is an n-gram model: the next word depends only on the last <i>n</i>−1.</p></div><div class="m">\[p(x_t\mid x_{&lt;t}) \approx \hat p(x_t\mid x_{t-n+1:t-1}) = \frac{c(x_{t-n+1:t})}{c(x_{t-n+1:t-1})}\]
+      <div><h3>In the mechanism</h3><div class="i"><p>Shannon generated English by choosing each word in proportion to how often it followed the previous word in real text. That is an n-gram model: the next word depends only on the last <i>n</i>−1.</p></div><div class="m"><div class="eqx" data-say="The next word&#x27;s probability is approximated from the last n−1 words only, and estimated as the count of the n-word sequence divided by the count of its first n−1 words.">\[p(x_t\mid x_{&lt;t}) \approx \hat p(x_t\mid x_{t-n+1:t-1}) = \frac{c(x_{t-n+1:t})}{c(x_{t-n+1:t-1})}\]</div>
 <p>where \(c(\cdot)\) counts occurrences in a corpus. This ratio is the maximum-likelihood estimate. Shannon sampled English from it, one word at a time.</p></div></div>
     </div>
     <figure><div class="fig"><svg data-fig="merge" viewBox="0 0 800 260" role="img" aria-label="Two different roads both end at 'the'; Shannon's walker faces the same way at the end of both, so both get one identical blaze." data-al-m="A bigram model conditions only on the last token, so every context ending in &quot;the&quot; gets the same next-token distribution."></svg></div>
@@ -49,7 +49,7 @@
 <p>This table is the whole model for that context. \(\hat p(\text{ran}\mid\text{cat})=0\), even though \(\hat p(\text{ran}\mid\text{dog})=0.5\): the model has no notion that "cat" and "dog" are similar, so nothing seen for one transfers to the other. The 2000 entry addresses this.</p>
 <p>Shannon sampled from such models by hand. For the second-order word approximation he opened a book at a random page, found the current word, and took the word that followed it there. The output is locally fluent and globally incoherent: <i>"the head and in frontal attack on an English writer that the character of this point is therefore another method for the letters that the time of who ever told the problem for an unexpected."</i></p>
 <p>Increasing n gives more context but makes the data far sparser. With \(|V| = 10^4\) there are \(|V|^2=10^8\) possible bigrams and \(|V|^3=10^{12}\) possible trigrams, and most never occur in any corpus. Decades of work went into estimating the unseen ones: smoothing, which moves some probability mass from seen to unseen events, and back-off, which falls back to a shorter context when a longer one is unseen. The simplest smoothing, add-one, uses</p>
-\[\hat p(w\mid u) = \frac{c(u,w)+1}{c(u)+|V|}.\]</div>
+<div class="eqx" data-say="Add-one smoothing: add one to every count, so word pairs never seen still get a small probability.">\[\hat p(w\mid u) = \frac{c(u,w)+1}{c(u)+|V|}.\]</div></div>
     </section>
     <section class="more">
       <h2>What it changed</h2>

@@ -16,7 +16,7 @@
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 10 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 10 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-brush)">
     <p class="kicker"><span class="dot"></span><span class="yr">2013</span> · <span class="i">Pen and brush</span><span class="m">Image generation</span></p>
@@ -32,7 +32,7 @@
       <figcaption><button class="replay">Replay</button><span><span class="i">From a random seed to a finished picture in one stroke. No drafts in between.</span><span class="m">A generator maps a latent vector \(z\sim\mathcal{N}(0,I)\) to a complete image \(x = G_\theta(z)\) in one forward pass, with no intermediate steps.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Images need a different walker: a painter, whose product is the canvas rather than the footprints. These first painters make the whole picture in a single stroke from a random seed. It is hardly a walk at all, just one step.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div><div class="m">\[x = G_\theta(z),\qquad z\sim\mathcal{N}(0, I)\]
+      <div><h3>In the mechanism</h3><div class="i"><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div><div class="m"><div class="eqx" data-say="An image is produced by passing random Gaussian noise through the generator network once.">\[x = G_\theta(z),\qquad z\sim\mathcal{N}(0, I)\]</div>
 <p>One forward pass per sample. The VAE trains \(G_\theta\) as a decoder, alongside an encoder \(q_\phi(z\mid x)\), by maximizing a lower bound on \(\log p_\theta(x)\). The GAN trains it against a discriminator \(D\), with no likelihood at all.</p></div></div>
     </div>
     <section class="more">
@@ -43,10 +43,10 @@
 <ul class="rules">
 <li><b>Blur (VAE).</b> When several pictures are plausible for one seed, a painter scored pixel by pixel does best by painting their average, which looks soft.</li>
 <li><b>Mode collapse (GAN).</b> A painter that finds a few pictures the critic accepts can keep painting only those. Training can also swing back and forth without settling.</li></ul></div><div class="m"><p><b>VAE.</b> An encoder maps an image \(x\) to a Gaussian over codes, \(q_\phi(z\mid x) = \mathcal{N}(\mu_\phi(x), \operatorname{diag}\sigma^2_\phi(x))\), and a decoder defines \(p_\theta(x\mid z)\). Training maximizes the evidence lower bound:</p>
-\[\log p_\theta(x) \ \ge\ \mathbb{E}_{q_\phi(z\mid x)}\big[\log p_\theta(x\mid z)\big] - \mathrm{KL}\big(q_\phi(z\mid x)\,\|\,\mathcal{N}(0, I)\big)\]
+<div class="eqx" data-say="The log-likelihood of an image is at least the expected reconstruction quality minus how far the encoder&#x27;s code distribution strays from the standard Gaussian prior.">\[\log p_\theta(x) \ \ge\ \mathbb{E}_{q_\phi(z\mid x)}\big[\log p_\theta(x\mid z)\big] - \mathrm{KL}\big(q_\phi(z\mid x)\,\|\,\mathcal{N}(0, I)\big)\]</div>
 <p>The first term is reconstruction; the KL term keeps every posterior near the shared prior, so at generation time \(z\) can be drawn from \(\mathcal{N}(0, I)\) and decoded with no encoder. The reparameterization \(z = \mu_\phi(x) + \sigma_\phi(x)\odot\varepsilon\), \(\varepsilon\sim\mathcal{N}(0,I)\), makes the sampling step differentiable.</p>
 <p><b>GAN.</b> No encoder and no explicit likelihood. A generator \(G\) and a discriminator \(D\) play a two-player minimax game:</p>
-\[\min_G \max_D\ \ \mathbb{E}_{x\sim p_{\text{data}}}\big[\log D(x)\big] + \mathbb{E}_{z\sim p(z)}\big[\log\big(1 - D(G(z))\big)\big]\]
+<div class="eqx" data-say="The discriminator maximizes its accuracy at telling real images from generated ones; the generator minimizes it.">\[\min_G \max_D\ \ \mathbb{E}_{x\sim p_{\text{data}}}\big[\log D(x)\big] + \mathbb{E}_{z\sim p(z)}\big[\log\big(1 - D(G(z))\big)\big]\]</div>
 <p>For the optimal \(D\), the generator's objective equals \(-\log 4 + 2\,\mathrm{JSD}(p_{\text{data}}\,\|\,p_G)\), minimized exactly when \(p_G = p_{\text{data}}\). The paper compares the game to counterfeiters and police.</p>
 <p>Each has a characteristic failure, and both follow from generating in one pass:</p>
 <ul class="rules">
