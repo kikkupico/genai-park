@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2014 · Sequence-to-sequence models and attention · GenAI Park">2014 · A dog on the other road · GenAI Park</title>
+<meta name="description" content="Translating, the walker gets a dog that runs the source sentence before every step and brings back what smells most relevant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 9 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-sight)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2014</span> · <span class="i">What the walker sees</span><span class="m">Context and memory</span></p>
+    <h1><span class="i">A dog on the other road</span><span class="m">Sequence-to-sequence models and attention</span></h1>
+    <p class="paper"><i>Sequence to Sequence Learning with Neural Networks</i> (2014) → <i>Neural Machine Translation by Jointly Learning to Align and Translate</i> (2014)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Machine translation in 2014 was mostly phrase-based statistics: tables of how phrases in one language tend to translate into another, plus an n-gram model to make the output read well, with many hand-tuned parts. These two papers translated with neural networks end to end, and in doing so exposed, then solved, the problem of a single fixed-size pack.</p></div><div class="m"><p>Machine translation in 2014 was dominated by phrase-based statistical systems: phrase translation tables, an n-gram language model and many separately tuned components. These papers replaced the pipeline with a single neural network trained end to end, first exposing and then removing the fixed-size bottleneck between encoder and decoder.</p></div>
+      <p class="from">Picks up what was left open in <a href="1990-carry-a-pack.html">1990 · <span class="i">Carry a pack</span><span class="m">Recurrent neural networks and LSTM</span></a>, <a href="2000-similar-words-similar-ground.html">2000 · <span class="i">Similar words, similar ground</span><span class="m">Neural language models and word embeddings</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="align" viewBox="0 0 800 260" role="img" aria-label="Translating, the walker's dog runs along the source sentence before each step, sniffing hardest at the matching word." data-al-m="At each output step, attention weights over the French source tokens are recomputed. The lines show the largest weights; &quot;wild&quot; and &quot;world&quot; align out of order."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Before each English word, the dog works the French road. The lines show where the scent was strongest; "wild" and "world" cross over.</span><span class="m">At each output step, attention weights over the French source tokens are recomputed. The lines show the largest weights; "wild" and "world" align out of order.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>Translating means two roads: the source sentence, and the walk being written. At first the whole source was squeezed into one pack before the walk began. Then the walker got a dog. Before each step, the dog runs along the source road, sniffs every word, and comes back with a blend, mostly of what smelled strongest.</p></div>
+      <div><h3>In the mechanism</h3><p>Sequence-to-sequence models encode the source into one fixed vector and decode from it. Attention lets the decoder, at every step, take a fresh weighted mix of all the source positions. The weights are recomputed each step; the lines in the picture are those weights.</p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">the bottleneck and the bypass</span><span class="m">the bottleneck and attention</span></h2>
+      <div class="i"><p><b>Sequence to sequence.</b> One LSTM reads the French sentence word by word and ends with a pack. A second LSTM starts from that pack and writes the English. The whole meaning of the source must pass through one fixed-size state. A small trick helped noticeably: feeding the source in reverse, so the first words of the source were freshest in the pack when the first words of the translation were written.</p>
+<p><b>Attention.</b> The second paper showed that quality dropped as sentences got longer: one pack can only hold so much. Its fix keeps a note for every source word. Before writing each English word, the decoder scores every source note against what it is about to write, turns the scores into weights that add up to one, and takes the weighted blend. That blend is the dog's report.</p>
+<div class="tw"><table class="mini"><thead><tr><th>Writing "European" in "the European Economic Area"</th><th>la</th><th>zone</th><th>économique</th><th>européenne</th></tr></thead><tbody>
+<tr><td>Dog's weights (illustrative)</td><td>.02</td><td>.06</td><td>.12</td><td>.80</td></tr></tbody></table></div>
+<p>The weights are recomputed for every English word, and plotted together they form an alignment chart, which the paper used to show that the model had learned on its own that French puts adjectives after the noun. Nobody gave it that rule.</p></div><div class="m"><p><b>Sequence to sequence.</b> An encoder LSTM reads the source sentence and its final hidden state initializes a decoder LSTM, which generates the target sentence. All information about the source has to pass through one fixed-size vector. Reversing the order of the source tokens improved results noticeably, by shortening the distance between the first source and first target words.</p>
+<p><b>Attention.</b> The second paper showed that quality degraded on long sentences, consistent with that bottleneck. It keeps every encoder hidden state h<sub>j</sub>. At decoder step i, an alignment model scores each h<sub>j</sub> against the decoder state, a softmax turns the scores into weights α<sub>ij</sub> that sum to one, and the context vector is c<sub>i</sub> = Σ<sub>j</sub> α<sub>ij</sub> h<sub>j</sub>.</p>
+<div class="tw"><table class="mini"><thead><tr><th>Generating "European" in "the European Economic Area"</th><th>la</th><th>zone</th><th>économique</th><th>européenne</th></tr></thead><tbody>
+<tr><td>α (illustrative)</td><td>.02</td><td>.06</td><td>.12</td><td>.80</td></tr></tbody></table></div>
+<p>The weights are recomputed at each output step. Plotted as a matrix they give a soft alignment, which the paper used to show that the model learned French adjective–noun reordering without being told.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>Attention made neural translation better than phrase tables, and by 2016 Google's production translator was an LSTM with attention. More important for this story, attention turned out to be a general way for any position to pull what it needs from any other, which is the entire idea <a href="2017-drop-the-pack-keep-the-dog.html">the 2017 entry</a> builds on.</p></div><div class="m"><p>Attention made neural machine translation better than phrase-based systems, and by 2016 Google's production system was an LSTM encoder–decoder with attention. More broadly, attention proved to be a general, differentiable way for any position to retrieve information from any other, which the transformer turns into the whole architecture.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">The dog only works the source road. On its own road the walker still carries a pack, and training still walks in order.</span><span class="m">Attention covers the source sentence only. The decoder still relies on a recurrent state over its own output, and training is still sequential.</span> <a href="2017-drop-the-pack-keep-the-dog.html">→ 2017</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="2013-paint-in-one-stroke.html" style="--th:var(--th-brush)"><small>← 2013</small><span class="i">Paint in one stroke</span><span class="m">Variational autoencoders and GANs</span></a>
+    <a class="next" href="2017-drop-the-pack-keep-the-dog.html" style="--th:var(--th-sight)"><small>2017 →</small><span class="i">Drop the pack, keep the dog</span><span class="m">The transformer</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

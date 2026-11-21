@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="1948 · n-gram language models · GenAI Park">1948 · Count the footprints, glance back · GenAI Park</title>
+<meta name="description" content="The first trails are counts: how often people stepped from one word to the next. The walker glances back a word or two and reads the blaze from the tally.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 1 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1948</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
+    <h1><span class="i">Count the footprints, glance back</span><span class="m">n-gram language models</span></h1>
+    <p class="paper"><i>A Mathematical Theory of Communication</i> (1948)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Before 1948 nobody could say how much information a message carries, or how predictable a language is. Shannon wanted to measure both, and for that he needed a model of how text gets produced: a source that emits one symbol after another, each with some probability. He did not try to say what the symbols mean. He only asked how likely each one is, given the ones before it.</p></div><div class="m"><p>Before 1948 there was no quantitative definition of information, and no way to say how predictable a language is. Shannon modelled a message source as a stochastic process that emits one symbol at a time, each with a probability conditioned on earlier symbols. Meaning was deliberately out of scope. Only the statistics mattered.</p></div>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="ngram" viewBox="0 0 800 260" role="img" aria-label="The walker looks back over only the last two footprints; earlier ones fade from view." data-al-m="An n-gram model conditions on a fixed window of recent tokens. Anything earlier, such as &quot;wildness&quot;, has no effect on the prediction."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Only the last two footprints are in view. By the time it matters, "wildness" is out of sight.</span><span class="m">An n-gram model conditions on a fixed window of recent tokens. Anything earlier, such as "wildness", has no effect on the prediction.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>The first trails are counts. For each pair or triple of words, how often did people step from here to there? The walker turns round, looks at the last few footprints, and reads the blaze from the tally.</p></div>
+      <div><h3>In the mechanism</h3><p>Shannon generated English by choosing each word in proportion to how often it followed the previous word in real text. That is an n-gram model: the next word depends only on the last <i>n</i>−1.</p></div>
+    </div>
+    <figure><div class="fig"><svg data-fig="merge" viewBox="0 0 800 260" role="img" aria-label="Two different roads both end at 'the'; Shannon's walker faces the same way at the end of both, so both get one identical blaze." data-al-m="A bigram model conditions only on the last token, so every context ending in &quot;the&quot; gets the same next-token distribution."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Shannon's walker sees only the last word, so every road ending in "the" reaches the same junction, facing the same way, with the same blaze.</span><span class="m">A bigram model conditions only on the last token, so every context ending in "the" gets the same next-token distribution.</span></span></figcaption></figure>
+    <section class="more">
+      <h2>A closer look: <span class="i">a tally for every junction</span><span class="m">maximum-likelihood estimation from counts</span></h2>
+      <div class="i"><p>Take a park with three recorded walks: <i>the dog ran</i>, <i>the dog sat</i>, <i>the cat sat</i>. Stand on "the" and look at the tally of where walkers went next:</p>
+<div class="tw"><table class="mini"><thead><tr><th>After "the"</th><th>Walkers</th><th>Blaze</th></tr></thead><tbody>
+<tr><td>dog</td><td>2</td><td>0.67</td></tr><tr><td>cat</td><td>1</td><td>0.33</td></tr><tr><td>ran, sat, the</td><td>0</td><td>0</td></tr></tbody></table></div>
+<p>That table is the whole model at that junction. Now stand on "cat". Only one walker ever left it, toward "sat", so "the cat ran" has no trail at all, even though "the dog ran" is well worn. The tally has no idea that cats and dogs are alike. That gap is what <a href="2000-similar-words-similar-ground.html">the 2000 entry</a> fills.</p>
+<p>Shannon built his examples by hand. For word pairs he opened a book at a random page, found the current word, and wrote down whatever word followed it there, then repeated from the new word. The result reads like English in short stretches and wanders off over longer ones: <i>"the head and in frontal attack on an English writer that the character of this point is therefore another method for the letters that the time of who ever told the problem for an unexpected."</i> Every pair in it is fine. The walk as a whole goes nowhere, because each step saw only one footprint back.</p>
+<p>Looking further back helps, but the tally grows explosively. With a vocabulary of 10,000 words there are 100 million possible pairs and a trillion possible triples, and most of them never occur in any amount of text. Decades of work went into patching the empty cells: borrowing counts from shorter contexts when a longer one was unseen (backing off) and shaving a little probability off seen events to give to unseen ones (smoothing).</p></div><div class="m"><p>Take a training corpus of three sentences: <i>the dog ran</i>, <i>the dog sat</i>, <i>the cat sat</i>. The bigram estimate is P(w | the) = count(the, w) / count(the):</p>
+<div class="tw"><table class="mini"><thead><tr><th>w</th><th>count(the, w)</th><th>P(w | the)</th></tr></thead><tbody>
+<tr><td>dog</td><td>2</td><td>0.67</td></tr><tr><td>cat</td><td>1</td><td>0.33</td></tr><tr><td>ran, sat, the</td><td>0</td><td>0</td></tr></tbody></table></div>
+<p>This table is the whole model for that context. P(ran | cat) is 0, even though P(ran | dog) is 0.5: the model has no notion that "cat" and "dog" are similar, so nothing seen for one transfers to the other. The 2000 entry addresses this.</p>
+<p>Shannon sampled from such models by hand. For the second-order word approximation he opened a book at a random page, found the current word, and took the word that followed it there. The output is locally fluent and globally incoherent: <i>"the head and in frontal attack on an English writer that the character of this point is therefore another method for the letters that the time of who ever told the problem for an unexpected."</i></p>
+<p>Increasing n gives more context but makes the data far sparser. With a vocabulary of 10,000 there are 10<sup>8</sup> possible bigrams and 10<sup>12</sup> possible trigrams, and most never occur in any corpus. Decades of work went into estimating the unseen ones: smoothing, which moves some probability mass from seen to unseen events, and back-off, which falls back to a shorter context when a longer one is unseen.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>The framing outlived the counts. A language model is still a probability for the next symbol given the ones before, and it is still scored by how surprised it is by real text, which is Shannon's entropy under another name. In a follow-up, <i>Prediction and Entropy of Printed English</i> (1951), he had people guess text letter by letter to estimate how predictable English is. Training a modern model asks exactly that question, with a far better counter.</p>
+<p>Counted n-gram models were the workhorse of speech recognition and machine translation into the 2010s.</p></div><div class="m"><p>The formulation stuck. A language model is still a conditional distribution over the next token, and it is still evaluated by cross-entropy (or perplexity) on held-out text, which is Shannon's entropy measured against a model. His 1951 paper <i>Prediction and Entropy of Printed English</i> estimated that entropy by having people predict text letter by letter.</p>
+<p>Smoothed n-gram models were the standard language model in speech recognition and statistical machine translation into the 2010s.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">The walker sees only a few footprints back. And at a junction nobody has walked, there are no counts and so no blaze: a tally can't tell that "cat" is like "dog".</span><span class="m">Two limits: context is capped at n−1 tokens, and unseen n-grams get no probability because counts can't generalize between similar words.</span> <a href="2000-similar-words-similar-ground.html">→ 2000</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="next" href="1950-judge-the-footprints.html" style="--th:var(--th-trails)"><small>1950 →</small><span class="i">Judge the footprints</span><span class="m">The imitation game</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

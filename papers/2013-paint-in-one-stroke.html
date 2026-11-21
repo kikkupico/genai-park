@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2013 · Variational autoencoders and GANs · GenAI Park">2013 · Paint in one stroke · GenAI Park</title>
+<meta name="description" content="The first painters make a whole picture from a random seed in one stroke, trained with an encoder or against a critic.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 8 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-brush)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2013</span> · <span class="i">Pen and brush</span><span class="m">Image generation</span></p>
+    <h1><span class="i">Paint in one stroke</span><span class="m">Variational autoencoders and GANs</span></h1>
+    <p class="paper"><i>Auto-Encoding Variational Bayes</i> (2013) · <i>Generative Adversarial Nets</i> (2014)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Earlier generative models of images, such as Boltzmann machines, could in principle describe a whole picture, but drawing a sample from them meant running a slow chain of random adjustments, and training them was hard. Both of these papers asked for something simpler: a network that takes a handful of random numbers and returns a finished picture in one pass.</p></div><div class="m"><p>Earlier generative models of images, such as deep Boltzmann machines, defined a distribution over whole images, but sampling required long Markov chain Monte Carlo runs and training was difficult. Both papers instead train a generator network that maps a random latent vector to an image in a single forward pass.</p></div>
+      <p class="from">Picks up what was left open in <a href="2012-ground-for-pictures.html">2012 · <span class="i">Ground for pictures, worn in</span><span class="m">Deep convolutional networks (AlexNet)</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="stroke" viewBox="0 0 800 260" role="img" aria-label="A painter goes from a random seed to a finished picture in a single stroke." data-al-m="A generator maps a latent vector to a complete image in one forward pass, with no intermediate steps."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">From a random seed to a finished picture in one stroke. No drafts in between.</span><span class="m">A generator maps a latent vector to a complete image in one forward pass, with no intermediate steps.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>Images need a different walker: a painter, whose product is the canvas rather than the footprints. These first painters make the whole picture in a single stroke from a random seed. It is hardly a walk at all, just one step.</p></div>
+      <div><h3>In the mechanism</h3><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">two ways to teach a one-stroke painter</span><span class="m">two training objectives for a one-pass generator</span></h2>
+      <div class="i"><p><b>The VAE trains with a translator.</b> An encoder looks at a real picture and returns not one seed but a small cloud of seeds, a center and a spread. The painter draws one seed from that cloud and must paint the original picture back. Training balances two pulls: paint the picture back accurately, and keep every cloud close to one shared, standard cloud. The second pull is what lets you skip the encoder later. Since every picture's cloud sits in the same region, any random seed from that region lands on ground the painter knows.</p>
+<p><b>The GAN trains against a critic.</b> No encoder at all. The painter turns random seeds into pictures; the critic sees a mix of painted and real pictures and guesses which is which. The painter is trained to fool the critic, and the critic to stop being fooled. The paper compares them to counterfeiters and police, each improving because of the other.</p>
+<p>Both have characteristic failures, and both come from the single stroke:</p>
+<ul class="rules">
+<li><b>Blur (VAE).</b> When several pictures are plausible for one seed, a painter scored pixel by pixel does best by painting their average, which looks soft.</li>
+<li><b>Mode collapse (GAN).</b> A painter that finds a few pictures the critic accepts can keep painting only those. Training can also swing back and forth without settling.</li></ul></div><div class="m"><p><b>VAE.</b> An encoder maps an image x to a Gaussian over latent codes, q(z | x), with a mean and variance. A decoder reconstructs x from a sample of z. The loss is the negative evidence lower bound: reconstruction error plus KL(q(z | x) ‖ N(0, I)). The KL term keeps the encoder's posteriors close to a shared prior, so at generation time z can be sampled from N(0, I) and decoded without an encoder. The reparameterization trick, z = μ + σ·ε, makes the sampling step differentiable.</p>
+<p><b>GAN.</b> No encoder and no explicit likelihood. A generator G maps z to images; a discriminator D is trained to classify real versus generated images, and G is trained to make D misclassify. The paper frames it as a two-player minimax game and compares it to counterfeiters and police.</p>
+<p>Each has a characteristic failure, and both follow from generating in one pass:</p>
+<ul class="rules">
+<li><b>Blur (VAE).</b> With a factorized Gaussian likelihood, a decoder facing several plausible outputs for one code minimizes expected pixel error by predicting their mean, which looks soft.</li>
+<li><b>Mode collapse and instability (GAN).</b> The generator can cover only a few modes that fool the discriminator, and the adversarial dynamics can oscillate instead of converging.</li></ul></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>GANs dominated image generation for years and reached photographic faces by 2018 and 2019. They were overtaken by the painters of <a href="2020-paint-in-drafts.html">the 2020 entry</a>, which are slower but steadier to train and cover more variety.</p>
+<p>The VAE's idea lasted in a different role. Many diffusion systems, Stable Diffusion among them, paint not on pixels but on a VAE's compressed seed-ground, and use the VAE's decoder to turn the result into an image at the end. The GAN's critic survives as the clearest picture of training by a judge.</p></div><div class="m"><p>GANs led image generation for several years, reaching photorealistic faces with StyleGAN (2018–19). Diffusion models overtook them on sample diversity and training stability.</p>
+<p>The VAE persisted as a component. Latent diffusion models, Stable Diffusion among them, run diffusion in a VAE's latent space and decode the result to pixels. The GAN's discriminator remains the canonical example of a learned critic used as a training signal.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">One stroke can't correct itself. VAE pictures came out blurry; GANs were unstable to train and prone to painting the same few pictures. The painter needed drafts.</span><span class="m">A single pass can't correct its own errors: VAE samples were blurry, and GANs were unstable and prone to mode collapse. Iterative refinement was needed.</span> <a href="2020-paint-in-drafts.html">→ 2020</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="2012-ground-for-pictures.html" style="--th:var(--th-ground)"><small>← 2012</small><span class="i">Ground for pictures, worn in</span><span class="m">Deep convolutional networks (AlexNet)</span></a>
+    <a class="next" href="2014-a-dog-on-the-other-road.html" style="--th:var(--th-sight)"><small>2014 →</small><span class="i">A dog on the other road</span><span class="m">Sequence-to-sequence models and attention</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

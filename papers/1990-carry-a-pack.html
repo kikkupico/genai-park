@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="1990 · Recurrent neural networks and LSTM · GenAI Park">1990 · Carry a pack · GenAI Park</title>
+<meta name="description" content="The walker stops looking back and carries a fixed-size pack instead, where old footprints slowly fade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 5 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-sight)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1990</span> · <span class="i">What the walker sees</span><span class="m">Context and memory</span></p>
+    <h1><span class="i">Carry a pack</span><span class="m">Recurrent neural networks and LSTM</span></h1>
+    <p class="paper"><i>Finding Structure in Time</i> (1990) → <i>Long Short-Term Memory</i> (1997)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Neural networks of the 1980s took a fixed-size input. To handle a sequence, you showed them a window of the last few items, which is the n-gram's glance back in a different form. Elman's idea was to let time show up in the network itself: copy the hidden layer's activity at each step and feed it back in at the next, so that what came before shapes how the next word is read.</p></div><div class="m"><p>Feed-forward networks of the 1980s took fixed-size inputs, so sequences were handled with a sliding window of recent items, which has the same fixed-context limit as an n-gram. Elman proposed representing time implicitly: feed the hidden layer's previous activation back as an additional input, so the network carries state from step to step.</p></div>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="pack" viewBox="0 0 800 260" role="img" aria-label="The walker never looks back; each word goes into a fixed-size pack where older words fade." data-al-m="The model never re-reads earlier tokens. Everything about them must be stored in a fixed-size hidden state, and older information decays."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">The road behind goes dark. Everything known about it must fit in the pack, and old things fade.</span><span class="m">The model never re-reads earlier tokens. Everything about them must be stored in a fixed-size hidden state, and older information decays.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>The walker stops looking back. Instead, each footprint goes into a pack of fixed size that it carries. New things push old things down, and old things fade. By the end, "wildness" is a smudge.</p></div>
+      <div><h3>In the mechanism</h3><p><span class="i">A recurrent network keeps a hidden state, updated each step from the last state and the new word. The LSTM's gates control the fading, so things last longer, but the pack stays fixed-size.</span><span class="m">A recurrent network keeps a hidden state, updated each step from the previous state and the new token. The LSTM's gates control what is kept and what decays, so information persists longer, but the state stays fixed-size.</span></p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">how the pack is packed</span><span class="m">the recurrence and its gradients</span></h2>
+      <div class="i"><p>At each step the network combines two things, the word just stepped on and the pack it is carrying, into a new pack:</p>
+<p class="eq">pack<sub>t</sub> = squash( A · word<sub>t</sub> + B · pack<sub>t−1</sub> )</p>
+<p>The same A and B are used at every step, so the walker uses one packing method all the way down the road. The blaze for the next word is read from the pack alone.</p>
+<p>Elman trained small networks to predict the next word in simple made-up sentences and then looked inside the packs. Words that played similar roles had produced similar packs: nouns grouped apart from verbs, and among nouns, animals apart from objects. No one had told the network about grammar. It had to discover those groupings to predict well.</p>
+<p>Training revealed the pack's leak. Learning that a word ten steps back mattered means passing a correction backward through ten repackings, and with each one the signal shrinks or explodes. In practice ordinary recurrent networks learned only short-range patterns. The LSTM (1997) added a separate compartment, the cell, whose contents pass from step to step mostly unchanged, plus learned gates that decide what goes in and what comes out. A forget gate, which decides what to throw away, was added in 1999. The pack still has a fixed size, but things put in it can last.</p></div><div class="m"><p>At each step the hidden state is updated from the current input and the previous state:</p>
+<p class="eq">h<sub>t</sub> = tanh( W x<sub>t</sub> + U h<sub>t−1</sub> + b )</p>
+<p>The same weights W and U are applied at every position, and the output distribution for the next token is computed from h<sub>t</sub> alone.</p>
+<p>Elman trained small networks on next-word prediction over sentences from a simple artificial grammar, then clustered their hidden states. Words with similar syntactic and semantic roles had similar representations: nouns separate from verbs, animate nouns separate from inanimate. The categories were never labeled; they emerged from the prediction objective.</p>
+<p>Training uses backpropagation through time. The gradient from a token t steps back is multiplied by roughly t Jacobians, so it tends to vanish or explode, and plain RNNs learn mainly short-range dependencies. The LSTM (1997) adds a memory cell with an additive update, which lets gradients flow over long spans, controlled by learned multiplicative gates for input and output. The forget gate was added in 1999. The state is still a fixed-size vector, but it can now retain information over many steps.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>From about 2014 to 2017, LSTMs were the standard tool for anything sequential: speech recognition, handwriting, translation, early text generation. <a href="2014-a-dog-on-the-other-road.html">The 2014 entry</a> is built on them.</p>
+<p>They also made the pack's two costs plain. Everything known about the road must squeeze into one fixed-size state, and training can't be split up: step 5 can't be computed until step 4 is done. The transformer was built to remove both.</p></div><div class="m"><p>From about 2014 to 2017, LSTMs were the default architecture for sequence tasks: speech recognition, handwriting recognition, machine translation and language modelling. The 2014 entry is built on them.</p>
+<p>They also made two costs explicit. All information about the past has to be compressed into one fixed-size vector, and computation is sequential in time: step t can't be computed before step t−1, which limits parallelism during training. The transformer removes both.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">The pack is small and leaky, and training must replay every walk in order, because step 5 needs the pack from step 4. That makes training slow to scale.</span><span class="m">The hidden state is a fixed-size bottleneck, and training is sequential over time steps, which makes it hard to parallelize and scale.</span> <a href="2014-a-dog-on-the-other-road.html">→ 2014</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="1989-a-garden-worn-in.html" style="--th:var(--th-ground)"><small>← 1989</small><span class="i">A garden, worn in</span><span class="m">Hidden Markov models</span></a>
+    <a class="next" href="2000-similar-words-similar-ground.html" style="--th:var(--th-ground)"><small>2000 →</small><span class="i">Similar words, similar ground</span><span class="m">Neural language models and word embeddings</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

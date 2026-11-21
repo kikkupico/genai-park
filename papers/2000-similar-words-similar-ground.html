@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2000 · Neural language models and word embeddings · GenAI Park">2000 · Similar words, similar ground · GenAI Park</title>
+<meta name="description" content="Words get learned positions on the ground, so trails worn after &quot;dog&quot; carry over to &quot;cat&quot;, a junction no walker passed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 6 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-ground)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2000</span> · <span class="i">The ground</span><span class="m">Representation</span></p>
+    <h1><span class="i">Similar words, similar ground</span><span class="m">Neural language models and word embeddings</span></h1>
+    <p class="paper"><i>A Neural Probabilistic Language Model</i> (2000) → <i>Efficient Estimation of Word Representations in Vector Space</i> (2013)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>The n-gram model treats every word as a separate symbol with nothing in common with any other. The paper names the result the curse of dimensionality: a model of 10 consecutive words from a 100,000-word vocabulary has about 10<sup>50</sup> possible cells, and no corpus fills more than a sliver of them. A tally can't generalize from "dog" to "cat" because, to a tally, the two are as different as "dog" and "of".</p></div><div class="m"><p>An n-gram model treats each word as an atomic symbol, with no relation to any other. The paper calls the consequence the curse of dimensionality: a joint model of 10 consecutive words over a 100,000-word vocabulary has about 10<sup>50</sup> free parameters, and no corpus constrains more than a tiny fraction of them. Counts can't generalize from "dog" to "cat".</p></div>
+      <p class="from">Picks up what was left open in <a href="1948-count-the-footprints.html">1948 · <span class="i">Count the footprints, glance back</span><span class="m">n-gram language models</span></a>, <a href="1989-a-garden-worn-in.html">1989 · <span class="i">A garden, worn in</span><span class="m">Hidden Markov models</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="ground" viewBox="0 0 800 260" role="img" aria-label="On the ground, dog and cat lie close together, so a blaze worn after 'the dog was' carries to 'the cat was', where no walker has been." data-al-m="&quot;dog&quot; and &quot;cat&quot; have nearby embeddings, so a prediction learned after &quot;the dog was&quot; generalizes to &quot;the cat was&quot;, which never occurred in training."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">"Dog" and "cat" stand on nearby ground, so the blaze carries to a junction nobody walked.</span><span class="m">"dog" and "cat" have nearby embeddings, so a prediction learned after "the dog was" generalizes to "the cat was", which never occurred in training.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>The ground itself gets shape. Words are placed so that similar words lie close together. A blaze worn in after "the dog was" now carries over to "the cat was", a junction no walker passed, because the two stand on similar ground. Here the ground stops being laid out by hand and starts to grow from data.</p></div>
+      <div><h3>In the mechanism</h3><p>Each word becomes a learned vector, and a neural network predicts the next word from the vectors of the previous few. Similar words get similar vectors, so evidence is shared between them. word2vec (2013) made such vectors cheap to learn at scale.</p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">ground that is learned</span><span class="m">learned distributed representations</span></h2>
+      <div class="i"><p>Each word gets a position: a short list of numbers, a few dozen in the original experiments, that places it on the ground. To read the blaze, the model takes the positions of the last few words, feeds them through a small neural network, and gets a probability for every word in the vocabulary. The positions and the network are learned together, by the same nudging used to wear trails.</p>
+<p>The paper's own illustration: having seen "The cat is walking in the bedroom" should make "A dog was running in a room" likelier, because "cat" and "dog", "the" and "a", "walking" and "running", "bedroom" and "room" play similar roles. Training pushes such words to nearby positions, since they predict similar next words. Once they are close, every walk through one also wears the ground around the other.</p>
+<p>The cost was speed. Computing a probability for every word in the vocabulary at every step was expensive in 2000. word2vec (2013) stripped the idea down to the ground alone: no deep network, just positions trained so that a word predicts its neighbors, cheap enough to run on billions of words. Its positions turned out to have direction as well as distance. The best-known example: the position of "king", minus "man", plus "woman", lands near "queen".</p></div><div class="m"><p>Each word is mapped to a learned feature vector, a few dozen dimensions in the original experiments. To predict the next word, the model concatenates the vectors of the previous n−1 words, passes them through a hidden layer, and applies a softmax over the vocabulary. The embedding table and the network weights are trained jointly by gradient descent on the log-likelihood.</p>
+<p>The paper's illustration: having seen "The cat is walking in the bedroom" should raise the probability of "A dog was running in a room", because the pairs cat/dog, the/a, walking/running and bedroom/room play similar roles. Words that predict similar contexts receive similar vectors, and because the model is a smooth function of those vectors, probability assigned to one sentence spreads to its neighbors.</p>
+<p>The bottleneck was the cost of computing a softmax over the whole vocabulary at every position. word2vec (2013) dropped the hidden layer and trained only embeddings, using objectives such as predicting a word's neighbors (skip-gram) with cheap approximations to the softmax, which scaled to billions of words. The resulting vector space has linear structure: vec("king") − vec("man") + vec("woman") is close to vec("queen").</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>Every neural language model since starts the same way: each token is turned into a learned vector before anything else happens. In the blaze section's terms, this is where the compass directions come from. The ground is no longer cut by hand at the word level. It is worn in from text, and what counts as similar is whatever helps predict.</p></div><div class="m"><p>Every subsequent neural language model begins by mapping tokens to learned embeddings. These are the vectors whose dot products with the model's hidden state give the next-token logits. Lexical similarity is no longer defined by hand; it is whatever geometry helps prediction.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">Better ground, but the walker still glances back only a few footprints. Seeing further stays with the pack, and later the dog.</span><span class="m">Better representations, but the context is still a fixed window of a few words. Longer context comes from recurrent state and, later, attention.</span> <a href="2014-a-dog-on-the-other-road.html">→ 2014</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="1990-carry-a-pack.html" style="--th:var(--th-sight)"><small>← 1990</small><span class="i">Carry a pack</span><span class="m">Recurrent neural networks and LSTM</span></a>
+    <a class="next" href="2012-ground-for-pictures.html" style="--th:var(--th-ground)"><small>2012 →</small><span class="i">Ground for pictures, worn in</span><span class="m">Deep convolutional networks (AlexNet)</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

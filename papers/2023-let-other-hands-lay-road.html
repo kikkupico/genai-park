@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2023 · Retrieval augmentation and tool use · GenAI Park">2023 · Let other hands lay road · GenAI Park</title>
+<meta name="description" content="Midway, the walker can ask for a search or a calculator, and another hand lays a stretch of road with the result.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 17 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-hand)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2023</span> · <span class="i">Handed to the walker</span><span class="m">Conditioning and input</span></p>
+    <h1><span class="i">Let other hands lay road</span><span class="m">Retrieval augmentation and tool use</span></h1>
+    <p class="paper"><i>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</i> (2020) → <i>Toolformer: Language Models Can Teach Themselves to Use Tools</i> (2023)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>A walker knows only what was worn into its trails during training. Facts after that date are missing, rare facts are faint, and exact arithmetic is unreliable, since it is done by reading blazes. Scouting doesn't help with any of this: you can't reason your way to a phone number.</p></div><div class="m"><p>A model's knowledge is limited to what its parameters absorbed during training: nothing after the training cutoff, unreliable recall of rare facts, and imprecise arithmetic. Generating more reasoning tokens doesn't help with any of these: missing information can't be derived.</p></div>
+      <p class="from">Picks up what was left open in <a href="2022-scout-before-answering.html">2022 · <span class="i">Scout before answering</span><span class="m">Chain-of-thought and reasoning models</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="tools" viewBox="0 0 800 260" role="img" aria-label="The walker calls for a search; another hand lays a stretch of road with the result, and the walker carries on." data-al-m="The model emits a tool call; the tool&#x27;s output is inserted into the context, and generation continues after it."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">The walker asks; another hand lays a stretch of road; the walker carries on from there.</span><span class="m">The model emits a tool call; the tool's output is inserted into the context, and generation continues after it.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>Midway, the walker can call for help: a search, a calculator, a database. Another hand lays a stretch of road with the result, and the walker carries on from the new end. It still has no map. What it gets is more road, not a view of the park. A chat works the same way: each of your messages is road laid by another hand.</p></div>
+      <div><h3>In the mechanism</h3><p>Retrieval-augmented generation fetches relevant passages and adds them to the model's input. Toolformer trained a model to write API calls into its own text, with the results spliced in. <span class="i">Either way the model reads the whole road again, including the new stretch.</span><span class="m">Either way the model attends over the whole context again, including the inserted text.</span></p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">two ways to get road laid</span><span class="m">retrieval and self-supervised tool learning</span></h2>
+      <div class="i"><p><b>Retrieval (2020).</b> Before writing, a retriever turns the question into a vector, finds the passages from a large document collection whose vectors are closest, and places them in the road ahead of the question. The walker then answers with those passages behind it. The paper trained the retriever and the writer together, and could update the model's knowledge by swapping the document index, without retraining the walker.</p>
+<p><b>Tools (2023).</b> Toolformer let the walker decide, midway, to call for help by writing the call into its own text. The results are spliced in and the walk continues. From the paper:</p>
+<p class="eq">Out of 1400 participants, 400 (or [Calculator(400 / 1400) → 0.29] 29%) passed the test.</p>
+<p>It learned this mostly on its own. The model proposed possible calls throughout ordinary text, the calls were run, and a call was kept as a training example only if the result made the following words easier to predict. A 6.7-billion-parameter model trained this way beat much larger models on several tasks requiring facts or arithmetic.</p>
+<p>In both cases the walker still has no map. It never sees the database or the search engine, only the stretch of road the result is written into.</p></div><div class="m"><p><b>RAG (2020).</b> A dense retriever embeds the query and retrieves the nearest passages from a large document index. The generator conditions on the query plus those passages. The retriever's query encoder and the generator were fine-tuned jointly, and the model's knowledge could be updated by replacing the index without retraining.</p>
+<p><b>Toolformer (2023).</b> The model learns to emit API calls inline in its own output; the calls are executed and their results inserted into the text before generation continues. An example from the paper:</p>
+<p class="eq">Out of 1400 participants, 400 (or [Calculator(400 / 1400) → 0.29] 29%) passed the test.</p>
+<p>Training data was generated self-supervised: the model sampled candidate calls at positions in ordinary text, the calls were executed, and a call was kept only if inserting its result reduced the loss on the following tokens. A 6.7B-parameter model trained this way outperformed much larger models on several knowledge and arithmetic tasks.</p>
+<p>In both cases, external information enters only through the context window. The model never accesses the index or tool directly, only the tokens of the result.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>Tool use became a standard feature: assistants that search, run code and call services, and agents that work through long tasks by alternating walking with other hands laying road. The context window became a workspace, and a chat is the same thing: every message you send is road laid by another hand.</p>
+<p>The more of the world's text is written this way, the more the next walkers will learn from it.</p></div><div class="m"><p>Tool use became a standard capability: function calling, code execution, web search, and agent loops that interleave generation with tool calls over long tasks. The context window became the working memory for these systems, and a multi-turn chat is the same structure, with each user message inserted into the context.</p>
+<p>As generated text spreads, it also enters the data later models are trained on.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">As more of the world's writing is walked by walkers, the next walkers' trails get worn by their footprints.</span><span class="m">As more published text is model-generated, future models are increasingly trained on the outputs of earlier ones.</span> <a href="2023-trails-worn-by-walkers.html">→ 2023</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="2022-scout-before-answering.html" style="--th:var(--th-scout)"><small>← 2022</small><span class="i">Scout before answering</span><span class="m">Chain-of-thought and reasoning models</span></a>
+    <a class="next" href="2023-trails-worn-by-walkers.html" style="--th:var(--th-trails)"><small>2023 →</small><span class="i">Trails worn by walkers' own footprints</span><span class="m">Model collapse</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

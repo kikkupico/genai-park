@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2022 · Reinforcement learning from human feedback · GenAI Park">2022 · Judge where walks end · GenAI Park</title>
+<meta name="description" content="A new source of trails: people judge where whole walks ended, and the trails are re-worn toward good endings, on a leash.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 15 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2022</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
+    <h1><span class="i">Judge where walks end</span><span class="m">Reinforcement learning from human feedback</span></h1>
+    <p class="paper"><i>Deep Reinforcement Learning from Human Preferences</i> (2017) → <i>Training language models to follow instructions with human feedback</i> (2022)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Pretrained walkers continue text the way text goes. Ask GPT-3 a question and it might answer, or write five more questions, or make up a confident falsehood, because all of those follow questions somewhere on the web. Next-word training can only reward matching footprints. What was wanted was a way to reward walks for how they turned out, as judged by people.</p></div><div class="m"><p>Pretrained language models continue text according to their training distribution. Given a question, GPT-3 might answer it, generate more questions, or state a fluent falsehood, since all of these follow questions on the web. Likelihood training can only reward matching the data. The goal was to optimize outputs directly for human judgments of quality.</p></div>
+      <p class="from">Picks up what was left open in <a href="1950-judge-the-footprints.html">1950 · <span class="i">Judge the footprints</span><span class="m">The imitation game</span></a>, <a href="2018-hand-over-the-road.html">2018–2020 · <span class="i">Wear the whole park, then hand over the road</span><span class="m">Generative pretraining and in-context learning</span></a>, <a href="2020-more-walkers-on-a-straight-line.html">2020 · <span class="i">More walkers, on a straight line</span><span class="m">Neural scaling laws</span></a>, <a href="2021-name-the-destination.html">2021 · <span class="i">Name the destination</span><span class="m">Classifier-free guidance</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="rlhf" viewBox="0 0 800 260" role="img" aria-label="Several complete walks are judged at their ends; trails widen toward the good ones, held on a leash near the old trails." data-al-m="Complete outputs are scored by a reward model. The policy shifts toward high-reward outputs, while a KL penalty keeps it close to the pretrained model."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">A judge marks where whole walks ended. Trails widen toward the good ones, but a leash keeps them near the old trails.</span><span class="m">Complete outputs are scored by a reward model. The policy shifts toward high-reward outputs, while a KL penalty keeps it close to the pretrained model.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>A new source of trails. Instead of copying footprints, the walker takes whole walks, and a judge marks how each one ended. The trails are re-worn toward walks that ended well. A leash keeps them near the old trails, so the walker doesn't wander off the ground it knows.</p></div>
+      <div><h3>In the mechanism</h3><p>People compare pairs of outputs, and a reward model learns their preferences. The language model is then tuned with reinforcement learning to score higher, with a penalty (the KL term) for drifting from the pretrained model. The 2017 paper introduced learning a reward from human comparisons, for simulated robots and games; <span class="i">InstructGPT applied the method, leash included, to following instructions.</span><span class="m">InstructGPT applied the method, KL penalty included, to following instructions.</span></p></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">three steps to a new trail source</span><span class="m">the InstructGPT pipeline</span></h2>
+      <div class="i"><p>The 2017 paper showed the core idea on simulated robots and Atari games, where a reward is hard to write down. People watched pairs of short clips and picked the better one; a model learned to predict their choices and became the reward. With about an hour of human comparisons, a simulated robot learned to do a backflip.</p>
+<p>InstructGPT applied it to language in three steps:</p>
+<ul class="rules">
+<li><b>Show.</b> People write good responses to prompts, and the model is fine-tuned on them: ordinary footprint-copying, on better footprints.</li>
+<li><b>Judge.</b> The model writes several responses to each prompt; people rank them. A reward model learns to predict the rankings. This is the judge at the end of the walk, now a network that can score walks no person has seen.</li>
+<li><b>Re-wear.</b> The model writes responses, the reward model scores them, and reinforcement learning shifts the trails toward high scores. A penalty grows as the trails move away from the step-one model: the leash.</li></ul>
+<p>The leash matters because the judge is imperfect. Left free, a walker finds walks the reward model scores highly that people wouldn't: longer, more flattering, more confident. This is called reward hacking.</p>
+<p>The headline result: people preferred answers from a 1.3-billion-parameter InstructGPT over those from the 175-billion-parameter GPT-3. A small model with the new trails beat a model over 100 times its size without them.</p></div><div class="m"><p>The 2017 paper introduced the core method for tasks where a reward function is hard to specify, in simulated robotics and Atari. Humans compared pairs of short trajectory clips, a reward model was fit to their preferences, and the agent was trained with RL against it. A simulated robot learned a backflip from about an hour of human feedback.</p>
+<p>InstructGPT applied it to language models in three stages:</p>
+<ul class="rules">
+<li><b>Supervised fine-tuning.</b> Labelers write demonstrations for prompts, and the pretrained model is fine-tuned on them.</li>
+<li><b>Reward modelling.</b> The model samples several outputs per prompt, labelers rank them, and a reward model is trained on the pairwise comparisons (a Bradley–Terry loss).</li>
+<li><b>RL fine-tuning.</b> The policy is optimized with PPO to maximize the reward model's score minus β · KL(policy ‖ SFT model).</li></ul>
+<p>The KL term matters because the reward model is an imperfect proxy. Without it, the policy exploits the reward model's errors, producing outputs it scores highly but humans don't prefer, such as longer, more sycophantic or overconfident text. This is reward hacking.</p>
+<p>The headline result: labelers preferred outputs of the 1.3B-parameter InstructGPT model to those of the 175B-parameter GPT-3, a model over 100 times larger.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>ChatGPT, released at the end of 2022, was trained this way, and the method, or close variants of it, became standard for assistants. Later work such as Direct Preference Optimization (2023) learns from the same comparisons without a separate reward model or reinforcement-learning loop.</p>
+<p>In the park, it is the first time trails are worn by where walks end rather than by copying footprints. The judge still only sees finished walks, though. While walking, the walker is as blind to the road ahead as ever.</p></div><div class="m"><p>ChatGPT, released in late 2022, was trained with this method, and RLHF or close variants became standard for assistant models. Direct Preference Optimization (2023) optimizes the same preference data with a classification-style loss, with no explicit reward model or RL loop.</p>
+<p>It changed the training signal from token-level imitation to sequence-level reward. Generation itself is unchanged: the model still commits to each token without evaluating continuations.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">The judge rewards how walks end, but the walker still can't look ahead before it steps, and a wrong step midway stays.</span><span class="m">The reward scores complete outputs, but generation is still greedy left to right: the model can't evaluate alternatives before committing to a token.</span> <a href="2022-scout-before-answering.html">→ 2022</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="2021-name-the-destination.html" style="--th:var(--th-hand)"><small>← 2021</small><span class="i">Name the destination</span><span class="m">Classifier-free guidance</span></a>
+    <a class="next" href="2022-scout-before-answering.html" style="--th:var(--th-scout)"><small>2022 →</small><span class="i">Scout before answering</span><span class="m">Chain-of-thought and reasoning models</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

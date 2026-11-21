@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 
-# index.html is authored for the claude.ai artifact viewer, which supplies
-# the doctype, charset and viewport. This wraps it into a full document.
+# The site is plain static files: the home page, one page per paper,
+# and the shared stylesheet and figure script.
 
 on:
   push:
@@ -28,15 +28,8 @@ jobs:
       - name: Build site
         run: |
           mkdir -p _site
-          {
-            printf '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
-            printf '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-            printf '<style>:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%%}[hidden]{display:none!important}</style>\n'
-            printf '</head>\n<body>\n'
-            cat index.html
-            printf '\n</body>\n</html>\n'
-          } > _site/index.html
-          cp -r archive _site/archive
+          cp index.html park.css park.js _site/
+          cp -r papers archive _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
