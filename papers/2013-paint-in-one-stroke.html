@@ -8,12 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body data-reg="i">
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 8 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 10 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-brush)">
     <p class="kicker"><span class="dot"></span><span class="yr">2013</span> · <span class="i">Pen and brush</span><span class="m">Image generation</span></p>
@@ -21,15 +24,16 @@
     <p class="paper"><i>Auto-Encoding Variational Bayes</i> (2013) · <i>Generative Adversarial Nets</i> (2014)</p>
     <section class="before">
       <h3>Before this</h3>
-      <div class="i"><p>Earlier generative models of images, such as Boltzmann machines, could in principle describe a whole picture, but drawing a sample from them meant running a slow chain of random adjustments, and training them was hard. Both of these papers asked for something simpler: a network that takes a handful of random numbers and returns a finished picture in one pass.</p></div><div class="m"><p>Earlier generative models of images, such as deep Boltzmann machines, defined a distribution over whole images, but sampling required long Markov chain Monte Carlo runs and training was difficult. Both papers instead train a generator network that maps a random latent vector to an image in a single forward pass.</p></div>
+      <div class="i"><p>Earlier generative models of images, such as Boltzmann machines, could in principle describe a whole picture, but drawing a sample from them meant running a slow chain of random adjustments, and training them was hard. Both of these papers asked for something simpler: a network that takes a handful of random numbers and returns a finished picture in one pass.</p></div><div class="m"><p>Earlier generative models of images, such as deep Boltzmann machines, defined a distribution over whole images, but sampling required long Markov chain Monte Carlo runs and training was difficult. Both papers instead train a generator network that maps a random latent vector to an image in a single forward pass.</p><p>Formally: learn a generator \(G_\theta\) such that \(G_\theta(z)\), with \(z\sim\mathcal{N}(0, I)\), is distributed like the data, so that sampling costs one forward pass.</p></div>
       <p class="from">Picks up what was left open in <a href="2012-ground-for-pictures.html">2012 · <span class="i">Ground for pictures, worn in</span><span class="m">Deep convolutional networks (AlexNet)</span></a>.</p>
     </section>
 
     <figure><div class="fig"><svg data-fig="stroke" viewBox="0 0 800 260" role="img" aria-label="A painter goes from a random seed to a finished picture in a single stroke." data-al-m="A generator maps a latent vector to a complete image in one forward pass, with no intermediate steps."></svg></div>
-      <figcaption><button class="replay">Replay</button><span><span class="i">From a random seed to a finished picture in one stroke. No drafts in between.</span><span class="m">A generator maps a latent vector to a complete image in one forward pass, with no intermediate steps.</span></span></figcaption></figure>
+      <figcaption><button class="replay">Replay</button><span><span class="i">From a random seed to a finished picture in one stroke. No drafts in between.</span><span class="m">A generator maps a latent vector \(z\sim\mathcal{N}(0,I)\) to a complete image \(x = G_\theta(z)\) in one forward pass, with no intermediate steps.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Images need a different walker: a painter, whose product is the canvas rather than the footprints. These first painters make the whole picture in a single stroke from a random seed. It is hardly a walk at all, just one step.</p></div>
-      <div><h3>In the mechanism</h3><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p>Both turn a random vector into an image in one pass of a network. The VAE learns this alongside an encoder that maps images back to seeds. The GAN learns it against a critic that tries to tell painted pictures from real ones: Turing's judge, turned into a trainer.</p></div><div class="m">\[x = G_\theta(z),\qquad z\sim\mathcal{N}(0, I)\]
+<p>One forward pass per sample. The VAE trains \(G_\theta\) as a decoder, alongside an encoder \(q_\phi(z\mid x)\), by maximizing a lower bound on \(\log p_\theta(x)\). The GAN trains it against a discriminator \(D\), with no likelihood at all.</p></div></div>
     </div>
     <section class="more">
       <h2>A closer look: <span class="i">two ways to teach a one-stroke painter</span><span class="m">two training objectives for a one-pass generator</span></h2>
@@ -38,12 +42,16 @@
 <p>Both have characteristic failures, and both come from the single stroke:</p>
 <ul class="rules">
 <li><b>Blur (VAE).</b> When several pictures are plausible for one seed, a painter scored pixel by pixel does best by painting their average, which looks soft.</li>
-<li><b>Mode collapse (GAN).</b> A painter that finds a few pictures the critic accepts can keep painting only those. Training can also swing back and forth without settling.</li></ul></div><div class="m"><p><b>VAE.</b> An encoder maps an image x to a Gaussian over latent codes, q(z | x), with a mean and variance. A decoder reconstructs x from a sample of z. The loss is the negative evidence lower bound: reconstruction error plus KL(q(z | x) ‖ N(0, I)). The KL term keeps the encoder's posteriors close to a shared prior, so at generation time z can be sampled from N(0, I) and decoded without an encoder. The reparameterization trick, z = μ + σ·ε, makes the sampling step differentiable.</p>
-<p><b>GAN.</b> No encoder and no explicit likelihood. A generator G maps z to images; a discriminator D is trained to classify real versus generated images, and G is trained to make D misclassify. The paper frames it as a two-player minimax game and compares it to counterfeiters and police.</p>
+<li><b>Mode collapse (GAN).</b> A painter that finds a few pictures the critic accepts can keep painting only those. Training can also swing back and forth without settling.</li></ul></div><div class="m"><p><b>VAE.</b> An encoder maps an image \(x\) to a Gaussian over codes, \(q_\phi(z\mid x) = \mathcal{N}(\mu_\phi(x), \operatorname{diag}\sigma^2_\phi(x))\), and a decoder defines \(p_\theta(x\mid z)\). Training maximizes the evidence lower bound:</p>
+\[\log p_\theta(x) \ \ge\ \mathbb{E}_{q_\phi(z\mid x)}\big[\log p_\theta(x\mid z)\big] - \mathrm{KL}\big(q_\phi(z\mid x)\,\|\,\mathcal{N}(0, I)\big)\]
+<p>The first term is reconstruction; the KL term keeps every posterior near the shared prior, so at generation time \(z\) can be drawn from \(\mathcal{N}(0, I)\) and decoded with no encoder. The reparameterization \(z = \mu_\phi(x) + \sigma_\phi(x)\odot\varepsilon\), \(\varepsilon\sim\mathcal{N}(0,I)\), makes the sampling step differentiable.</p>
+<p><b>GAN.</b> No encoder and no explicit likelihood. A generator \(G\) and a discriminator \(D\) play a two-player minimax game:</p>
+\[\min_G \max_D\ \ \mathbb{E}_{x\sim p_{\text{data}}}\big[\log D(x)\big] + \mathbb{E}_{z\sim p(z)}\big[\log\big(1 - D(G(z))\big)\big]\]
+<p>For the optimal \(D\), the generator's objective equals \(-\log 4 + 2\,\mathrm{JSD}(p_{\text{data}}\,\|\,p_G)\), minimized exactly when \(p_G = p_{\text{data}}\). The paper compares the game to counterfeiters and police.</p>
 <p>Each has a characteristic failure, and both follow from generating in one pass:</p>
 <ul class="rules">
-<li><b>Blur (VAE).</b> With a factorized Gaussian likelihood, a decoder facing several plausible outputs for one code minimizes expected pixel error by predicting their mean, which looks soft.</li>
-<li><b>Mode collapse and instability (GAN).</b> The generator can cover only a few modes that fool the discriminator, and the adversarial dynamics can oscillate instead of converging.</li></ul></div>
+<li><b>Blur (VAE).</b> With a factorized Gaussian likelihood, \(-\log p_\theta(x\mid z)\) is squared error, and for a code compatible with several images the optimal decoder output is their mean, \(\mathbb{E}[x\mid z]\), which looks soft.</li>
+<li><b>Mode collapse and instability (GAN).</b> \(G\) can cover only a few modes of \(p_{\text{data}}\) that fool \(D\), and simultaneous gradient steps on a minimax objective can oscillate instead of converging.</li></ul></div>
     </section>
     <section class="more">
       <h2>What it changed</h2>
@@ -51,7 +59,7 @@
 <p>The VAE's idea lasted in a different role. Many diffusion systems, Stable Diffusion among them, paint not on pixels but on a VAE's compressed seed-ground, and use the VAE's decoder to turn the result into an image at the end. The GAN's critic survives as the clearest picture of training by a judge.</p></div><div class="m"><p>GANs led image generation for several years, reaching photorealistic faces with StyleGAN (2018–19). Diffusion models overtook them on sample diversity and training stability.</p>
 <p>The VAE persisted as a component. Latent diffusion models, Stable Diffusion among them, run diffusion in a VAE's latent space and decode the result to pixels. The GAN's discriminator remains the canonical example of a learned critic used as a training signal.</p></div>
     </section>
-    <div class="open"><h3>Left open</h3><p><span class="i">One stroke can't correct itself. VAE pictures came out blurry; GANs were unstable to train and prone to painting the same few pictures. The painter needed drafts.</span><span class="m">A single pass can't correct its own errors: VAE samples were blurry, and GANs were unstable and prone to mode collapse. Iterative refinement was needed.</span> <a href="2020-paint-in-drafts.html">→ 2020</a></p></div>
+    <div class="open"><h3>Left open</h3><p><span class="i">One stroke can't correct itself. VAE pictures came out blurry; GANs were unstable to train and prone to painting the same few pictures. The painter needed drafts.</span><span class="m">\(x = G_\theta(z)\) is computed in a single pass, so its errors can't be corrected: VAE samples were blurry, and GANs were unstable and prone to mode collapse. Iterative refinement was needed.</span> <a href="2020-paint-in-drafts.html">→ 2020</a></p></div>
   </article>
 
   <nav class="pager" aria-label="Previous and next entries">

@@ -8,12 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body data-reg="i">
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 18 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 20 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-trails)">
     <p class="kicker"><span class="dot"></span><span class="yr">2023</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
@@ -21,15 +24,16 @@
     <p class="paper"><i>The Curse of Recursion: Training on Generated Data Makes Models Forget</i> (2023)</p>
     <section class="before">
       <h3>Before this</h3>
-      <div class="i"><p>Language models are trained on text scraped from the web. As generated text spreads across the web, later models will be trained partly on earlier models' output, whether or not anyone intends it. This paper asked what happens when that loop runs for several generations.</p></div><div class="m"><p>Language models are trained on web-scale scraped text. As generated content spreads online, future training sets will contain the outputs of earlier models, whether or not anyone intends it. This paper studied what happens when models are trained recursively on generated data.</p></div>
+      <div class="i"><p>Language models are trained on text scraped from the web. As generated text spreads across the web, later models will be trained partly on earlier models' output, whether or not anyone intends it. This paper asked what happens when that loop runs for several generations.</p></div><div class="m"><p>Language models are trained on web-scale scraped text. As generated content spreads online, future training sets will contain the outputs of earlier models, whether or not anyone intends it. This paper studied what happens when models are trained recursively on generated data.</p><p>Formally: generation \(n+1\) is fit to samples from generation \(n\), \(\theta_{n+1} = \arg\max_\theta \sum_i \log p_\theta(x_i)\) with \(x_i\sim p_{\theta_n}\). What does \(p_{\theta_n}\) converge to?</p></div>
       <p class="from">Picks up what was left open in <a href="2023-let-other-hands-lay-road.html">2023 · <span class="i">Let other hands lay road</span><span class="m">Retrieval augmentation and tool use</span></a>.</p>
     </section>
 
     <figure><div class="fig"><svg data-fig="collapse" viewBox="0 0 800 260" role="img" aria-label="Over generations trained on each other's footprints, the common trail widens and the rare trails fade away." data-al-m="Each generation is trained on samples from the previous one. High-probability outcomes grow; low-probability outcomes disappear. Rates are illustrative."></svg></div>
-      <figcaption><button class="replay">Replay</button><span><span class="i">Each generation is trained on the last one's footprints. Common ways widen; rare ways fade until nobody walks them. Rates are illustrative.</span><span class="m">Each generation is trained on samples from the previous one. High-probability outcomes grow; low-probability outcomes disappear. Rates are illustrative.</span></span></figcaption></figure>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Each generation is trained on the last one's footprints. Common ways widen; rare ways fade until nobody walks them. Rates are illustrative.</span><span class="m">Each generation \(n+1\) is fit to samples of \(p_{\theta_n}\). High-probability outcomes grow; low-probability outcomes disappear. Rates are illustrative.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Train each generation of walkers on footprints left by the one before, and the trails narrow. The common way gets wider; rare ways fade until nobody walks them. Self-play game players escape this, because a win or a loss keeps correcting their trails. Here nothing does.</p></div>
-      <div><h3>In the mechanism</h3><p>Training repeatedly on model-generated data loses the tails of the original distribution first, then drifts toward a narrow version of it. The authors call this model collapse. Keeping some original human data in the mix slows it down.</p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p>Training repeatedly on model-generated data loses the tails of the original distribution first, then drifts toward a narrow version of it. The authors call this model collapse. Keeping some original human data in the mix slows it down.</p></div><div class="m">\[x^{(n)}_{1:M}\sim p_{\theta_n},\qquad \theta_{n+1} = \arg\max_\theta \sum_{i=1}^{M}\log p_\theta\big(x^{(n)}_i\big)\]
+<p>With finite \(M\), events of small probability are missed and get less mass at the next step. Repeated, the tails vanish first and the distribution narrows. The authors call this model collapse. Mixing in original human data slows it down.</p></div></div>
     </div>
     <section class="more">
       <h2>A closer look: <span class="i">how trails narrow</span><span class="m">why recursive training narrows the distribution</span></h2>
@@ -39,7 +43,9 @@
 <li><b>Sampling.</b> A finite set of walks misses rare routes. Once a route is missed, the next generation's trails don't have it.</li>
 <li><b>Imperfect fit.</b> Every model approximates its training trails slightly wrong, and the errors add up generation after generation.</li></ul>
 <p>With language models fine-tuned repeatedly on their own text, the same pattern appeared: rare continuations disappeared, and later generations drifted toward repetitive, strange text. One example in the paper begins with medieval church architecture and, nine generations later, has become a list of jackrabbits with different-colored tails.</p>
-<p>Keeping some of the original human data in each round slowed the collapse. Later work found that adding generated data on top of the original, rather than replacing it, avoids much of the damage.</p></div><div class="m"><p>The simplest case: fit a Gaussian to N samples, draw N samples from the fit, refit, and repeat. Each finite sample under-represents the tails, and each refit inherits the error. Over generations the estimated variance shrinks toward zero, and the tails disappear first.</p>
+<p>Keeping some of the original human data in each round slowed the collapse. Later work found that adding generated data on top of the original, rather than replacing it, avoids much of the damage.</p></div><div class="m"><p>The simplest case: fit a Gaussian to \(M\) samples, draw \(M\) samples from the fit, refit, and repeat. With the unbiased variance estimate, each refit multiplies the variance by an independent factor \(\chi^2_{M-1}/(M-1)\):</p>
+\[\sigma_n^2 = \sigma_0^2 \prod_{k=1}^{n} \frac{\chi^2_{M-1,\,k}}{M-1}\]
+<p>Each factor has mean 1, so \(\mathbb{E}[\sigma_n^2] = \sigma_0^2\). But by Jensen's inequality each factor has negative expected logarithm, so \(\log\sigma_n^2\) is a random walk with negative drift, and \(\sigma_n^2 \to 0\) almost surely. Each finite sample under-represents the tails, each refit inherits the error, and the tails disappear first.</p>
 <p>The paper identifies two compounding error sources:</p>
 <ul class="rules">
 <li><b>Statistical approximation error.</b> Finite samples miss low-probability events, so the next model assigns them less probability, or none.</li>
@@ -53,7 +59,7 @@
 <p>The contrast with <a href="2022-scout-before-answering.html">the 2022 reasoning entry</a> is the lesson. Training a walker on its own walks is fine when a judge keeps checking which walks were right, as with checkable math answers or self-play games won or lost. Collapse is what happens when there is no judge.</p></div><div class="m"><p>The paper, later published in <i>Nature</i> (2024), made data provenance a concern: verified human-generated data, and the ability to tell it apart from generated data, gained value.</p>
 <p>It contrasts with RL on verifiable rewards and with self-play: training on self-generated data works when an external signal (correct answers, game outcomes) filters or weights it. Collapse is what happens without such a signal.</p></div>
     </section>
-    <div class="open"><h3>Left open</h3><p><span class="i">Still open: where will the next trails come from?</span><span class="m">Still open: where future training data will come from.</span></p></div>
+    <div class="open"><h3>Left open</h3><p><span class="i">Still open: where will the next trails come from?</span><span class="m">Still open: where future \(p_{\text{data}}\) will come from.</span></p></div>
   </article>
 
   <nav class="pager" aria-label="Previous and next entries">

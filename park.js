@@ -1,13 +1,13 @@
 (()=>{
 const REGK='genai-park-reg';
-const LBL={"leads somewhere real": "true", "leads nowhere": "false", "passes as human ✓": "high likelihood ✓", "the judge sees only the footprints": "the score sees only the text", "where the walks ended, which the judge never checks": "whether it is true, which the score never checks", "the ground: word vectors": "embedding space", "worn in by many walkers": "seen often in training", "no walker has been here": "never seen in training", "carried over: similar ground": "generalized: similar embeddings", "random seed": "latent z ~ N(0, I)", "a painter: the product is the canvas, not the footprints": "image generator: the output is an image, not a sequence", "one stroke, no drafts": "one forward pass", "source road (French)": "encoder input (French)", "the walk (English)": "decoder output (English)", "road laid by the user: two examples and a cue": "prompt: two examples and a cue", "every footprint leaves a draft": "each step: a less noisy image", "glances lightly": "low guidance scale", "glances hard": "high guidance scale", "a request": "prompt", "✓ ended well": "✓ high reward", "✗ ended badly": "✗ low reward", "the leash: stay near the old trails": "KL penalty: stay near the pretrained model", "the walker takes whole walks": "sample complete outputs", "a judge marks where each one ended": "a reward model scores each one", "the trails are re-worn toward good endings": "the policy is updated toward high reward", "but held near the old trails": "with a KL penalty toward the original model", "scouting: used to reach the answer, then set aside": "reasoning tokens: computed, then discarded", "the product": "final answer", "laid by a search tool": "inserted tool output", "waiting…": "tool running…", "same spot, different road: a different heading, a different blaze": "same last token, different context: different state, different distribution", "Road 1: “in wildness is the”": "Context 1: “in wildness is the”", "Road 2: “I went to the”": "Context 2: “I went to the”", "Shannon’s walker sees only the last word": "bigram model: conditions only on the last token", "road 1 reaches “the”": "context 1 ends in “the”", "road 2 reaches “the”": "context 2 ends in “the”", "both roads, one junction: same heading, same blaze": "same last token: same distribution", "typed by the user": "user input", "paths cut by hand: which sound may follow which": "designed topology: allowed state transitions", "how worn each one gets: learned from recordings": "transition probabilities: estimated with Baum–Welch", "cut by hand: features engineers chose": "hand-engineered features + classifier", "worn in: features learned from a million photos": "learned convolutional features, trained end to end", "26% wrong": "26.2% top-5 error", "15% wrong": "15.3% top-5 error", "how far off the blaze is": "test loss (log)", "walkers × ground (log) →": "compute (log) →", "forecast, before it was built": "extrapolated before training", "each step: ten times more walkers, finer ground": "each point: 10× more compute", "trained on human footprints": "trained on human data", "after “in wildness is the”, the blaze:": "P(next token | “in wildness is the”):", "the blaze here is just this wear": "the distribution is just these counts", "in view:": "context window:", "the pack": "hidden state", "sniffs per step →": "tokens attended per step →", "Done: every word cost a full run": "Done: each token attended over all before it", "this dog’s nose: ": "this head’s query: ", "few walkers, coarse ground": "small model, little compute", "many walkers, fine ground": "large model, much compute", "more walkers, finer ground": "more compute", "what is the walk about?": "what is the topic?"};
+const LBL={"leads somewhere real": "true", "leads nowhere": "false", "passes as human ✓": "high likelihood ✓", "the judge sees only the footprints": "the score sees only the text", "where the walks ended, which the judge never checks": "whether it is true, which the score never checks", "the ground: word vectors": "embedding space", "worn in by many walkers": "seen often in training", "no walker has been here": "never seen in training", "carried over: similar ground": "generalized: similar embeddings", "random seed": "z ~ N(0, I)", "a painter: the product is the canvas, not the footprints": "image generator: the output is an image, not a sequence", "one stroke, no drafts": "one forward pass", "source road (French)": "encoder input (French)", "the walk (English)": "decoder output (English)", "road laid by the user: two examples and a cue": "prompt: two examples and a cue", "every footprint leaves a draft": "each step: xₜ → xₜ₋₁, less noisy", "glances lightly": "low guidance scale", "glances hard": "high guidance scale", "a request": "prompt", "✓ ended well": "✓ high reward", "✗ ended badly": "✗ low reward", "the leash: stay near the old trails": "− β·KL(π ‖ π_ref): stay near the pretrained model", "the walker takes whole walks": "sample complete outputs", "a judge marks where each one ended": "a reward model scores each: r(x, y)", "the trails are re-worn toward good endings": "the policy is updated toward high reward", "but held near the old trails": "with a KL penalty toward the original model", "scouting: used to reach the answer, then set aside": "reasoning tokens: computed, then discarded", "the product": "final answer", "laid by a search tool": "inserted tool output", "waiting…": "tool running…", "same spot, different road: a different heading, a different blaze": "same last token, different context: different state, different distribution", "Road 1: “in wildness is the”": "Context 1: “in wildness is the”", "Road 2: “I went to the”": "Context 2: “I went to the”", "Shannon’s walker sees only the last word": "bigram model: p(xₜ | xₜ₋₁) only", "road 1 reaches “the”": "context 1 ends in “the”", "road 2 reaches “the”": "context 2 ends in “the”", "both roads, one junction: same heading, same blaze": "same last token: same distribution", "typed by the user": "user input", "paths cut by hand: which sound may follow which": "designed topology: allowed state transitions", "how worn each one gets: learned from recordings": "transition probabilities: estimated with Baum–Welch", "cut by hand: features engineers chose": "hand-engineered features + classifier", "worn in: features learned from a million photos": "learned convolutional features, trained end to end", "26% wrong": "26.2% top-5 error", "15% wrong": "15.3% top-5 error", "how far off the blaze is": "log L (test loss)", "walkers × ground (log) →": "log C (compute) →", "forecast, before it was built": "extrapolated before training", "each step: ten times more walkers, finer ground": "each point: 10× more compute", "trained on human footprints": "trained on human data", "after “in wildness is the”, the blaze:": "p(xₜ | “in wildness is the”):", "the blaze here is just this wear": "p̂(xₜ | the) = c(the, xₜ) / c(the)", "in view:": "context window:", "the pack": "hₜ (hidden state)", "sniffs per step →": "tokens attended per step →", "Done: every word cost a full run": "Done: each token attended over all before it", "this dog’s nose: ": "this head’s query: ", "few walkers, coarse ground": "small model, little compute", "many walkers, fine ground": "large model, much compute", "more walkers, finer ground": "more compute", "what is the walk about?": "what is the topic?", "clue A →": "x₁ →", "clue B": "x₂", "clue A": "x₁", "one signpost: weigh two clues, point one way": "one perceptron: threshold a weighted sum of two inputs", "point to the pond": "class 1", "point to the gate": "class 0", "wrong way: nudge the weights": "mistake: w ← w + η(y − ŷ)x", "every spot sorted": "converged: no mistakes", "pond if exactly one clue holds": "XOR: 1 if exactly one input is on", "no straight line sorts these": "not linearly separable", "either clue": "h₁ ≈ OR", "both clues": "h₂ ≈ AND", "exactly one": "y = XOR", "hidden posts: no walker sees them": "hidden layer", "forward: each post weighs the posts before it": "forward pass: each unit takes a weighted sum of the layer before", "back: the blame splits by how much each post was heeded": "backward pass: the chain rule gives ∂E/∂w for every weight", "the middle posts found these clues on their own": "the hidden units learned these features unaided", "… thousands of walks later": "… thousands of gradient steps later", "✗ wrong way": "✗ high error", "✓ right way": "✓ low error", "solid: heed it · dashed: do the opposite": "solid: positive weight · dashed: negative weight", "where it says pond": "predicted class 1"};
 const RLBL=Object.fromEntries(Object.entries(LBL).map(([a,b])=>[b,a]));
 const isM=()=>document.body.dataset.reg==='m';
 const T=s=>isM()?(LBL[s]??s):s;
 const L=(i,m)=>isM()?m:i;
 const NS='http://www.w3.org/2000/svg';
 const ROADC={road:['ru'],givenroad:['gu']};let RID=0;
-const el=(tag,a={},p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);
+const el=(tag,a={},p)=>{if(SK&&tag==='path'&&ROADC[a.class])a={...a,class:'mroad'+(a.class==='givenroad'?' given':'')};const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);
   if(p){const rc=tag==='path'&&ROADC[a.class];if(rc){e.id='rd'+(++RID);el('use',{href:'#'+e.id,class:rc[0]},p)}p.appendChild(e);}return e};
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const seg=(t,a,b)=>clamp((t-a)/(b-a));
@@ -15,25 +15,28 @@ const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
 const lerp=(a,b,u)=>a+(b-a)*u;
 const W=['in','wildness','is','the','preservation','of','the','world'];
 const DX=84,X0=104,Y0=146,AMP=12;
-const R=s=>({x:X0+s*DX,y:Y0+AMP*Math.sin(s*1.1)});
+/* SK: draw this figure in the minimal diagram skin (abstraction register, figures with mskin:true) */
+let SK=false;
+const R=s=>({x:X0+s*DX,y:Y0+(SK?0:AMP*Math.sin(s*1.1))});
 const f1=n=>n.toFixed(1);
 function roadD(a,b,F=R){if(b<=a+1e-3)return 'M0 0';let d='';const n=Math.max(2,Math.ceil((b-a)/.08));for(let k=0;k<=n;k++){const p=F(a+(b-a)*k/n);d+=(k?'L':'M')+f1(p.x)+' '+f1(p.y)}return d}
 function place(e,x,y,flip=1){e.setAttribute('transform',`translate(${f1(x)} ${f1(y)}) scale(${flip} 1)`);if(e.gait)e.gait(x,y)}
-function tufts(g,seed){let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;
+function tufts(g,seed){if(SK){el('rect',{x:0,y:0,width:800,height:400,class:'mbg'},g);return}let s=seed;const r=()=>(s=(s*16807)%2147483647)/2147483647;
   el('rect',{x:0,y:0,width:800,height:400,fill:'url(#glow)'},g);
   for(let i=0;i<52;i++){const x=r()*800,y=r()*260,k=.75+r()*.6;if(Math.abs(y-Y0)<26&&x<720)continue;
     el('path',{d:`M${f1(x-3*k)} ${f1(y)}q.4 -3 ${f1(2*k)} ${f1(-5*k)}M${f1(x)} ${f1(y)}v${f1(-6.5*k)}M${f1(x+3*k)} ${f1(y)}q-.4 -3 ${f1(-2*k)} ${f1(-5*k)}`,class:'tuft'},g);
     if(r()<.16){const c=['flA','flB','flC'][Math.floor(r()*3)];el('circle',{cx:f1(x+(r()-.5)*6),cy:f1(y-7*k-1.5),r:1.9,class:'fl '+c},g)}}}
-function gate(g){const one=(x,y,o)=>{const e=el('path',{d:`M${x-11} ${y+14}V${y-18}M${x+11} ${y+14}V${y-18}M${x-14} ${y-13}H${x+14}M${x-14} ${y-4}H${x+14}`,class:'gate'},g);e.style.opacity=o};
+function gate(g){if(SK)return;const one=(x,y,o)=>{const e=el('path',{d:`M${x-11} ${y+14}V${y-18}M${x+11} ${y+14}V${y-18}M${x-14} ${y-13}H${x+14}M${x-14} ${y-4}H${x+14}`,class:'gate'},g);e.style.opacity=o};
   const p=R(-1);one(p.x,p.y,1);[-58,58].forEach(dy=>{const y=p.y+dy;one(p.x,y,.45);el('path',{d:`M${p.x+14} ${y}q28 ${f1(-dy*.06)} 60 ${f1(-dy*.22)}`,class:'worn','stroke-width':5,'stroke-opacity':.4},g)})}
 function opts_pmax(o){return Math.max(...o.map(x=>x[1]))}
 function foot(g,p,ang,side,c){const f=el('g',{transform:`translate(${f1(p.x)} ${f1(p.y)}) rotate(${f1(ang)}) translate(0 ${side*3}) scale(1.3)`},g);
   el('path',{d:'M-.5 -3.4C3.4 -3.6 6.2 -1.6 6.2 .2S3.4 3.7 -.4 3.4C-2.6 3.2 -2.9 -3.2 -.5 -3.4Z',class:'fp '+c},f);
   el('ellipse',{cx:-5.4,cy:0,rx:2.4,ry:2.6,class:'fp '+c},f);return f}
 function posts(g,words=W,F=R,cls=[],dy=[]){return words.map((w,i)=>{const p=F(i),a=F(i-.15),b=F(i+.15);const c=cls[i]||'';const gg=el('g',{},g);
-  foot(gg,p,Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI,i%2?1:-1,c);const t=el('text',{x:p.x,y:p.y+(dy[i]??38),class:'word '+c,'text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
+  if(SK)el('circle',{cx:f1(p.x),cy:f1(p.y),r:3.2,class:'mnode '+c},gg);else foot(gg,p,Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI,i%2?1:-1,c);const t=el('text',{x:p.x,y:p.y+(SK?26:(dy[i]??38)),class:'word '+c,'text-anchor':'middle'},gg);t.textContent=w;gg.style.opacity=0;return gg})}
 const rev=(s,i)=>clamp((s-i)/.12+1);
 function walker(g){const w=el('g',{},g);
+  if(SK){el('path',{d:'M0 -9V-34M-5 -34H5',class:'mcur'},w);w.gait=()=>{};return w}
   el('ellipse',{cx:0,cy:1,rx:9,ry:2.4,class:'shade'},w);
   const body=el('g',{},w);
   const arm=el('path',{class:'limb',d:'M0 -26L-3 -16'},body),la=el('path',{class:'limb'},body),lb=el('path',{class:'limb'},body);
@@ -52,6 +55,7 @@ function walker(g){const w=el('g',{},g);
   el('path',{d:'M-9 -40H9M-5.5 -40L-4.5 -46H4.5L5.5 -40',class:'hat'},body);
   return w}
 function dog(g,color){const d=el('g',{style:`--dc:${color}`},g);
+  if(SK){el('path',{d:'M0 -27l5 5l-5 5l-5 -5z',class:'mdog'},d);d.legs=[];d.tail=el('path',{d:'M0 0'},d);return d}
   el('ellipse',{cx:2,cy:1,rx:13,ry:2.3,class:'shade'},d);
   d.legs=[-7,-3,6,10].map(x=>({x,e:el('line',{x1:x,y1:-7,x2:x,y2:0,class:'dleg'},d)}));
   d.tail=el('path',{d:'M-9 -10q-6 -3 -8 -10',class:'dtail'},d);
@@ -75,13 +79,18 @@ class Trip{
 }
 function puff(c,x,y,e,t,maxR,base,life=.8){if(!e){c.style.opacity=0;return}const f=(t-e.t)/life;if(f<0||f>=1){c.style.opacity=0;return}c.setAttribute('cx',f1(x));c.setAttribute('cy',f1(y));c.setAttribute('r',f1(4+maxR*ease(f)));c.style.opacity=base*(1-f)}
 function walkS(t,per,s0,s1,move=.62){const n=Math.max(0,t)/per,i=Math.floor(n);return Math.min(s0+i+ease(clamp((n-i)/move)),s1)}
-function fan(g,o,to,opts,L=110){const base=Math.atan2(to.y-o.y,to.x-o.x),angs=[base,base-.55,base+.55];
+function fan(g,o,to,opts,L=110){if(SK)return mfan(g,o,opts);const base=Math.atan2(to.y-o.y,to.x-o.x),angs=[base,base-.55,base+.55];
   const pm=opts_pmax(opts);const items=opts.map(([w,p],i)=>{const a=angs[i],e={x:o.x+L*Math.cos(a),y:o.y+L*Math.sin(a)};const gg=el('g',{},g);
     const line=el('path',{d:`M${f1(o.x)} ${f1(o.y)}L${f1(e.x)} ${f1(e.y)}`,class:'fan','stroke-width':f1(3+14*p),'stroke-opacity':f1(.2+.8*p/pm),'stroke-dasharray':`${L} ${L+60}`,'stroke-dashoffset':L},gg);
     const lab=el('text',{x:f1(e.x+14*Math.cos(a)+4),y:f1(e.y+14*Math.sin(a)+6),class:'flabel'},gg);lab.append(w);
     const pr=el('tspan',{class:'prob',dx:5},lab);pr.textContent=p.toFixed(2);return{gg,line,lab}});
   return{set(grow,label,choose,gone){items.forEach((it,i)=>{it.line.setAttribute('stroke-dashoffset',f1(L*(1-grow)));it.line.style.visibility=grow>0?'visible':'hidden';it.lab.style.opacity=label;it.gg.style.opacity=(i===0?1:1-.8*choose)*(1-gone)})}}}
-function layers(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const road=el('path',{class:'road',d:'M0 0'},bg);gate(bg);return{bg,road,mid:el('g',{},svg),top:el('g',{},svg)}}
+/* the distribution as a bar chart under the current position */
+function mfan(g,o,opts){const pm=opts_pmax(opts),BW=220,x0=Math.min(o.x+20,770-(100+BW*pm+40));
+  const items=opts.map(([w,p],i)=>{const y=o.y+54+i*21,gg=el('g',{},g);const lab=txt(gg,x0+92,y+4,'flabel','end');lab.textContent=w;
+    const bar=el('rect',{x:x0+100,y:y-6,width:0,height:11,class:i?'mbar':'mbar top'},gg);const pr=txt(gg,x0+106,y+4,'prob');pr.textContent=p.toFixed(2);return{gg,lab,bar,pr,w:BW*p}});
+  return{set(grow,label,choose,gone){items.forEach((it,i)=>{const w=it.w*ease(grow);it.bar.setAttribute('width',f1(w));it.pr.setAttribute('x',f1(x0+106+w));it.lab.style.opacity=label;it.pr.style.opacity=label;it.gg.style.opacity=grow>0?(i===0?1:1-.75*choose)*(1-gone):0})}}}
+function layers(svg,seed){const bg=el('g',{},svg);tufts(bg,seed);const road=el('path',{class:SK?'mroad':'road',d:'M0 0'},bg);gate(bg);return{bg,road,mid:el('g',{},svg),top:el('g',{},svg)}}
 function txt(g,x,y,cls,anchor='start'){return el('text',{x,y,class:cls,'text-anchor':anchor},g)}
 
 
@@ -129,7 +138,7 @@ judge:{dur:9,hold:2.8,init(svg){const bg=el('g',{},svg);tufts(bg,101);
     this.pa=posts(bg,['Walking','was','written','by','Thoreau'],RA);this.pb=posts(bg,['Walking','was','written','by','Emerson'],RB);
     [...this.pa,...this.pb].forEach(p=>p.style.opacity=1);
     const ea=RA(4.75),eb=RB(4.75);
-    this.endA=el('g',{},svg);el('path',{d:`M${ea.x-12} ${ea.y+9}v-15l12 -11l12 11v15z`,class:'house'},this.endA);
+    this.endA=el('g',{},svg);if(!SK)el('path',{d:`M${ea.x-12} ${ea.y+9}v-15l12 -11l12 11v15z`,class:'house'},this.endA);
     const ta=txt(this.endA,ea.x+22,ea.y+6,'stamp good');ta.textContent='leads somewhere real';
     this.endB=el('g',{},svg);el('path',{d:`M${eb.x-14} ${eb.y}h26`,class:'leash'},this.endB);
     const tb=txt(this.endB,eb.x+22,eb.y+6,'stamp bad');tb.textContent='leads nowhere';
@@ -428,7 +437,103 @@ collapse:{dur:8.4,hold:2.6,init(svg){const bg=el('g',{},svg);tufts(bg,163);
     const p=a.map((v,i)=>lerp(v,b[i],u));
     const pmx=Math.max(...p);this.br.forEach((e,i)=>{e.setAttribute('stroke-width',f1(2+26*p[i]));e.setAttribute('stroke-opacity',f1(.15+.85*p[i]/pmx));e.style.opacity=clamp(p[i]*14)});
     this.lb.forEach((l,i)=>{l.s.textContent=p[i]<.005?'gone':Math.round(p[i]*100)+'%';l.t.style.opacity=.35+.65*clamp(p[i]*12)});
-    const G=Math.round(x)+1;this.hud.textContent=`Generation ${G}`;this.hud2.textContent=G===1?T('trained on human footprints'):L(`trained on generation ${G-1}’s footprints`,`trained on generation ${G-1}’s outputs`)}}
+    const G=Math.round(x)+1;this.hud.textContent=`Generation ${G}`;this.hud2.textContent=G===1?T('trained on human footprints'):L(`trained on generation ${G-1}’s footprints`,`trained on generation ${G-1}’s outputs`)}},
+
+/* 1958 · perceptron */
+perceptron:{dur:9.8,hold:2.6,init(svg){const bg=el('g',{},svg);tufts(bg,151);
+    const B={x0:40,x1:440,y0:62,y1:222};this.B=B;
+    const P=[[-.8,.6],[-.5,.85],[-.75,-.05],[-.35,.4],[-.05,.8],[-.85,-.65],[.15,.75],[.35,-.45],[.75,.2],[.45,-.85],[.85,-.4],[.15,-.5],[.45,.85],[.4,0]];
+    const Y=P.map(([u,v])=>v>1.1*u-.05?1:-1);
+    /* a real perceptron run: cycle through the spots, nudge on every mistake */
+    let w=[.9,.3],b=.1;const st=[[w[0],w[1],b,-1]];
+    for(let ep=0;ep<30&&st.length<9;ep++){let m=0;P.forEach(([u,v],i)=>{if(st.length>=9)return;const s=w[0]*u+w[1]*v+b;if((s>0?1:-1)!==Y[i]){w[0]+=.6*Y[i]*u;w[1]+=.6*Y[i]*v;b+=.6*Y[i];st.push([w[0],w[1],b,i]);m++}});if(!m)break}
+    this.st=st;this.K=st.length-1;
+    el('rect',{x:B.x0,y:B.y0,width:B.x1-B.x0,height:B.y1-B.y0,rx:4,class:'frame'},bg);
+    this.tint=el('path',{d:'M0 0',class:'side'},bg);this.line=el('path',{d:'M0 0',class:'heading'},bg);
+    const X=u=>lerp(B.x0,B.x1,(u+1)/2),Yp=v=>lerp(B.y1,B.y0,(v+1)/2);this.X=X;this.Yp=Yp;
+    const mark=(g,x,y,c)=>c>0?el('circle',{cx:x,cy:y,r:6.5,class:'vdot'},g):el('rect',{x:x-6,y:y-6,width:12,height:12,rx:1.5,class:'house'},g);
+    this.pts=P.map(([u,v],i)=>{mark(bg,X(u),Yp(v),Y[i]);return el('circle',{cx:X(u),cy:Yp(v),r:13,class:'ring','stroke-opacity':0},bg)});
+    const ax=txt(bg,B.x1,B.y1+14,'prob','end');ax.textContent='clue A →';
+    const ay=txt(bg,B.x0-8,B.y0+4,'prob','end');ay.textContent='clue B';
+    this.h1=txt(svg,24,30,'hudb');this.h1.textContent='one signpost: weigh two clues, point one way';
+    const lg=el('g',{},svg);mark(lg,46,246,1);const l1=txt(lg,58,250,'prob');l1.textContent='point to the pond';
+    mark(lg,190,246,-1);const l2=txt(lg,202,250,'prob');l2.textContent='point to the gate';
+    el('rect',{x:322,y:240,width:12,height:12,rx:1.5,class:'side',style:'opacity:.45'},lg);const l3=txt(lg,340,250,'prob');l3.textContent='where it says pond';
+    this.nudge=txt(svg,B.x0+6,B.y0-8,'hand');this.nudge.textContent='wrong way: nudge the weights';
+    this.done=stampT(svg,B.x0+6,B.y0-6,true,'every spot sorted');
+    /* XOR, on the right */
+    const C={x0:528,x1:760,y0:92,y1:222};this.C=C;
+    this.xg=el('g',{},svg);
+    el('rect',{x:C.x0,y:C.y0,width:C.x1-C.x0,height:C.y1-C.y0,rx:4,class:'frame'},this.xg);
+    this.xt=el('path',{d:'M0 0',class:'side'},this.xg);this.xl=el('path',{d:'M0 0',class:'heading'},this.xg);
+    const XQ=[[-.6,-.6,-1],[.6,.6,-1],[-.6,.6,1],[.6,-.6,1]];this.XQ=XQ;
+    const XX=u=>lerp(C.x0,C.x1,(u+1)/2),XY=v=>lerp(C.y1,C.y0,(v+1)/2);this.XX=XX;this.XY=XY;
+    this.xr=XQ.map(([u,v,c])=>{mark(this.xg,XX(u),XY(v),c);return el('circle',{cx:XX(u),cy:XY(v),r:13,class:'ring','stroke-opacity':0},this.xg)});
+    const x1=txt(this.xg,C.x0,C.y0-34,'hudb');x1.textContent='pond if exactly one clue holds';
+    this.xs=stampT(this.xg,C.x0,C.y0-10,false,'no straight line sorts these');
+    this.xc=txt(this.xg,C.x1,C.y1+18,'prob','end')},
+  /* clip the box to the half-plane w·x+b>0, in data units */
+  half(w0,w1,b,BX,FX,FY){const box=[[-1,-1],[1,-1],[1,1],[-1,1]],f=([u,v])=>w0*u+w1*v+b,out=[],seg=[];
+    for(let i=0;i<4;i++){const p=box[i],q=box[(i+1)%4],fp=f(p),fq=f(q);if(fp>0)out.push(p);
+      if((fp>0)!==(fq>0)){const s=fp/(fp-fq),r=[p[0]+(q[0]-p[0])*s,p[1]+(q[1]-p[1])*s];out.push(r);seg.push(r)}}
+    const d=a=>a.map((p,i)=>(i?'L':'M')+f1(FX(p[0]))+' '+f1(FY(p[1]))).join('');
+    return{tint:out.length>2?d(out)+'Z':'M0 0',line:seg.length===2?d(seg):'M0 0'}},
+  draw(t){const st=this.st,T0=.6,per=.95;const k=Math.min(this.K,Math.max(0,Math.floor((t-T0)/per)));
+    const ph=(t-T0)/per-k;let a=st[k],bb=a;
+    if(t>=T0&&(t-T0)/per<this.K){bb=st[k+1];const u=ease(seg(ph,.45,1));a=a.map((x,i)=>i<3?lerp(x,bb[i],u):x)}else if(t>=T0)a=st[this.K];
+    const h=this.half(a[0],a[1],a[2],this.B,this.X,this.Yp);this.tint.setAttribute('d',h.tint);this.line.setAttribute('d',h.line);
+    const active=t>=T0&&(t-T0)/per<this.K;
+    this.pts.forEach((r,i)=>r.setAttribute('stroke-opacity',active&&bb[3]===i?f1(Math.sin(Math.PI*seg(ph,0,.9))):'0'));
+    this.nudge.style.opacity=active?1:0;this.done.style.opacity=seg(t,T0+this.K*per+.1,T0+this.K*per+.5);
+    /* XOR: any line, any tilt, at least one spot is wrong */
+    const X0=5.6;this.xg.style.opacity=seg(t,X0-.4,X0);
+    const th=lerp(.3,.3+Math.PI*1.25,ease(seg(t,X0,X0+3.6))),off=.45*Math.sin(2.3*(t-X0));
+    const w0=Math.cos(th),w1=Math.sin(th),b=off;
+    let err=this.XQ.map(([u,v,c])=>((w0*u+w1*v+b)>0?1:-1)!==c),s=1;
+    if(err.filter(Boolean).length>2){err=err.map(e=>!e);s=-1}
+    const hx=this.half(s*w0,s*w1,s*b,this.C,this.XX,this.XY);
+    this.xt.setAttribute('d',hx.tint);this.xl.setAttribute('d',hx.line);
+    this.xr.forEach((r,i)=>r.setAttribute('stroke-opacity',t>X0&&err[i]?'.9':'0'));
+    const n=err.filter(Boolean).length;this.xc.textContent=t>X0?L(`wrong: ${n}`,`errors: ${n}`):'';
+    this.xs.style.opacity=seg(t,X0+3.7,X0+4.1)}},
+
+/* 1986 · backpropagation */
+backprop:{dur:9.4,hold:3,init(svg){const bg=el('g',{},svg);tufts(bg,171);
+    const N={a:[130,96],b:[130,192],h:[400,96],g:[400,192],o:[660,144]};this.N=N;
+    this.E=[['a','h'],['b','h'],['a','g'],['b','g'],['h','o'],['g','o']];
+    this.w0=[.35,-.25,.2,.3,-.3,.25];this.w1=[1,1,1,1,1,-1];
+    this.paths=this.E.map(([p,q])=>el('path',{d:`M${N[p][0]} ${N[p][1]}L${N[q][0]} ${N[q][1]}`,class:'worn'},bg));
+    this.neg=this.E.map(([p,q])=>el('path',{d:`M${N[p][0]} ${N[p][1]}L${N[q][0]} ${N[q][1]}`,class:'leash'},bg));
+    Object.values(N).forEach(([x,y])=>el('circle',{cx:x,cy:y,r:19,class:'plaza'},bg));
+    const lab=(x,y,s,c='flabel',a='middle')=>{const e=txt(bg,x,y,c,a);e.textContent=s;return e};
+    lab(N.a[0]-30,N.a[1]+7,'clue A','flabel','end');lab(N.b[0]-30,N.b[1]+7,'clue B','flabel','end');
+    this.q1=lab(N.h[0],N.h[1]-30,'?');this.q2=lab(N.g[0],N.g[1]+40,'?');
+    this.m1=lab(N.h[0],N.h[1]-30,'either clue');this.m2=lab(N.g[0],N.g[1]+40,'both clues');
+    lab(N.o[0]+30,N.o[1]+7,'exactly one','flabel','start');
+    lab(N.h[0],254,'hidden posts: no walker sees them','prob');
+    this.dots=this.E.map(()=>el('circle',{r:5.5,class:'ghost'},bg));
+    this.bdots=this.E.map(()=>el('circle',{r:5,class:'blame'},bg));
+    this.h1=txt(svg,24,30,'hudb');this.h1.textContent='forward: each post weighs the posts before it';
+    this.h2=txt(svg,24,30,'hudb');this.h2.textContent='back: the blame splits by how much each post was heeded';
+    this.h3=txt(svg,24,30,'hudb');this.h3.textContent='the middle posts found these clues on their own';
+    this.later=txt(svg,400,144,'hand','middle');this.later.textContent='… thousands of walks later';
+    this.bad=stampT(svg,N.o[0]-34,N.o[1]-34,false,'✗ wrong way');this.good=stampT(svg,N.o[0]-34,N.o[1]-34,true,'✓ right way');
+    const lg=txt(svg,776,254,'prob','end');lg.textContent='solid: heed it · dashed: do the opposite'},
+  draw(t){const N=this.N,E=this.E;
+    const at=(e,u,back)=>{const[p,q]=E[e],A=N[back?q:p],B2=N[back?p:q];return[lerp(A[0],B2[0],u),lerp(A[1],B2[1],u)]};
+    const run=(d,t0,back)=>{E.forEach((e,i)=>{const l2=i>=4,s=back?(l2?t0:t0+1):(l2?t0+1:t0),u=seg(t,s,s+1);const on=t>s&&t<s+1;
+      d[i].style.opacity=on?(back?.95:.85):0;if(on){const[x,y]=at(i,ease(u),back);d[i].setAttribute('cx',f1(x));d[i].setAttribute('cy',f1(y))}})};
+    const F1=.5,BK=3.2,F2=6.1;
+    if(t<BK)run(this.dots,F1,false);else run(this.dots,F2,false);run(this.bdots,BK,true);
+    /* weights change as the blame passes each layer, then again over many walks */
+    const u2=seg(t,BK,BK+1),u1=seg(t,BK+1,BK+2),uL=ease(seg(t,BK+2.2,F2-.1));
+    E.forEach((e,i)=>{const nudged=lerp(this.w0[i],this.w0[i]+.25*(this.w1[i]-this.w0[i]),i>=4?u2:u1),w=lerp(nudged,this.w1[i],uL);
+      const sw=f1(2+6*Math.abs(w));this.paths[i].setAttribute('stroke-width',sw);this.paths[i].style.opacity=w>0?.9:0;
+      this.neg[i].style.opacity=w<0?1:0;this.neg[i].style.strokeWidth=f1(1.6+3*Math.abs(w))+'px'});
+    this.h1.style.opacity=t<BK-.1?seg(t,.2,.5):(t>=F2&&t<F2+2.3?1:0);this.h2.style.opacity=t>=BK-.1&&t<F2?1:0;this.h3.style.opacity=seg(t,F2+2.3,F2+2.6);
+    this.later.style.opacity=seg(t,BK+2.2,BK+2.5)*(1-seg(t,F2-.2,F2));
+    this.bad.style.opacity=seg(t,F1+2,F1+2.3)*(1-seg(t,BK+2.2,BK+2.5));this.good.style.opacity=seg(t,F2+2,F2+2.3);
+    const m=seg(t,F2+2.3,F2+2.8);this.m1.style.opacity=this.m2.style.opacity=m;this.q1.style.opacity=this.q2.style.opacity=1-m}}
 };
 
 const FIGS={
@@ -473,6 +578,11 @@ ngram:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,41);this.L=L;this.cone=el('
 
 /* 5 · pack */
 pack:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,53);this.L=L;
+    if(SK){/* h_t as a fixed-length vector: each token adds its vector, older contributions decay */
+      const D=16,cw=18;this.cells=Array.from({length:D},(_,k)=>el('rect',{x:256+k*cw,y:30,width:cw-3,height:28,rx:1.5,class:'mcell'},L.mid));
+      this.vec=W.map((_,i)=>Array.from({length:D},(_,k)=>{const v=Math.sin(i*12.9898+k*78.233)*43758.5453;return 2*(v-Math.floor(v))-1}));
+      const lab=txt(L.mid,240,49,'hud','end');lab.textContent='the pack';const dl=txt(L.mid,256+D*cw,74,'prob','end');dl.textContent='d = 16';
+      this.strap=el('path',{class:'strap',d:'M0 0'},L.mid);this.p=posts(L.mid);this.w=walker(L.top);return}
     shadow(L.mid,250,16,300,56,12);el('rect',{x:250,y:16,width:300,height:56,rx:12,class:'pack'},L.mid);
     const cp=el('clipPath',{id:'packclip'},svg);el('rect',{x:252,y:18,width:296,height:52,rx:11},cp);
     this.chips=onPanel(el('g',{'clip-path':'url(#packclip)'},L.mid));this.ch=W.map(w=>{const t=txt(this.chips,0,52,'flabel','end');t.textContent=w;return t});
@@ -480,8 +590,10 @@ pack:{dur:9.2,hold:2.4,init(svg){const L=layers(svg,53);this.L=L;
     this.strap=el('path',{class:'strap',d:'M0 0'},L.mid);this.p=posts(L.mid);this.w=walker(L.top)},
   draw(t){const s=walkS(t,1.1,-1,7);this.L.road.setAttribute('d',roadD(-1,s));
     this.p.forEach((p,i)=>p.style.opacity=rev(s,i)*(i>s-.55?1:.14));
-    let right=540;for(let j=W.length-1;j>=0;j--){const c=this.ch[j],age=s-j;if(age<-.02){c.style.opacity=0;continue}const a=Math.max(age,0),sc=Math.max(.5,Math.pow(.86,a));
-      c.setAttribute('x',f1(right));c.style.fontSize=f1(24*sc)+'px';c.style.opacity=Math.pow(.6,a)*rev(s,j);right-=(W[j].length*9.5+12)*sc*clamp(age+1)}
+    if(this.cells){const h=this.cells.map((_,k)=>this.vec.reduce((a,v,i)=>a+(s>=i-.02?v[k]*Math.pow(.55,Math.max(0,s-i))*rev(s,i):0),0));
+      this.cells.forEach((c,k)=>{c.style.fillOpacity=f1(.08+.85*clamp(Math.abs(h[k])/1.3));c.classList.toggle('neg',h[k]<0)})}
+    else{let right=540;for(let j=W.length-1;j>=0;j--){const c=this.ch[j],age=s-j;if(age<-.02){c.style.opacity=0;continue}const a=Math.max(age,0),sc=Math.max(.5,Math.pow(.86,a));
+      c.setAttribute('x',f1(right));c.style.fontSize=f1(24*sc)+'px';c.style.opacity=Math.pow(.6,a)*rev(s,j);right-=(W[j].length*9.5+12)*sc*clamp(age+1)}}
     const q=R(s);place(this.w,q.x,q.y);this.strap.setAttribute('d',`M${f1(q.x-2)} ${f1(q.y-28)}Q${f1((q.x+400)/2)} ${f1(q.y-70)} 400 72`)}},
 
 /* 6 · the dog */
@@ -508,8 +620,8 @@ nose:{hold:2.6,init(svg){const L=layers(svg,71);this.L=L;this.wts=[.03,.30,.04,.
     this.pf=W.map(()=>el('circle',{class:'puff',r:0,style:`--dc:${DOGC[1]}`},L.mid));
     this.bars=this.wts.map((w,i)=>{const p=R(i);const g=el('g',{style:`--dc:${DOGC[1]}`},L.mid);el('rect',{x:p.x-6,width:12,y:p.y-98,height:38,rx:2,class:'track'},g);const r=el('rect',{x:p.x-6,width:12,y:p.y-60,height:0,rx:2,class:'bar'},g);return{r,base:p.y-60,h:w*92}});
     this.p=posts(L.mid);this.w=walker(L.top);this.d=dog(L.top,DOGC[1]);
-    this.bub=onPanel(el('g',{style:`--dc:${DOGC[1]}`},L.top));shadow(this.bub,-92,-50,184,30,15);el('rect',{x:-92,y:-50,width:184,height:30,rx:15,class:'bubble'},this.bub);
-    const bt=txt(this.bub,0,-29,'flabel','middle');[['preservation',21],['wildness',17],['the',12]].forEach(([w,sz],i)=>{const sp=el('tspan',{dx:i?6:0},bt);sp.textContent=w;sp.style.fontSize=sz+'px'});
+    this.bub=onPanel(el('g',{style:`--dc:${DOGC[1]}`},L.top));if(!SK)shadow(this.bub,-92,-50,184,30,15);el('rect',{x:-92,y:-50,width:184,height:30,rx:SK?3:15,class:'bubble'},this.bub);
+    const bt=txt(this.bub,0,-29,'flabel','middle');[['preservation',21],['wildness',17],['the',12]].forEach(([w,sz],i)=>{const sp=el('tspan',{dx:i?6:0},bt);sp.textContent=w;sp.style.fontSize=(SK?sz*.72:sz)+'px'});
     const tr=new Trip(.7,6-.24);tr.go(-.4,250,true);this.turn=tr.t;tr.go(6-.24,330);this.back=tr.t;tr.wait(2.6);tr.go(7-.24,DX/.8);this.tr=tr;this.dur=this.back+4.1;
     this.hud=txt(L.top,24,32,'hud');this.hud.append('this dog’s nose: ');const hb=el('tspan',{class:'hudb'},this.hud);hb.textContent='what is the walk about?'},
   draw(t){const B=this.back;const s=6+ease(seg(t,B+2.6,B+3.4));this.L.road.setAttribute('d',roadD(-1,s));this.p.forEach((p,i)=>p.style.opacity=rev(s,i));
@@ -525,18 +637,19 @@ Object.assign(FIGS,NEWFIGS);
 
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const live=[];
-document.querySelectorAll('svg[data-fig]').forEach(svg=>{const def=FIGS[svg.dataset.fig];def.init(svg);
-  const st={def,svg,start:performance.now(),vis:false,playing:!reduce};live.push(st);
+const inSK=(st,f)=>{SK=st.sk;st.svg.classList.toggle('msk',SK);try{return f()}finally{SK=false}};
+document.querySelectorAll('svg[data-fig]').forEach(svg=>{const def=FIGS[svg.dataset.fig];
+  const st={def,svg,start:performance.now(),vis:false,playing:!reduce,sk:isM()};live.push(st);inSK(st,()=>def.init(svg));
   const btn=svg.closest('figure').querySelector('.replay');btn.onclick=()=>{st.start=performance.now();st.playing=true};
   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!st.vis){st.start=performance.now()}st.vis=e.isIntersecting}),{threshold:.3}).observe(svg);
-  def.draw(def.dur)});
+  inSK(st,()=>def.draw(def.dur))});
 function frame(now){for(const st of live){if(!st.vis)continue;const D=st.def.dur+st.def.hold;let t=(now-st.start)/1000;
-  if(!st.playing)t=st.def.dur;else if(reduce){if(t>D){st.playing=false;t=st.def.dur}}else t%=D;st.def.draw(Math.min(t,st.def.dur))}
+  if(!st.playing)t=st.def.dur;else if(reduce){if(t>D){st.playing=false;t=st.def.dur}}else t%=D;inSK(st,()=>st.def.draw(Math.min(t,st.def.dur)))}
   requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
 /* clear grass tufts and flowers from under any label, once the fonts have their real widths */
 function cull(st){const svg=st.svg,M=svg.getScreenCTM();if(!M)return;const I=M.inverse(),pt=(x,y)=>new DOMPoint(x,y).matrixTransform(I);
-  st.def.draw(st.def.dur);const boxes=[];
+  inSK(st,()=>st.def.draw(st.def.dur));const boxes=[];
   svg.querySelectorAll('text').forEach(t=>{if(!t.textContent.trim())return;const r=t.getBoundingClientRect();if(!r.width)return;const a=pt(r.left,r.top),b=pt(r.right,r.bottom);boxes.push([a.x-4,a.y-3,b.x+4,b.y+3])});
   svg.querySelectorAll('.tuft,.fl').forEach(e=>{const b=e.getBBox();if(boxes.some(q=>b.x<q[2]&&b.x+b.width>q[0]&&b.y<q[3]&&b.y+b.height>q[1]))e.remove()})}
 document.fonts.ready.then(()=>live.forEach(cull));
@@ -550,9 +663,13 @@ function setReg(r,keep){const a=keep?[...document.querySelectorAll('main h1,main
   const tt=document.querySelector('title');if(tt.dataset.m){tt.dataset.i??=tt.textContent;document.title=r==='m'?tt.dataset.m:tt.dataset.i}
   document.querySelectorAll('.segb').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.reg===r)));
   document.querySelectorAll('[data-al-m]').forEach(e=>{e.dataset.alI??=e.getAttribute('aria-label');e.setAttribute('aria-label',r==='m'?e.dataset.alM:e.dataset.alI)});
-  for(const st of live){relabel(st.svg);if(!st.vis||!st.playing)st.def.draw(st.def.dur)}
+  for(const st of live){const sk=r==='m';if(sk!==st.sk){st.sk=sk;st.svg.replaceChildren();inSK(st,()=>st.def.init(st.svg))}
+    relabel(st.svg);if(!st.vis||!st.playing)inSK(st,()=>st.def.draw(st.def.dur))}
   if(a){const d=a.getBoundingClientRect().top-y0;if(d)scrollTo({top:scrollY+d,behavior:'instant'})}}
 document.querySelectorAll('.segb').forEach(b=>b.addEventListener('click',()=>{setReg(b.dataset.reg,true);try{localStorage.setItem(REGK,b.dataset.reg)}catch(e){}
   document.fonts.ready.then(()=>live.forEach(cull))}));
 setReg(isM()?'m':'i',false);
+/* typeset the abstraction register's math (KaTeX, loaded deferred in the head) */
+const math=()=>{if(window.renderMathInElement)renderMathInElement(document.querySelector('main'),{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,ignoredClasses:['i']})};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',math);else math();
 })();

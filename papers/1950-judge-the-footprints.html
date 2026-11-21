@@ -8,12 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body data-reg="i">
 <script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 2 of 18</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 2 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-trails)">
     <p class="kicker"><span class="dot"></span><span class="yr">1950</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
@@ -21,14 +24,15 @@
     <p class="paper"><i>Computing Machinery and Intelligence</i> (1950)</p>
     <section class="before">
       <h3>Before this</h3>
-      <div class="i"><p>"Can machines think?" had no agreed meaning, so Turing replaced it with a game that could be scored. A judge exchanges typed messages with two hidden players, a person and a machine, and must say which is which. If the judge can't reliably tell, the question of thinking is, for practical purposes, answered.</p></div><div class="m"><p>"Can machines think?" had no operational definition. Turing replaced it with a test: an interrogator exchanges typed messages with a human and a machine, and must identify which is which. If the interrogator can't do better than chance, the machine passes.</p></div>
+      <div class="i"><p>"Can machines think?" had no agreed meaning, so Turing replaced it with a game that could be scored. A judge exchanges typed messages with two hidden players, a person and a machine, and must say which is which. If the judge can't reliably tell, the question of thinking is, for practical purposes, answered.</p></div><div class="m"><p>"Can machines think?" had no operational definition. Turing replaced it with a test: an interrogator exchanges typed messages with a human and a machine, and must identify which is which. If the interrogator can't do better than chance, the machine passes.</p><p>In modern terms: given samples from \(p_{\text{data}}\) and from a model \(p_\theta\), can any test distinguish them better than chance?</p></div>
     </section>
 
     <figure><div class="fig"><svg data-fig="judge" viewBox="0 0 800 260" role="img" aria-label="A judge inspects two sets of footprints and passes both as human; only one leads somewhere real." data-al-m="A score that measures only how human the text looks rates both sentences highly. Only one is true."></svg></div>
-      <figcaption><button class="replay">Replay</button><span><span class="i">The judge reads footprints and passes both. Only one of them leads somewhere real.</span><span class="m">A score that measures only how human the text looks rates both sentences highly. Only one is true.</span></span></figcaption></figure>
+      <figcaption><button class="replay">Replay</button><span><span class="i">The judge reads footprints and passes both. Only one of them leads somewhere real.</span><span class="m">A score that measures only how human the text looks, such as \(\log p_\theta(x)\), rates both sentences highly. Only one is true.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Turing's judge looks only at footprints and asks: did a person make these? It never asks where the walk ended. That standard, footprints that pass for human, became what the field trains toward.</p></div>
-      <div><h3>In the mechanism</h3><p><span class="i">The imitation game. Its modern form is maximum-likelihood training: wear the trails so the walker's footprints match human ones, step by step. Most entries up to 2020 train this way. The GAN (2013 entry) made the judge literal: a second network that judges footprints and nothing else.</span><span class="m">The imitation game. Its modern form is maximum-likelihood training: fit the model so its outputs match the distribution of human text, token by token. Most entries up to 2020 train this way. The GAN (2013 entry) made the judge literal: a discriminator network trained to tell generated samples from real ones.</span></p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p><span class="i">The imitation game. Its modern form is maximum-likelihood training: wear the trails so the walker's footprints match human ones, step by step. Most entries up to 2020 train this way. The GAN (2013 entry) made the judge literal: a second network that judges footprints and nothing else.</span><span class="m">The imitation game. Its modern form is maximum-likelihood training: fit the model so its outputs match the distribution of human text, token by token. Most entries up to 2020 train this way. The GAN (2013 entry) made the judge literal: a discriminator network trained to tell generated samples from real ones.</span></p></div><div class="m">\[\theta^\star=\arg\max_\theta\ \mathbb{E}_{x\sim p_{\text{data}}}\big[\log p_\theta(x)\big]=\arg\min_\theta\ \mathrm{KL}\big(p_{\text{data}}\,\|\,p_\theta\big)\]
+<p>Maximum likelihood makes \(p_\theta\) match the distribution of human text. Most entries up to 2020 train this way. The GAN (2013 entry) makes the judge literal: a discriminator \(D\) trained to separate samples of \(p_\theta\) from samples of \(p_{\text{data}}\).</p></div></div>
     </div>
     <section class="more">
       <h2>A closer look: <span class="i">a judge at every footprint</span><span class="m">cross-entropy as a per-token imitation test</span></h2>
@@ -37,12 +41,14 @@
 <tr><td>0.60</td><td>0.51</td></tr><tr><td>0.10</td><td>2.30</td></tr><tr><td>0.01</td><td>4.61</td></tr></tbody></table></div>
 <p>Averaged over billions of footprints, this is the loss that almost every language model in this guide is trained to lower. It is the imitation game, played one step at a time: would a person have stepped here?</p>
 <p>Look at what the judge never checks. In the figure, "Walking was written by Emerson" passes just as easily as the true sentence, because the judge is scoring whether footprints look human, not whether the walk arrives anywhere real. A model trained this way learns that "written by" is followed by a plausible author's name. Whether it is the right name depends on whether the trails happened to be worn deep enough there.</p>
-<p>Turing made a concrete forecast: in about fifty years, a machine with roughly 10<sup>9</sup> bits of storage would play well enough that an average judge would have no more than a 70% chance of picking correctly after five minutes of questions.</p></div><div class="m"><p>The test judges a whole transcript. Language-model training applies a version of it at every token: given a human-written prefix, how much probability did the model assign to the token the human actually wrote? The loss is −log p:</p>
-<div class="tw"><table class="mini"><thead><tr><th>p(actual next token)</th><th>Loss (−log p)</th></tr></thead><tbody>
+<p>Turing made a concrete forecast: in about fifty years, a machine with roughly 10<sup>9</sup> bits of storage would play well enough that an average judge would have no more than a 70% chance of picking correctly after five minutes of questions.</p></div><div class="m"><p>The test judges a whole transcript. Language-model training applies a version of it at every token: given a human-written prefix, how much probability did the model assign to the token the human actually wrote? The loss is \(-\log p_\theta(x_t\mid x_{&lt;t})\):</p>
+<div class="tw"><table class="mini"><thead><tr><th>\(p_\theta(x_t\mid x_{&lt;t})\)</th><th>\(-\log p_\theta(x_t\mid x_{&lt;t})\)</th></tr></thead><tbody>
 <tr><td>0.60</td><td>0.51</td></tr><tr><td>0.10</td><td>2.30</td></tr><tr><td>0.01</td><td>4.61</td></tr></tbody></table></div>
-<p>Averaged over the training corpus, this is the cross-entropy loss that nearly every model in this guide minimizes. Minimizing it is maximum-likelihood estimation: making the model's distribution match the distribution of human text.</p>
+<p>Averaged over the training corpus, this is the cross-entropy loss that nearly every model in this guide minimizes:</p>
+\[\mathcal{L}(\theta) = -\frac{1}{T}\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{&lt;t})\]
+<p> Minimizing it is maximum-likelihood estimation: making the model's distribution match the distribution of human text.</p>
 <p>The objective doesn't measure truth. "Walking was written by Emerson" and "Walking was written by Thoreau" are both fluent, and the loss rewards whichever continuation the training data makes more probable. A model learns that "written by" is followed by an author's name. Whether it produces the right name depends on how strongly that particular fact is represented in the data.</p>
-<p>Turing made a forecast: in about fifty years, a machine with about 10<sup>9</sup> bits of storage would play well enough that an average interrogator would have no more than a 70% chance of identifying it correctly after five minutes.</p></div>
+<p>Turing made a forecast: in about fifty years, a machine with about \(10^9\) bits of storage would play well enough that an average interrogator would have no more than a 70% chance of identifying it correctly after five minutes.</p></div>
     </section>
     <section class="more">
       <h2>What it changed</h2>
@@ -50,12 +56,12 @@
 <p>The game itself became a culture of judging by output: chatbot contests such as the Loebner Prize from 1991, benchmarks scored on answers alone, and in 2014 <a href="2013-paint-in-one-stroke.html">the GAN</a>, where a second network plays judge for the first.</p></div><div class="m"><p>The paper's final section, "Learning Machines", proposed building a "child machine" and training it rather than programming adult behavior directly: the choice between learned and hand-written systems, made in 1950.</p>
 <p>The test also set a habit of evaluating systems purely by their outputs. Chatbot competitions such as the Loebner Prize ran from 1991, benchmarks score only answers, and the GAN (2014) turned the interrogator into a trained discriminator.</p></div>
     </section>
-    <div class="open"><h3>Left open</h3><p><span class="i">Footprints can look human and lead nowhere. That is what a hallucination is. Judging where walks end has to wait.</span><span class="m">Text can be fluent and false, and likelihood training rewards fluency. Scoring outputs by their outcome comes later.</span> <a href="2022-judge-where-walks-end.html">→ 2022</a></p></div>
+    <div class="open"><h3>Left open</h3><p><span class="i">Footprints can look human and lead nowhere. That is what a hallucination is. Judging where walks end has to wait.</span><span class="m">Text can be fluent and false: \(\log p_\theta(x)\) can be high whether or not \(x\) is true, and likelihood training only raises \(\log p_\theta\) on human text. Scoring outputs by an outcome \(r(x)\) comes later.</span> <a href="2022-judge-where-walks-end.html">→ 2022</a></p></div>
   </article>
 
   <nav class="pager" aria-label="Previous and next entries">
     <a class="prev" href="1948-count-the-footprints.html" style="--th:var(--th-trails)"><small>← 1948</small><span class="i">Count the footprints, glance back</span><span class="m">n-gram language models</span></a>
-    <a class="next" href="1966-cut-the-paths-by-hand.html" style="--th:var(--th-trails)"><small>1966 →</small><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></a>
+    <a class="next" href="1958-signposts-that-learn.html" style="--th:var(--th-trails)"><small>1958 →</small><span class="i">Signposts that learn</span><span class="m">The perceptron</span></a>
   </nav>
 
   <footer>

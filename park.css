@@ -145,6 +145,8 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .card{fill:var(--panel);stroke:var(--blaze);stroke-width:1.5}
 .frame{fill:none;stroke:var(--ink);stroke-width:1.2;opacity:.6}
 .house{fill:var(--fp)}
+.side{fill:var(--th-ground);opacity:.13}
+.blame{fill:var(--bad)}
 
 /* document basics (formerly injected by the deploy wrapper) */
 :root{color-scheme:light dark}
@@ -201,3 +203,34 @@ body[data-reg="m"] .hand{font-size:14px}
 body[data-reg="m"] .sign{font-size:13px}
 body[data-reg="m"] .vlab{font-size:13px}
 body[data-reg="m"] .stamp{font-size:14px;font-weight:600}
+/* math in the abstraction register */
+.katex{font-size:1.04em}
+.katex-display{overflow-x:auto;overflow-y:hidden;margin:.7em 0;padding:2px 0}
+.notation{margin-top:18px;padding:14px 18px;background:var(--panel);border:1px solid var(--rule);border-radius:10px}
+.notation h3{margin:0 0 6px}
+.notation dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;margin:0}
+.notation dt{color:var(--ink)}
+.notation dd{margin:0;color:var(--muted)}
+/* minimal diagram skin for figures in the abstraction register */
+svg.msk{--halo:var(--panel);--dogA:var(--blaze);--dogB:var(--blaze);--dogC:var(--blaze)}
+.mbg{fill:var(--panel)}
+.mroad{fill:none;stroke:var(--muted);stroke-width:1.2;opacity:.6}
+.mnode{fill:var(--ink)}
+.mcur{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.mbar{fill:var(--muted);opacity:.45}
+.mbar.top{fill:var(--blaze);opacity:1}
+.mdog{fill:none;stroke:var(--dc);stroke-width:1.6;stroke-linejoin:round}
+svg.msk .puff{fill:none;stroke:var(--dc);stroke-width:1.4}
+svg.msk .bubble{stroke-width:1}
+svg.msk .worn,svg.msk .fan{filter:none;stroke:var(--muted);stroke-opacity:.55}
+svg.msk .cutfill{display:none}
+svg.msk .cutedge{stroke:var(--ink);stroke-width:1.4px!important}
+svg.msk .plaza{fill:var(--panel);stroke:var(--ink);stroke-width:1.2}
+svg.msk .shade{display:none}
+svg.msk .ghost{fill:var(--muted);opacity:.8}
+svg.msk .stamp{font-size:14px;font-weight:600;stroke-width:3px}
+svg.msk .flabel,svg.msk .vlab,svg.msk .sign{font-size:13.5px}
+svg.msk .hand{font-size:13px}
+svg.msk .mroad.given{stroke:var(--givenInk,var(--blaze));stroke-width:3;opacity:.5}
+.mcell{fill:var(--blaze);stroke:var(--rule);stroke-width:1}
+.mcell.neg{fill:var(--muted)}

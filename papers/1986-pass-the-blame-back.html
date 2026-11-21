@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="1986 · Backpropagation and hidden layers · GenAI Park">1986 · Pass the blame back · GenAI Park</title>
+<meta name="description" content="Stack the signposts in rows. When a walk ends wrong, the blame flows back and every post adjusts by its share. The middle posts learn clues nobody named.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+</head>
+<body data-reg="i">
+<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 5 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Abstraction</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-ground)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1986</span> · <span class="i">The ground</span><span class="m">Representation</span></p>
+    <h1><span class="i">Pass the blame back</span><span class="m">Backpropagation and hidden layers</span></h1>
+    <p class="paper"><i>Learning Representations by Back-Propagating Errors</i> (1986)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>After <i>Perceptrons</i>, neural networks were a fringe pursuit for more than a decade. The cure was known in principle: put rows of posts between the clues and the last signpost, and together they can split the ground with bent lines, not only straight ones. The problem was teaching them. When the last post points wrong, which of the middle posts was at fault, and by how much? This is the credit-assignment problem. The mathematics for answering it had been worked out before, by Linnainmaa in 1970 and Werbos in 1974, among others. Rumelhart, Hinton and Williams showed it working, and showed what the middle posts learned.</p></div><div class="m"><p>After <i>Perceptrons</i>, neural network research was marginal for more than a decade. Multi-layer networks were known to be more expressive, but there was no practical way to assign credit to hidden units for the network's errors. Reverse-mode differentiation, the core of the solution, had been described earlier, by Linnainmaa (1970) and, applied to neural networks, by Werbos (1974), among others. This paper demonstrated it convincingly and showed that the hidden units learn useful internal representations.</p><p>Formally: for a loss \(\mathcal{L}\) and every weight \(w_{ij}\), including those into hidden units, compute \(\partial\mathcal{L}/\partial w_{ij}\), efficiently and all at once.</p></div>
+      <p class="from">Picks up what was left open in <a href="1958-signposts-that-learn.html">1958 · <span class="i">Signposts that learn</span><span class="m">The perceptron</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="backprop" viewBox="0 0 800 260" role="img" aria-label="Clues flow forward through two hidden signposts to the last one. It points the wrong way; blame flows back along every path and the paths change width. Many walks later it points the right way, and the hidden posts turn out to read &#39;either clue&#39; and &#39;both clues&#39;." data-al-m="Forward pass, error, backward pass, weight update. After training on XOR, the two hidden units compute roughly OR and AND, features that were never specified. Weights are illustrative; biases not shown."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Clues flow forward through hidden posts. When the last one points wrong, blame flows back and every dial turns by its share. After many walks, the middle posts have found clues of their own: “either” and “both”. Weights are illustrative.</span><span class="m">Forward pass, error, backward pass, weight update. After training on XOR, the hidden units compute roughly \(h_1 \approx x_1 \lor x_2\) and \(h_2 \approx x_1 \land x_2\), and the output \(\hat y \approx h_1 \land \lnot h_2\): features that were never specified. Weights are illustrative; biases not shown.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>Now the signposts stand in rows, and every one can learn. The first row reads the ground; each later row reads the row before it; the last points the walker. When a walk ends wrong, the blame travels back from the last post to the first, and each post turns its dials by its share.</p><p>No walker ever sees the middle posts, and nobody tells them what to look for. Yet they end up reading clues of their own. That is the ground, learned instead of cut. Every walker from here on, with its pack, its word ground or its dog, is built from such rows, and trained by passing the blame back.</p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p>A multi-layer network of units with smooth activations. The forward pass computes the output; the error against the target is measured; the backward pass applies the chain rule layer by layer to get the gradient of the error with respect to every weight; and each weight takes a small step against its gradient. The backward pass costs about as much as the forward pass, however many weights there are.</p></div><div class="m">\[\delta_j = \frac{\partial \mathcal{L}}{\partial z_j} = \sigma'(z_j)\sum_k w_{jk}\,\delta_k,\qquad \frac{\partial \mathcal{L}}{\partial w_{ij}} = a_i\,\delta_j\]
+<p>One forward pass computes every activation \(a_j\); one backward pass computes every \(\delta_j\), from the output layer down; then \(w \leftarrow w - \eta\,\nabla_w \mathcal{L}\). The backward pass costs about as much as the forward pass, however many weights there are.</p></div></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">how the blame is shared</span><span class="m">the backward pass</span></h2>
+      <div class="i"><p>The blame moves back one row at a time:</p>
+<ul class="rules">
+<li><b>The last post's blame</b> is how far off it was.</li>
+<li><b>A middle post's blame</b> is the blame of each post it feeds, times how much that post heeded it, all added up. A post nobody heeds gets no blame.</li>
+<li><b>Each dial</b> turns in proportion to its post's blame and to how strongly its clue was showing.</li></ul>
+<p>For this to work the posts need soft edges. A perceptron's signpost snaps from one way to the other, which gives no hint of which way to turn a dial. The paper's posts lean gradually instead, so a small turn always makes a small difference.</p>
+<p>The paper's showcase was two family trees of twelve people each, one English and one Italian. The network was given facts such as "Colin's father is James", and asked to name the missing person. A row of six hidden posts saw each person. Nobody told them about nationality, generation or which side of the family someone was on, yet individual posts came to stand for exactly those. Trained on most of the facts, the network got most of the held-out ones right.</p></div><div class="m"><p>Each unit \(j\) computes \(z_j = \sum_i w_{ij}\,a_i\) and outputs \(a_j = \sigma(z_j)\), so \(\sigma'(z_j) = a_j(1-a_j)\). For squared error against targets \(y_o\), and \(\delta_j = \partial\mathcal{L}/\partial z_j\):</p>
+\[\begin{aligned}\mathcal{L} &amp;= \tfrac12\textstyle\sum_o (a_o - y_o)^2\\ \delta_o &amp;= (a_o - y_o)\,\sigma'(z_o) &amp;&amp;\text{output units}\\ \delta_j &amp;= \sigma'(z_j)\textstyle\sum_k w_{jk}\,\delta_k &amp;&amp;\text{hidden units}\\ \Delta w_{ij}(t) &amp;= -\eta\,\delta_j\,a_i + \alpha\,\Delta w_{ij}(t-1) &amp;&amp;\text{update, with momentum } \alpha\end{aligned}\]
+<ul class="rules">
+<li><b>Credit assignment.</b> A hidden unit's error signal is the sum of the error signals of the units it feeds, weighted by its outgoing weights.</li>
+<li><b>Differentiability.</b> The perceptron's step function \(\mathbb{1}[z&gt;0]\) has zero gradient almost everywhere. The sigmoid makes every unit differentiable, so gradients flow.</li>
+<li><b>Momentum.</b> The \(\alpha\) term adds a fraction of the previous weight change to each update, to speed descent.</li></ul>
+<p>The showcase was a family-tree task: two isomorphic trees of twelve people, English and Italian, encoded as triples such as (Colin, father, James). The network had a six-unit hidden layer encoding the input person. After training, individual hidden units encoded nationality, generation and branch of the family, features never present in the local input encoding. The network generalized to most held-out triples.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>Passing the blame back became how neural networks are trained, and it still is: every network in the rest of this guide learns this way, including through time for the pack in <a href="1990-carry-a-pack.html">1990</a>. In 1989 LeCun's group used it to train a network that read handwritten zip codes, with posts sharing their dials across the picture: an early convolutional ground for pictures, and a direct ancestor of <a href="2012-ground-for-pictures.html">2012</a>.</p>
+<p>But in the 1990s networks lost ground again, to methods with tidier mathematics and guaranteed answers, such as support vector machines. Deep stacks of posts were simply too hard to train.</p></div><div class="m"><p>Backpropagation became the standard training algorithm for neural networks and remains so; automatic differentiation in modern frameworks is its generalization. Backpropagation through time trains the recurrent networks of <a href="1990-carry-a-pack.html">1990</a>. LeCun et al. (1989) trained a convolutional network with backpropagation to read handwritten zip codes.</p>
+<p>Through the 1990s, kernel methods such as support vector machines, with convex training objectives, overtook neural networks on many benchmarks. Deep networks in particular were difficult to train.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">Deep stacks barely learned: passed back through many rows, the blame faded to almost nothing. And there were too few walks and too little power to wear in deep ground. The pack&#39;s gates, in 1997, were built partly against that fading.</span><span class="m">Each layer multiplies the error signal by \(\sigma'(z)\,w\), and \(\sigma' \le \tfrac14\), so through many layers it shrinks geometrically, or explodes if the weights are large (Hochreiter, 1991; Bengio et al., 1994). Data and compute were also too limited to train deep networks. LSTM (1997) was designed partly to counter vanishing gradients through time.</span> <a href="2012-ground-for-pictures.html">→ 2012</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="1966-cut-the-paths-by-hand.html" style="--th:var(--th-trails)"><small>← 1966</small><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></a>
+    <a class="next" href="1989-a-garden-worn-in.html" style="--th:var(--th-ground)"><small>1989 →</small><span class="i">A garden, worn in</span><span class="m">Hidden Markov models</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>
