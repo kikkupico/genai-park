@@ -29,7 +29,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html park.css park.js _site/
-          cp -r papers archive _site/
+          cp -r papers archive img _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

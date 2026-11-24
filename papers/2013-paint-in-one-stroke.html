@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title data-m="2013 · Variational autoencoders and GANs · GenAI Park">2013 · Paint in one stroke · GenAI Park</title>
 <meta name="description" content="The first painters make a whole picture from a random seed in one stroke, trained with an encoder or against a critic.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e6ebd6'/%3E%3Cpath d='M5 25Q14 22 17 16M17 16L27 8M17 16L28 16M17 16L26 24' fill='none' stroke='%23c9822b' stroke-linecap='round' stroke-width='3'/%3E%3Ccircle cx='12' cy='21' r='2.4' fill='%236b5a3a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../park.css">
@@ -13,10 +14,10 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body data-reg="i">
-<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<script>try{const r=localStorage.getItem('genai-park-reg'),t=localStorage.getItem('genai-park-theme');if(r==='m'||r==='b')document.body.dataset.reg=r;if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 10 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 10 of 20</span><div class="regseg" role="group" aria-label="Reading mode"><button type="button" class="segb" data-reg="i" aria-pressed="true" title="Park allegory only">Allegory</button><button type="button" class="segb" data-reg="b" aria-pressed="false" title="Allegory and math side by side">Bridge</button><button type="button" class="segb" data-reg="m" aria-pressed="false" title="Formal math and minimal diagrams">Math</button></div></span></header>
 
   <article class="entry timeline page" style="--th:var(--th-brush)">
     <p class="kicker"><span class="dot"></span><span class="yr">2013</span> · <span class="i">Pen and brush</span><span class="m">Image generation</span></p>

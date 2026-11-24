@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title data-m="GenAI Park · the ideas of generative AI">GenAI Park</title>
 <meta name="description" content="Where understanding generative AI is a walk in the park. Literally.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e6ebd6'/%3E%3Cpath d='M5 25Q14 22 17 16M17 16L27 8M17 16L28 16M17 16L26 24' fill='none' stroke='%23c9822b' stroke-linecap='round' stroke-width='3'/%3E%3Ccircle cx='12' cy='21' r='2.4' fill='%236b5a3a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="park.css">
@@ -13,19 +14,28 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body data-reg="i">
-<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
+<script>try{const r=localStorage.getItem('genai-park-reg'),t=localStorage.getItem('genai-park-theme');if(r==='m'||r==='b')document.body.dataset.reg=r;if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
 <main>
-  <header class="topbar"><span></span><span class="right"><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
-  <h1>GenAI Park</h1>
-  <p class="sub">Where understanding generative AI is a walk in the park. Literally.</p>
-  <p class="lede"><span class="i">Every generative model, from Shannon's word counts to today's chatbots and image painters, can be drawn as one picture: a walker in a park, making something one step at a time. This guide traces how that walker changed over seventy-five years, one idea at a time.</span><span class="m">Every generative model, from Shannon's n-gram counts to today's chat assistants and image generators, produces its output one step at a time, sampling each step from learned probabilities: \(x_t \sim p_\theta(\cdot \mid x_{&lt;t})\). This guide traces how those models changed over seventy-five years, one idea and one landmark paper at a time.</span></p>
+  <header class="topbar"><a href="#" class="brand" aria-label="Back to top">GenAI Park</a><span class="right"><div class="regseg" role="group" aria-label="Reading mode"><button type="button" class="segb" data-reg="i" aria-pressed="true" title="Park allegory only">Allegory</button><button type="button" class="segb" data-reg="b" aria-pressed="false" title="Allegory and math side by side">Bridge</button><button type="button" class="segb" data-reg="m" aria-pressed="false" title="Formal math and minimal diagrams">Math</button></div></span></header>
+  <div class="hero">
+    <h1>GenAI Park</h1>
+    <p class="sub">Where understanding generative AI is a walk in the park. Literally.</p>
+    <p class="lede"><span class="i">Every generative model, from Shannon's word counts to today's chatbots and image painters, can be drawn as one picture: a walker in a park, making something one step at a time. This guide traces how that walker changed over seventy-five years, one idea at a time.</span><span class="m">Every generative model, from Shannon's n-gram counts to today's chat assistants and image generators, produces its output one step at a time, sampling each step from learned probabilities: \(x_t \sim p_\theta(\cdot \mid x_{&lt;t})\). This guide traces how those models changed over seventy-five years, one idea and one landmark paper at a time.</span></p>
+    <figure class="vista i-only">
+      <div class="vista-frame">
+        <img class="vista-day" src="img/park-day.webp" width="1600" height="702" alt="A wooden park gate opening onto a dirt path through a meadow that forks into three trails of decreasing width: wide, medium, and narrow." fetchpriority="high" decoding="async">
+        <img class="vista-night" src="img/park-night.webp" width="1600" height="702" alt="The same park gate and three-way trail fork lit by a warm street lamp at night." loading="lazy" decoding="async">
+      </div>
+      <figcaption class="vista-cap"><span>The gate and the first fork: one road behind, three worn ways ahead, wide where earlier walkers went often and narrow where they rarely went.</span></figcaption>
+    </figure>
+  </div>
 
   <nav class="tl" aria-label="Timeline">
     <ol>
       <li><a href="papers/1948-count-the-footprints.html" style="--th:var(--th-trails)"><span class="dot"></span><b>1948</b><span class="i">Count the footprints</span><span class="m">n-gram language models</span></a></li>
       <li><a href="papers/1950-judge-the-footprints.html" style="--th:var(--th-trails)"><span class="dot"></span><b>1950</b><span class="i">Judge the footprints</span><span class="m">The imitation game</span></a></li>
-      <li><a href="papers/1958-signposts-that-learn.html" style="--th:var(--th-trails)"><span class="dot"></span><b>1958</b><span class="i">Signposts that learn</span><span class="m">The perceptron</span></a></li>
+      <li><a href="papers/1958-wear-the-rule-from-mistakes.html" style="--th:var(--th-trails)"><span class="dot"></span><b>1958</b><span class="i">Wear the rule from mistakes</span><span class="m">The perceptron</span></a></li>
       <li><a href="papers/1966-cut-the-paths-by-hand.html" style="--th:var(--th-trails)"><span class="dot"></span><b>1966</b><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></a></li>
       <li><a href="papers/1986-pass-the-blame-back.html" style="--th:var(--th-ground)"><span class="dot"></span><b>1986</b><span class="i">Pass the blame back</span><span class="m">Backpropagation and hidden layers</span></a></li>
       <li><a href="papers/1989-a-garden-worn-in.html" style="--th:var(--th-ground)"><span class="dot"></span><b>1989</b><span class="i">A garden, worn in</span><span class="m">Hidden Markov models</span></a></li>
@@ -56,15 +66,16 @@
 
   <div class="part">
     <p class="kicker"><span class="i">The park</span><span class="m">The terms</span></p>
-    <h2><span class="i">Seven words for the whole field</span><span class="m">Seven terms for the whole field</span></h2>
-    <p><span class="i">Three short animations set up the picture. The other four arrive where history needs them.</span><span class="m">Three short sections set up the basics. The other four terms arrive where history needs them.</span></p>
+    <h2><span class="i">Eight words for the whole field</span><span class="m">Eight terms for the whole field</span></h2>
+    <p><span class="i">Three short animations set up the picture. The other five arrive where history needs them.</span><span class="m">Three short sections set up the basics. The other five terms arrive where history needs them.</span></p>
     <ul class="words">
       <li><span class="i"><b>Walk</b>the product, built one step at a time</span><span class="m"><b>Sampling</b>\(x_t \sim p_\theta(\cdot\mid x_{&lt;t})\), one step at a time</span></li>
       <li><span class="i"><b>Blaze</b>the marks ahead: how likely each next step is</span><span class="m"><b>Next-token distribution</b>\(p_\theta(v\mid x_{&lt;t})\) for every \(v \in V\)</span></li>
       <li><span class="i"><b>Trails</b>worn in by earlier walkers: training</span><span class="m"><b>Training</b>\(\theta^\star=\arg\min_\theta \mathcal{L}(\theta)\) on data</span></li>
       <li><span class="i"><b>Ground</b>what the walker can tell apart</span><span class="m"><b>Representation</b>an encoding \(x \mapsto h \in \mathbb{R}^d\): what the model can tell apart</span></li>
-      <li><span class="i"><b>Signposts</b>what reads the ground and sets the blaze: dials that learn, in rows</span><span class="m"><b>Neural network</b>\(f_\theta = f_L\circ\cdots\circ f_1\), with \(f_\ell(h)=\sigma(W_\ell h+b_\ell)\)</span></li>
-      <li><span class="i"><b>Cut path</b>laid by hand: rules, hand-picked features</span><span class="m"><b>Hand-designed structure</b>rules, topologies and features fixed before seeing data</span></li>
+      <li><span class="i"><b>Clearings</b>hidden spots in rows, joined by worn trails to set the blaze</span><span class="m"><b>Neural network</b>\(f_\theta = f_L\circ\cdots\circ f_1\), with \(f_\ell(h)=\sigma(W_\ell h+b_\ell)\)</span></li>
+      <li><span class="i"><b>Signpost</b>planted by hand: fixed rules or hand-tuned weights</span><span class="m"><b>Hand-tuned rules</b>explicit logic, keywords or weights set without data</span></li>
+      <li><span class="i"><b>Cut path</b>structure laid by hand: allowed ways and chosen features</span><span class="m"><b>Hand-designed structure</b>topologies and features fixed before seeing data</span></li>
       <li><span class="i"><b>Scouting</b>walks taken only to choose, then dropped</span><span class="m"><b>Search</b>compute spent on \(\arg\max\) over candidate outputs, then discarded</span></li>
     </ul>
     <div class="notation m">
@@ -103,15 +114,16 @@
       <figcaption><button class="replay">Replay</button><span><span class="i">The more trodden a way, the likelier. The walker reads the blaze and takes one step.</span><span class="m">Each candidate token has a probability. The sampler draws one token per step.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Where the road ends, the ground ahead is marked. Some ways are well trodden, some barely marked. The walker sees only these marks and the road behind it. There is no map of the park.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p><span class="i">At each step the model outputs a probability for every possible next token. Decoding reads it: take the top one, or sample. A real blaze has tens of thousands of hairline branches; this one shows three.</span><span class="m">At each step the model outputs a probability for every possible next token. Decoding chooses from it: take the most likely token (greedy) or sample. A real vocabulary has tens of thousands of tokens; the figure shows three.</span></p></div><div class="m"><p>At each step the model outputs a distribution over the vocabulary:</p>
+      <div><h3>In the mechanism</h3><div class="i"><p>At each step the model outputs a probability for every possible next token. Decoding reads it: take the top one, or sample. A real blaze has tens of thousands of hairline branches; this one shows three.</p></div><div class="m"><p>At each step the model outputs a distribution over the vocabulary:</p>
 <div class="eqx" data-say="At each step the model gives every vocabulary token a probability; none is negative, and together they sum to one.">\[p_\theta(v\mid x_{&lt;t}) \ge 0,\qquad \sum_{v\in V} p_\theta(v\mid x_{&lt;t}) = 1\]</div>
 <p>Greedy decoding takes \(\arg\max_v p_\theta(v\mid x_{&lt;t})\); sampling draws from it, often reshaped by a temperature \(\tau\), as \(p \propto \exp(\ell_v/\tau)\) for logits \(\ell_v\). Real vocabularies have \(|V|\) in the tens of thousands; the figure shows three.</p></div></div>
     </div>
+    <div class="sandbox" data-sandbox="temp" aria-label="Interactive temperature and sampling explorer"></div>
     <figure><div class="fig"><svg data-fig="heading" viewBox="0 0 800 260" role="img" aria-label="Two walkers reach the same footprint, 'the', by different roads; each turns a different way, and the blaze differs." data-al-m="The distribution depends on the whole context, not just the last token: the model summarizes the context as a hidden-state vector."></svg></div>
       <figcaption><button class="replay">Replay</button><span><span class="i">Where you stand is the last word. Which way you face is everything before it.</span><span class="m">The distribution depends on the whole context, not just the last token: the model summarizes the context as a hidden-state vector.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>The blaze isn't printed on the ground. Two walkers can reach the same footprint, "the", by different roads, and each arrives facing a different way. The trodden ways fan out widest in the direction the walker faces, so the same spot gives a different blaze.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p><span class="i">At each step the model sums up the road so far as one long vector: a direction. Every word has a direction too, and a word's likelihood follows how closely it lines up with the one the walker faces (a dot product, then a softmax). The real compass has thousands of dimensions; the picture uses two.</span><span class="m">At each step the model summarizes the context as a hidden-state vector. Every token has an output embedding, and a token's logit is the dot product of the two; a softmax turns logits into probabilities. Real models use thousands of dimensions; the figure uses two.</span></p></div><div class="m"><p>The context is summarized as a vector, and each token \(v\) has an output embedding \(e_v\):</p>
+      <div><h3>In the mechanism</h3><div class="i"><p>At each step the model sums up the road so far as one long vector: a direction. Every word has a direction too, and a word's likelihood follows how closely it lines up with the one the walker faces (a dot product, then a softmax). The real compass has thousands of dimensions; the picture uses two.</p></div><div class="m"><p>The context is summarized as a vector, and each token \(v\) has an output embedding \(e_v\):</p>
 <div class="eqx" data-say="The context is summarized as a vector; each candidate token&#x27;s probability is a softmax of its embedding&#x27;s dot product with that vector.">\[h_t = f_\theta(x_{1:t}) \in \mathbb{R}^d,\qquad p_\theta(x_{t+1}=v\mid x_{1:t}) = \frac{\exp(e_v^\top h_t)}{\sum_{u\in V}\exp(e_u^\top h_t)}\]</div>
 <p>Two contexts ending in the same token have different \(h_t\), so different distributions. Real models use \(d\) in the thousands; the figure uses \(d=2\).</p></div></div>
     </div>
@@ -124,11 +136,11 @@
       <figcaption><button class="replay">Replay</button><span><span class="i">Earlier walkers wear the grass. The blaze is the wear, read from where the walker stands.</span><span class="m">The more often a continuation appears in training data, the higher the probability the model learns for it.</span></span></figcaption></figure>
     <div class="two">
       <div class="i"><h3>In the walk</h3><p>Before our walker arrives, many others have crossed the park. Where they went, the grass wore down. The blaze is how worn each way is, seen from this spot. The rest of the story is mostly about where the trails come from, and what the walker can see when it reads them.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p><span class="i">Training. For every position in every training example, the model is nudged to make what actually came next a little likelier. Who the earlier walkers are, people, judges or the model itself, changes over the decades.</span><span class="m">Training. For every position in every training example, gradient descent, with gradients from <a href="papers/1986-pass-the-blame-back.html">backpropagation</a>, adjusts the parameters to raise the probability of the token that actually came next. Where the training data and signal come from, human text, human judgments or the model's own outputs, changes over the decades.</span></p></div><div class="m"><p>Training minimizes the average negative log-likelihood of the data, with gradients from <a href="papers/1986-pass-the-blame-back.html">backpropagation</a>:</p>
+      <div><h3>In the mechanism</h3><div class="i"><p>Training. For every position in every training example, the model is nudged to make what actually came next a little likelier. Who the earlier walkers are, people, judges or the model itself, changes over the decades.</p></div><div class="m"><p>Training minimizes the average negative log-likelihood of the data, with gradients from <a href="papers/1986-pass-the-blame-back.html">backpropagation</a>:</p>
 <div class="eqx" data-say="The loss is the average negative log-probability the model gave to each actual next token; training repeatedly steps the parameters a little way downhill along its gradient.">\[\mathcal{L}(\theta) = -\frac{1}{N}\sum_{n=1}^{N}\sum_{t}\log p_\theta\big(x^{(n)}_t \mid x^{(n)}_{&lt;t}\big),\qquad \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal{L}(\theta)\]</div>
 <p>Continuations that are frequent in the data get high probability. What the data \(x^{(n)}\) and the training signal are, human text, human judgments or the model's own outputs, changes over the decades.</p></div></div>
     </div>
-    <div class="call i"><p><b>Cut paths and worn trails.</b> <span class="legend-sw" style="background:var(--gravel);border:2px solid var(--cutEdge)"></span>A cut path is laid by hand: crisp edges, its width a designer's decision. <span class="legend-sw" style="background:var(--wear)"></span>A worn trail is made by walkers: soft edges, and the likelier a way, the more trodden it is. Early systems cut their paths; modern ones wear them; for decades, many did both.</p></div><div class="call m"><p><b>Hand-designed versus learned.</b> In a hand-designed system, people specify the rules or structure directly. In a learned system, parameters are fit to data. Early systems were designed; modern ones are learned; for decades, many did both: hand-designed structure with learned probabilities.</p></div>
+    <div class="call i"><p><b>Signposts, cut paths and worn trails.</b> Keepers build by hand: they plant <b>signposts</b> that state fixed rules, and lay <span class="legend-sw" style="background:var(--gravel);border:2px solid var(--cutEdge)"></span><b>cut paths</b> with crisp edges to fix which ways exist. Walkers build by traffic: a <span class="legend-sw" style="background:var(--wear)"></span><b>worn trail</b> has soft edges, and the likelier a way, the more trodden it is. Early systems planted signposts and cut their paths; modern ones wear them; for decades, many cut the garden by hand and let walkers wear the trails in.</p></div><div class="call m"><p><b>Hand-designed versus learned.</b> In a hand-designed system, people specify the rules, weights or structure directly. In a learned system, parameters are fit to data. Early systems were designed; modern ones are learned; for decades, many did both: hand-designed structure with learned probabilities.</p></div>
   </section>
 
   <div class="part">
@@ -152,25 +164,25 @@
       <p class="blurb"><span class="i">A judge who looks only at footprints sets the standard the field trains toward: text that passes for human, whether or not it leads anywhere real.</span><span class="m">Judge a machine only by whether its output is indistinguishable from a human&#39;s. That standard survives as maximum likelihood, \(\min_\theta \mathrm{KL}(p_{\text{data}}\,\|\,p_\theta)\).</span></p>
       <span class="go">Read the entry →</span>
     </a></li>
-    <li><a href="papers/1958-signposts-that-learn.html" style="--th:var(--th-trails)">
+    <li><a href="papers/1958-wear-the-rule-from-mistakes.html" style="--th:var(--th-trails)">
       <p class="kicker"><span class="dot"></span><span class="yr">1958</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
-      <h3><span class="i">Signposts that learn</span><span class="m">The perceptron</span></h3>
+      <h3><span class="i">Wear the rule from mistakes</span><span class="m">The perceptron</span></h3>
       <p class="paper"><i>The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</i> (1958)</p>
-      <p class="blurb"><span class="i">A signpost weighs the clues where it stands and points one way. Each time it points wrong, its dials are nudged: the first machine that learned from its mistakes.</span><span class="m">A single artificial neuron, \(\hat y = \mathbb{1}[w^\top x + b &gt; 0]\), learns from labeled examples by \(w \leftarrow w + \eta(y - \hat y)x\), changing only when it errs. It can&#39;t learn XOR.</span></p>
+      <p class="blurb"><span class="i">Instead of a signpost planted by hand, clues on the ground wear trails toward a choice, nudged only on wrong turns: the first machine that learned from its mistakes.</span><span class="m">A single artificial neuron, \(\hat y = \mathbb{1}[w^\top x + b &gt; 0]\), learns from labeled examples by \(w \leftarrow w + \eta(y - \hat y)x\), changing only when it errs. It can&#39;t learn XOR.</span></p>
       <span class="go">Read the entry →</span>
     </a></li>
     <li><a href="papers/1966-cut-the-paths-by-hand.html" style="--th:var(--th-trails)">
       <p class="kicker"><span class="dot"></span><span class="yr">1966</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
       <h3><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></h3>
       <p class="paper"><i>ELIZA: A Computer Program for the Study of Natural Language Communication Between Man and Machine</i> (1966)</p>
-      <p class="blurb"><span class="i">A formal garden where every path is cut by hand: keyword rules turn your words into a reply, with nothing counted or learned.</span><span class="m">A conversation program built entirely from hand-written rules, \(y = r(d(x))\): no data, no probabilities, no learning.</span></p>
+      <p class="blurb"><span class="i">A formal garden where every path is cut and every signpost planted by hand: keyword rules turn your words into a reply, with nothing counted or learned.</span><span class="m">A conversation program built entirely from hand-written rules, \(y = r(d(x))\): no data, no probabilities, no learning.</span></p>
       <span class="go">Read the entry →</span>
     </a></li>
     <li><a href="papers/1986-pass-the-blame-back.html" style="--th:var(--th-ground)">
       <p class="kicker"><span class="dot"></span><span class="yr">1986</span> · <span class="i">The ground</span><span class="m">Representation</span></p>
       <h3><span class="i">Pass the blame back</span><span class="m">Backpropagation and hidden layers</span></h3>
       <p class="paper"><i>Learning Representations by Back-Propagating Errors</i> (1986)</p>
-      <p class="blurb"><span class="i">Stand the signposts in rows. When a walk ends wrong, the blame flows back and every post adjusts by its share, so the middle posts learn clues nobody named.</span><span class="m">The chain rule, \(\delta_j = \sigma&#39;(z_j)\sum_k w_{jk}\delta_k\), gives every weight in a multi-layer network its share of the error, so hidden layers learn their own features.</span></p>
+      <p class="blurb"><span class="i">Lay rows of hidden clearings between the clues and the choice. When a walk ends wrong, blame flows back and re-wears every trail by its share, so the middle clearings learn clues nobody named.</span><span class="m">The chain rule, \(\delta_j = \sigma&#39;(z_j)\sum_k w_{jk}\delta_k\), gives every weight in a multi-layer network its share of the error, so hidden layers learn their own features.</span></p>
       <span class="go">Read the entry →</span>
     </a></li>
     <li><a href="papers/1989-a-garden-worn-in.html" style="--th:var(--th-ground)">
@@ -316,7 +328,7 @@
 </main>
 <script>
 /* old single-page links (#e1948 and so on) now live on their own pages */
-(()=>{const m={e1948:'1948-count-the-footprints',e1950:'1950-judge-the-footprints',e1966:'1966-cut-the-paths-by-hand',e1989:'1989-a-garden-worn-in',e1990:'1990-carry-a-pack',e2000:'2000-similar-words-similar-ground',e2012:'2012-ground-for-pictures',e2013:'2013-paint-in-one-stroke',e2014:'2014-a-dog-on-the-other-road',e2017:'2017-drop-the-pack-keep-the-dog',e2018:'2018-hand-over-the-road',e2020a:'2020-more-walkers-on-a-straight-line',e2020:'2020-paint-in-drafts',e2021:'2021-name-the-destination',e2022a:'2022-judge-where-walks-end',e2022b:'2022-scout-before-answering',e2023a:'2023-let-other-hands-lay-road',e2023b:'2023-trails-worn-by-walkers'};const k=location.hash.slice(1);if(m[k])location.replace('papers/'+m[k]+'.html')})();
+(()=>{const m={e1948:'1948-count-the-footprints',e1950:'1950-judge-the-footprints',e1958:'1958-wear-the-rule-from-mistakes',e1966:'1966-cut-the-paths-by-hand',e1986:'1986-pass-the-blame-back',e1989:'1989-a-garden-worn-in',e1990:'1990-carry-a-pack',e2000:'2000-similar-words-similar-ground',e2012:'2012-ground-for-pictures',e2013:'2013-paint-in-one-stroke',e2014:'2014-a-dog-on-the-other-road',e2017:'2017-drop-the-pack-keep-the-dog',e2018:'2018-hand-over-the-road',e2020a:'2020-more-walkers-on-a-straight-line',e2020:'2020-paint-in-drafts',e2021:'2021-name-the-destination',e2022a:'2022-judge-where-walks-end',e2022b:'2022-scout-before-answering',e2023a:'2023-let-other-hands-lay-road',e2023b:'2023-trails-worn-by-walkers'};const k=location.hash.slice(1);if(m[k])location.replace('papers/'+m[k]+'.html')})();
 </script>
 <script src="park.js"></script>
 </body>

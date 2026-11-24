@@ -2,77 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title data-m="1958 · The perceptron · GenAI Park">1958 · Signposts that learn · GenAI Park</title>
-<meta name="description" content="A signpost weighs the clues where it stands and points one way. When it points wrong, its dials are nudged. The first machine that learned from its mistakes.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="../park.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<title>Redirecting · 1958 · Wear the rule from mistakes · GenAI Park</title>
+<link rel="canonical" href="1958-wear-the-rule-from-mistakes.html">
+<meta http-equiv="refresh" content="0; url=1958-wear-the-rule-from-mistakes.html">
+<script>location.replace('1958-wear-the-rule-from-mistakes.html'+location.search+location.hash);</script>
 </head>
-<body data-reg="i">
-<script>try{if(localStorage.getItem('genai-park-reg')==='m')document.body.dataset.reg='m'}catch(e){}</script>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
-<main>
-  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 3 of 20</span><div class="regseg" role="group" aria-label="Which words to read"><button type="button" class="segb" data-reg="i" aria-pressed="true">Allegory</button><button type="button" class="segb" data-reg="m" aria-pressed="false">Math</button></div></span></header>
-
-  <article class="entry timeline page" style="--th:var(--th-trails)">
-    <p class="kicker"><span class="dot"></span><span class="yr">1958</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
-    <h1><span class="i">Signposts that learn</span><span class="m">The perceptron</span></h1>
-    <p class="paper"><i>The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain</i> (1958)</p>
-    <section class="before">
-      <h3>Before this</h3>
-      <div class="i"><p>In 1943 McCulloch and Pitts drew a brain cell as a tiny switch: it adds up the signals arriving on its wires and fires if the total passes a threshold. Wired the right way, such switches could compute any logic. But someone had to set every wire by hand, like a signpost painted once and left pointing the same way forever. Hebb, in 1949, guessed that real connections strengthen with use. Rosenblatt, a psychologist at Cornell, asked how a network of such switches could set its own wires from experience.</p></div><div class="m"><p>McCulloch and Pitts (1943) modelled a neuron as a threshold unit: it sums weighted binary inputs and fires if the sum exceeds a threshold. Networks of such units can compute any Boolean function, but their weights were fixed by design. Hebb (1949) proposed that synaptic connections strengthen with correlated activity. Rosenblatt asked how a network of threshold units could acquire its weights from examples.</p><p>A McCulloch–Pitts unit computes \(\hat y = \mathbb{1}\big[\sum_i w_i x_i \ge \tau\big]\) with \(w\) and \(\tau\) fixed by the designer. The perceptron keeps the unit and learns \(w\).</p></div>
-    </section>
-
-    <figure><div class="fig"><svg data-fig="perceptron" viewBox="0 0 800 260" role="img" aria-label="A signpost&#39;s line across the ground is nudged after each wrong pointing until every spot is sorted. On the right, four spots arranged as &#39;exactly one clue&#39; defeat every straight line." data-al-m="A perceptron&#39;s decision boundary is a straight line. Each misclassified example updates the weights, until every training point is classified correctly. XOR can&#39;t be separated by any line."></svg></div>
-      <figcaption><button class="replay">Replay</button><span><span class="i">One signpost weighs two clues and splits the ground with one straight line. Each wrong pointing nudges the line, until every spot is sorted. Then the trap: no straight line sorts “pond if exactly one clue holds”.</span><span class="m">A perceptron's decision boundary \(w^\top x + b = 0\) is a straight line. Each misclassified example updates \(w\) and \(b\), until every training point is classified correctly. XOR can't be separated by any line.</span></span></figcaption></figure>
-    <div class="two">
-      <div class="i"><h3>In the walk</h3><p>Until now, every signpost in the park was painted by hand. The perceptron is a signpost that paints itself. It looks at the clues where the walker stands, weighs each one with a dial, and points one way. Whenever a walker it sent the wrong way complains, the dials turn a little. Nobody tells it the rule; it wears the rule in from mistakes.</p><p>It points rather than writes: one decision, not a walk. But every later walker in this guide reads its blaze off stacks of signposts like this one.</p></div>
-      <div><h3>In the mechanism</h3><div class="i"><p>A perceptron computes a weighted sum of its inputs plus a bias and outputs one class if the sum is positive, the other if not. Training is error-driven: weights change only when the output is wrong, and then they move toward the correct answer. It is the first learning rule for an artificial neuron that came with a working machine.</p></div><div class="m"><div class="eqx" data-say="Predict 1 when the weighted sum of the inputs plus the bias is positive; after each example, move the weights by the error times the input.">\[\hat y = \mathbb{1}\big[w^\top x + b &gt; 0\big],\qquad w \leftarrow w + \eta\,(y-\hat y)\,x\]</div>
-<p>The update is zero when \(\hat y = y\), so weights change only on mistakes, and then toward the correct label. The decision boundary \(\{x : w^\top x + b = 0\}\) is a hyperplane: in the figure, a line.</p></div></div>
-    </div>
-    <section class="more">
-      <h2>A closer look: <span class="i">the signpost&#39;s dials</span><span class="m">the learning rule</span></h2>
-      <div class="i"><p>The signpost has a dial for each clue, saying how much that clue counts and whether for or against, plus one more for its own lean. Standing on a spot, it adds up the clues present, each times its dial. Over zero, it points to the pond; otherwise, to the gate. After each walker:</p>
-<ul class="rules">
-<li><b>Pointed the right way.</b> Touch nothing.</li>
-<li><b>Pointed to the gate, should have said pond.</b> Turn up the dials of the clues showing here.</li>
-<li><b>Pointed to the pond, should have said gate.</b> Turn them down.</li></ul>
-<p>Whatever the dials say, the signpost splits the ground with one straight line, as in the figure, and each correction tilts or shifts it. If some straight line can sort every spot, this rule is certain to find one after a limited number of mistakes, a guarantee proven a few years after the paper (Block and Novikoff, 1962).</p>
-<p>Rosenblatt's machine had a middle row of posts too, but they were wired at random and never changed. Only the last signpost learned. His group later built it in hardware, the Mark I Perceptron (around 1960): a 20 × 20 grid of light sensors for clues and motor-driven dials for weights. It learned to tell simple shapes and letters apart. The press had run ahead of it from the start: reporting a 1958 demonstration of the rule on an IBM 704 computer, the <i>New York Times</i> wrote that the Navy expected the machine to "walk, talk, see, write, reproduce itself and be conscious of its existence."</p></div><div class="m"><p>Given an input \(x\in\mathbb{R}^n\), weights \(w\) and bias \(b\), the perceptron predicts</p>
-<div class="eqx" data-say="The perceptron outputs 1 if the weighted sum plus the bias is positive, and 0 otherwise.">\[\hat y = \begin{cases}1 &amp; w^\top x + b &gt; 0\\ 0 &amp; \text{otherwise.}\end{cases}\]</div>
-<p>For each training example \((x, y)\), with label \(y\in\{0,1\}\):</p>
-<div class="eqx" data-say="Weights and bias change only when the prediction is wrong, by the learning rate times the error (times the input, for the weights).">\[w \leftarrow w + \eta\,(y-\hat y)\,x,\qquad b \leftarrow b + \eta\,(y-\hat y)\]</div>
-<ul class="rules">
-<li><b>Correct output.</b> \(y-\hat y=0\), so nothing changes.</li>
-<li><b>False negative</b> (\(y=1,\ \hat y=0\)). \(\eta x\) is added to \(w\).</li>
-<li><b>False positive</b> (\(y=0,\ \hat y=1\)). \(\eta x\) is subtracted.</li></ul>
-<p>The decision boundary \(w^\top x + b = 0\) is a hyperplane: a straight line in two dimensions. The perceptron convergence theorem (Block; Novikoff, 1962): if some unit vector \(u\) separates the classes with margin \(\gamma\), and \(\|x\|\le R\) for every example, the rule makes at most</p>
-<div class="eqx" data-say="The number of mistakes is at most the square of the data&#x27;s radius divided by the margin.">\[\left(R/\gamma\right)^2\]</div>
-<p>mistakes, however long it runs.</p>
-<p>Rosenblatt's architecture had three layers: sensory units, association units with random, fixed connections, and response units whose weights were learned. Only the last layer was trained. The Mark I Perceptron (around 1960) implemented it in hardware, with a 20 × 20 photocell array as input and potentiometers driven by electric motors as weights, and learned to classify simple shapes and letters. Press coverage overstated the work from the start: reporting a 1958 demonstration simulated on an IBM 704, the <i>New York Times</i> wrote that the Navy expected it to "walk, talk, see, write, reproduce itself and be conscious of its existence."</p></div>
-    </section>
-    <section class="more">
-      <h2>What it changed</h2>
-      <div class="i"><p>The perceptron was the first machine to learn a task from labeled examples instead of being told how. The rule at its heart, nudge each dial by how much it contributed to the mistake, is the seed of how every neural network in this guide is trained.</p>
-<p>The setback came in 1969. Minsky and Papert's book <i>Perceptrons</i> proved what one learning signpost can't do: it can't tell whether exactly one of two clues holds, whether a count is odd or even, or whether a shape is all in one piece. The book is often blamed for drying up neural-network funding for more than a decade, though the wider "AI winter" of the mid-1970s had many causes. Rosenblatt died in 1971.</p></div><div class="m"><p>The perceptron was the first trainable classifier with a working implementation, and error-driven weight updates remain the basis of neural network training. In modern terms it is a linear classifier, closely related to logistic regression and linear support vector machines.</p>
-<p>Minsky and Papert's <i>Perceptrons</i> (1969) proved limits of single-layer perceptrons: they can't compute XOR, parity or connectedness. The book is often blamed for a decline in neural-network funding through the 1970s, though the broader AI winter of the mid-1970s had several causes. Rosenblatt died in 1971.</p></div>
-    </section>
-    <div class="open"><h3>Left open</h3><p><span class="i">One signpost can only split the ground with a straight line, so “pond if exactly one clue holds” defeats it. More rows of posts could do it, but nobody knew how to teach the posts in the middle.</span><span class="m">\(\hat y = \mathbb{1}[w^\top x + b &gt; 0]\) can only represent linearly separable functions. XOR is not one: it needs \(b \le 0\), \(w_1 + b &gt; 0\), \(w_2 + b &gt; 0\) and \(w_1 + w_2 + b \le 0\), and adding the middle two contradicts the others. Multi-layer networks can represent XOR, but there was no method for training their hidden layers.</span> <a href="1986-pass-the-blame-back.html">→ 1986</a></p></div>
-  </article>
-
-  <nav class="pager" aria-label="Previous and next entries">
-    <a class="prev" href="1950-judge-the-footprints.html" style="--th:var(--th-trails)"><small>← 1950</small><span class="i">Judge the footprints</span><span class="m">The imitation game</span></a>
-    <a class="next" href="1966-cut-the-paths-by-hand.html" style="--th:var(--th-trails)"><small>1966 →</small><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></a>
-  </nav>
-
-  <footer>
-    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
-  </footer>
-</main>
-<script src="../park.js"></script>
+<body>
+<p>Moved to <a href="1958-wear-the-rule-from-mistakes.html">1958 · Wear the rule from mistakes</a>.</p>
 </body>
 </html>
