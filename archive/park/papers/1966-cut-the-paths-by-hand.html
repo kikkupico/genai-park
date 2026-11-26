@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="1966 · Rule-based dialogue · GenAI Park">1966 · Cut the paths by hand · GenAI Park</title>
+<meta name="description" content="A formal garden where every path is cut by hand: keyword rules turn your words into a reply, with nothing counted or learned.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e6ebd6'/%3E%3Cpath d='M5 25Q14 22 17 16M17 16L27 8M17 16L28 16M17 16L26 24' fill='none' stroke='%23c9822b' stroke-linecap='round' stroke-width='3'/%3E%3Ccircle cx='12' cy='21' r='2.4' fill='%236b5a3a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+</head>
+<body data-reg="i">
+<script>try{const r=localStorage.getItem('genai-park-reg'),t=localStorage.getItem('genai-park-theme');if(r==='m'||r==='b')document.body.dataset.reg=r;if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 4 of 20</span><div class="regseg" role="group" aria-label="Reading mode"><button type="button" class="segb" data-reg="i" aria-pressed="true" title="Park allegory only">Allegory</button><button type="button" class="segb" data-reg="b" aria-pressed="false" title="Allegory and math side by side">Bridge</button><button type="button" class="segb" data-reg="m" aria-pressed="false" title="Formal math and minimal diagrams">Math</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-trails)">
+    <p class="kicker"><span class="dot"></span><span class="yr">1966</span> · <span class="i">Where the trails come from</span><span class="m">Training signal</span></p>
+    <h1><span class="i">Cut the paths by hand</span><span class="m">Rule-based dialogue</span></h1>
+    <p class="paper"><i>ELIZA: A Computer Program for the Study of Natural Language Communication Between Man and Machine</i> (1966)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>In the 1960s there was no large body of digital text, and the learning machines of the day, such as the <a href="1958-wear-the-rule-from-mistakes.html">perceptron</a>, could sort simple shapes but came nowhere near the size of language. If a computer was to hold a conversation, every response had to be written in advance. Weizenbaum, at MIT, wrote ELIZA to run on a time-shared computer that people reached by typewriter terminal. Its best-known script, DOCTOR, played a non-directive psychotherapist, a clever choice: that kind of therapist mostly reflects your own words back, so the program could seem to listen without knowing anything about the world.</p></div><div class="m"><p>In the 1960s there was no large digital text corpus, and the learning methods of the day, such as the single-layer <a href="1958-wear-the-rule-from-mistakes.html">perceptron</a>, handled only simple pattern classification, so any conversational behavior had to be specified explicitly. Weizenbaum built ELIZA on MIT's MAC time-sharing system. Its best-known script, DOCTOR, imitated a Rogerian psychotherapist, a style that mostly reflects the user's own statements back and so needs no knowledge of the world.</p></div>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="eliza" viewBox="0 0 800 260" role="img" aria-label="A user types 'I am sad'; a hand-cut path chosen by a rule leads the walker to write 'How long have you been sad?'" data-al-m="A keyword rule matches the input &quot;I am sad&quot; and fills a fixed template, copying &quot;sad&quot; into the reply."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Every path was cut by hand. A rule matches the user's words and the walker follows the path it points to, copying "sad" across.</span><span class="m">A keyword rule matches the input "I am sad" and fills a fixed template, copying "sad" into the reply.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>A different kind of park: a formal garden. Every path was cut by hand, and a signpost at each junction names the pattern it answers. Nothing is worn; nobody counted anything. The walker matches what it was handed against the signs and follows the path the matching sign points to.</p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p>ELIZA's script was a list of keywords and decomposition patterns, each with reassembly rules that reused parts of the input. "I am <i>X</i>" could become "How long have you been <i>X</i>?" No probabilities, no data: rules written by hand. The same approach ran through decades of symbolic AI.</p></div><div class="m"><p>A script is a ranked set of rules \((k, d, r)\): a keyword \(k\), a decomposition pattern \(d\) that splits the input \(x\) into segments \(s_1,\dots,s_m\), and a reassembly template \(r\) that builds the reply from them:</p>
+<div class="eqx" data-say="The reply is the template filled in with the segments that the pattern cut out of the input.">\[y = r\big(d(x)\big)\]</div>
+<p>The reply is a deterministic function of the input: no probabilities and no parameters fit to data. The same approach ran through decades of symbolic AI.</p></div></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">one signpost, read closely</span><span class="m">decomposition and reassembly</span></h2>
+      <div class="i"><p>A script is a list of keywords, each with a rank and one or more decomposition patterns. A pattern splits the input into numbered pieces; a reassembly rule builds the reply from those pieces. The paper's own example:</p>
+<div class="tw"><table class="mini"><tbody>
+<tr><td>Input</td><td>It seems that you hate me</td></tr>
+<tr><td>Pattern</td><td>(0 YOU 0 ME), where 0 matches any run of words</td></tr>
+<tr><td>Pieces</td><td>(1) It seems that · (2) you · (3) hate · (4) me</td></tr>
+<tr><td>Reassembly</td><td>(WHAT MAKES YOU THINK I 3 YOU)</td></tr>
+<tr><td>Reply</td><td>What makes you think I hate you</td></tr></tbody></table></div>
+<p>Pronouns are swapped on the way through, "my" for "your" and "I" for "you", so copied pieces read naturally. If several keywords appear, the highest-ranked one wins. If none does, ELIZA falls back on a content-free prompt such as "Please go on", or brings up something saved from earlier: a sentence that began "my…" could return later as "Earlier you said your…".</p>
+<p>In the garden picture, each keyword is a signpost and each reassembly rule is a path someone cut to a fixed destination. Nothing about the garden is learned. Every response that ever appears was, in shape, typed in by a person.</p></div><div class="m"><p>A script is a list of ranked keywords. Each keyword has decomposition patterns that split the input into numbered segments, and reassembly templates that build the reply from those segments. The paper's example:</p>
+<div class="tw"><table class="mini"><tbody>
+<tr><td>Input</td><td>It seems that you hate me</td></tr>
+<tr><td>Pattern</td><td>(0 YOU 0 ME), where 0 matches any sequence of words</td></tr>
+<tr><td>Segments</td><td>(1) It seems that · (2) you · (3) hate · (4) me</td></tr>
+<tr><td>Template</td><td>(WHAT MAKES YOU THINK I 3 YOU)</td></tr>
+<tr><td>Output</td><td>What makes you think I hate you</td></tr></tbody></table></div>
+<p>Pronouns are transformed during the copy ("my" to "your", "I" to "you"). When several keywords match, the highest-ranked one is used. When none does, the program emits a generic prompt such as "Please go on", or retrieves a stored earlier input: a sentence beginning "my…" could return later as "Earlier you said your…".</p>
+<p>The output space is exactly \(\{\,r(d(x))\,\}\) over the script's rules, plus the fallbacks. Every possible response was, in form, written by the script author.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>ELIZA left a name behind: the ELIZA effect, people's readiness to credit a program with understanding. Weizenbaum was disturbed by it. In his 1976 book <i>Computer Power and Human Reason</i> he recalled his secretary, who had watched him build the program, asking him to leave the room so she could talk to it in private.</p>
+<p>The cut-path method carried on for decades in symbolic AI and the expert systems of the 1970s and 80s. It is easy to inspect and fails abruptly: one step off the cut paths and there is nothing underfoot.</p></div><div class="m"><p>The "ELIZA effect" names users' tendency to attribute understanding to such a program. Weizenbaum found it troubling; in <i>Computer Power and Human Reason</i> (1976) he recalled his secretary asking him to leave the room so she could talk with it privately.</p>
+<p>Hand-written rules remained the dominant approach in symbolic AI and the expert systems of the 1970s and 80s. They are transparent and brittle: inputs outside the rules get no meaningful response.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">Every path has to be cut by someone. Step off the cut paths and there is nothing at all. Real language is far too big a park to lay out by hand.</span><span class="m">The output set is fixed by the hand-written rules \((k,d,r)\), and inputs no rule matches get a stock fallback. Natural language is too large to specify that way.</span> <a href="1989-a-garden-worn-in.html">→ 1989</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="1958-wear-the-rule-from-mistakes.html" style="--th:var(--th-trails)"><small>← 1958</small><span class="i">Wear the rule from mistakes</span><span class="m">The perceptron</span></a>
+    <a class="next" href="1986-pass-the-blame-back.html" style="--th:var(--th-ground)"><small>1986 →</small><span class="i">Pass the blame back</span><span class="m">Backpropagation and hidden layers</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

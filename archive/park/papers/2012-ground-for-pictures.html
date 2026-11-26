@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-m="2012 · Deep convolutional networks (AlexNet) · GenAI Park">2012 · Ground for pictures, worn in · GenAI Park</title>
+<meta name="description" content="The ground for pictures stops being cut by engineers and is worn in from a million labeled photos, layer by layer.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e6ebd6'/%3E%3Cpath d='M5 25Q14 22 17 16M17 16L27 8M17 16L28 16M17 16L26 24' fill='none' stroke='%23c9822b' stroke-linecap='round' stroke-width='3'/%3E%3Ccircle cx='12' cy='21' r='2.4' fill='%236b5a3a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../park.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+</head>
+<body data-reg="i">
+<script>try{const r=localStorage.getItem('genai-park-reg'),t=localStorage.getItem('genai-park-theme');if(r==='m'||r==='b')document.body.dataset.reg=r;if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="rough" filterUnits="userSpaceOnUse" x="-60" y="-60" width="920" height="400"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter><radialGradient id="glow" cx="30%" cy="18%" r="75%"><stop offset="0" class="glowstop" stop-opacity=".95"/><stop offset="1" class="glowstop" stop-opacity="0"/></radialGradient></defs></svg>
+<main>
+  <header class="topbar"><a href="../index.html">← GenAI Park</a><span class="right"><span>Entry 9 of 20</span><div class="regseg" role="group" aria-label="Reading mode"><button type="button" class="segb" data-reg="i" aria-pressed="true" title="Park allegory only">Allegory</button><button type="button" class="segb" data-reg="b" aria-pressed="false" title="Allegory and math side by side">Bridge</button><button type="button" class="segb" data-reg="m" aria-pressed="false" title="Formal math and minimal diagrams">Math</button></div></span></header>
+
+  <article class="entry timeline page" style="--th:var(--th-ground)">
+    <p class="kicker"><span class="dot"></span><span class="yr">2012</span> · <span class="i">The ground</span><span class="m">Representation</span></p>
+    <h1><span class="i">Ground for pictures, worn in</span><span class="m">Deep convolutional networks (AlexNet)</span></h1>
+    <p class="paper"><i>ImageNet Classification with Deep Convolutional Neural Networks</i> (2012)</p>
+    <section class="before">
+      <h3>Before this</h3>
+      <div class="i"><p>Computer vision before 2012 was a two-stage process. Engineers designed feature detectors, recipes for spotting edges, corners and gradients in an image, with names such as SIFT and HOG, and a trained classifier sorted images by those features. The learned part sat on top of hand-cut ground. The ImageNet challenge, from 2010, gave the field a shared test: 1.2 million training photos in 1,000 categories.</p><p>Meanwhile, deep rows of clearings were coming back. From 2006, Hinton and others showed that deep stacks could be trained by preparing one row at a time, and the name "deep learning" caught on. Graphics chips, built for games, made training many times faster. By 2010–2012, deep networks were beating the best speech recognizers. Pictures were next.</p></div><div class="m"><p>Computer vision before 2012 used a two-stage pipeline: hand-engineered feature descriptors such as SIFT and HOG, followed by a trained classifier, often an SVM. Learning happened only in the final stage. The ImageNet Large Scale Visual Recognition Challenge, from 2010, provided a common benchmark: 1.2 million training images in 1,000 classes.</p><p>In parallel, deep networks were becoming trainable. From 2006, layer-wise unsupervised pretraining (deep belief networks) made deeper networks practical, and the term "deep learning" spread. GPUs sped up training by an order of magnitude or more. By 2010–2012, deep networks were outperforming Gaussian-mixture acoustic models in speech recognition.</p><p>Formally, the pipeline was \(\hat y = g_\theta(\phi(x))\), with the features \(\phi\) fixed by hand and only the classifier \(g_\theta\) learned.</p></div>
+      <p class="from">Picks up what was left open in <a href="1986-pass-the-blame-back.html">1986 · <span class="i">Pass the blame back</span><span class="m">Backpropagation and hidden layers</span></a>.</p>
+    </section>
+
+    <figure><div class="fig"><svg data-fig="alexnet" viewBox="0 0 800 260" role="img" aria-label="Top: a photo passes along a hand-cut path through feature detectors engineers chose. Bottom: photos wear a trail through layers whose features are learned, from edges to textures to parts, and it names the picture far more reliably." data-al-m="Top: a pipeline of hand-engineered features and a classifier. Bottom: a deep network that learns its features from data, from edges to textures to parts. Error is ImageNet top-5: the correct label is missing from the five highest-scoring guesses."></svg></div>
+      <figcaption><button class="replay">Replay</button><span><span class="i">Above, the features were chosen by engineers. Below, a million photos wear them in, layer by layer. Error is ImageNet top-5: the right answer missing from the system's five guesses.</span><span class="m">Top: hand-engineered features \(\phi(x)\) and a learned classifier. Bottom: a deep network \(f_\theta\) that learns its features from data, from edges to textures to parts. Error is ImageNet top-5: the correct label is missing from the five highest-scoring classes.</span></span></figcaption></figure>
+    <div class="two">
+      <div class="i"><h3>In the walk</h3><p>This one isn't a walker at all: it looks at a photo and names it, in one step. It is here for the ground. Until 2012, the ground for pictures was cut by hand: engineers decided which edges, corners and color patterns a system should notice. AlexNet let that ground wear in from a million labeled photos, layer on layer, from edges to textures to parts of things. Worn ground beat cut ground by a wide margin, and every painter after it stands on ground learned this way.</p></div>
+      <div><h3>In the mechanism</h3><div class="i"><p>A deep convolutional network, trained on two GPUs on ImageNet's 1.2 million images in 1,000 classes, won the 2012 ImageNet challenge with 15.3% top-5 error against 26.2% for the best system built on hand-designed features. Its early layers learned edge and color filters by themselves. The result set off the deep-learning wave that replaced hand-picked features across vision, speech and language.</p></div><div class="m"><div class="eqx" data-say="The label probabilities are a softmax of the output of eight stacked learned layers applied to the image.">\[p_\theta(y\mid x) = \operatorname{softmax}\big(f_\theta(x)\big)_y,\qquad f_\theta = f_8\circ\cdots\circ f_1\]</div>
+<p>All eight layers are learned end to end by minimizing \(-\log p_\theta(y\mid x)\) over 1.2 million labeled images, instead of fixing \(\phi\) by hand. Trained on two GPUs, it won the 2012 ImageNet challenge with 15.3% top-5 error, against 26.2% for the best system built on hand-designed features, and set off the deep-learning wave across vision, speech and language.</p></div></div>
+    </div>
+    <section class="more">
+      <h2>A closer look: <span class="i">what a convolution is, in the park</span><span class="m">convolution, depth and what made it trainable</span></h2>
+      <div class="i"><p>A convolutional layer slides one small detector across every spot of the image, asking the same question everywhere: is there a vertical edge here? A patch of red? The network learns which questions to ask. Stack layers and later detectors ask about patterns of earlier answers: edges become textures, textures become parts like wheels or eyes, parts become objects.</p>
+<p>AlexNet had five such layers followed by three fully connected ones, about 60 million parameters in all. A few choices made it work at that scale:</p>
+<ul class="rules">
+<li><b>Two GPUs.</b> The network was split across two graphics cards with 3 GB each and trained for five to six days.</li>
+<li><b>A simpler activation.</b> Rectified linear units, which pass positive values and zero out the rest, trained several times faster than the usual smooth curves.</li>
+<li><b>Dropout.</b> Randomly silencing half the units in the large layers during training kept the network from memorizing.</li>
+<li><b>More pictures for free.</b> Random crops and flips of each training image multiplied the data.</li></ul>
+<p>When the researchers looked at the first layer's learned detectors, they found edge and color-blob filters, much like the ones engineers had been designing by hand, only learned.</p></div><div class="m"><p>A convolutional layer applies the same small learned filter \(K\) at every spatial position,</p>
+<div class="eqx" data-say="A convolution slides one small filter over the image, taking a weighted sum of the pixels under it at each position.">\[(K * X)_{ij} = \sum_{u,v} K_{uv}\, X_{i+u,\ j+v},\]</div>
+<p>which builds in translation equivariance and shares weights across the image. Stacked layers compose features hierarchically: edges, then textures, then object parts, then objects.</p>
+<p>AlexNet had five convolutional layers and three fully connected layers, about 60 million parameters. Several choices made it trainable at that scale:</p>
+<ul class="rules">
+<li><b>GPU training.</b> The model was split across two GTX 580 GPUs with 3 GB each and trained for five to six days.</li>
+<li><b>ReLU activations.</b> \(\max(0, z)\) trained several times faster than \(\tanh\) units.</li>
+<li><b>Dropout.</b> Training on \(h\odot m\), with each \(m_i\sim\text{Bernoulli}(0.5)\), in the fully connected layers reduced overfitting.</li>
+<li><b>Data augmentation.</b> Random crops and horizontal flips enlarged the effective training set.</li></ul>
+<p>Visualized, the first-layer filters were oriented edge detectors and color blobs, much like the features that had been designed by hand.</p></div>
+    </section>
+    <section class="more">
+      <h2>What it changed</h2>
+      <div class="i"><p>The recipe was data, GPUs and depth, with the features worn in rather than cut. Within a few years it had replaced hand-designed features across vision, then in speech recognition and language. Error on ImageNet kept falling: <i>Deep Residual Learning for Image Recognition</i> reached 3.57% top-5 in 2015, and its residual connections reappear in <a href="2017-drop-the-pack-keep-the-dog.html">the 2017 entry</a>.</p>
+<p>For this guide the lasting point is the ground. Every image painter that follows, one-stroke or in drafts, stands on visual ground learned this way.</p></div><div class="m"><p>The combination of large labeled datasets, GPU compute and deep end-to-end networks replaced feature engineering, first in vision, then in speech and language. ImageNet error kept dropping: <i>Deep Residual Learning for Image Recognition</i> reached 3.57% top-5 in 2015, and its residual connections reappear in the transformer.</p>
+<p>For image generation, the lasting contribution is learned visual representations, which every later generator relies on.</p></div>
+    </section>
+    <div class="open"><h3>Left open</h3><p><span class="i">The ground for pictures can now be learned, but this system only names what it sees. Making a picture takes a painter.</span><span class="m">The network models \(p_\theta(y\mid x)\), a distribution over 1,000 labels given an image. Generation needs \(p_\theta(x)\), a distribution over images themselves.</span> <a href="2013-paint-in-one-stroke.html">→ 2013</a></p></div>
+  </article>
+
+  <nav class="pager" aria-label="Previous and next entries">
+    <a class="prev" href="2000-similar-words-similar-ground.html" style="--th:var(--th-ground)"><small>← 2000</small><span class="i">Similar words, similar ground</span><span class="m">Neural language models and word embeddings</span></a>
+    <a class="next" href="2013-paint-in-one-stroke.html" style="--th:var(--th-brush)"><small>2013 →</small><span class="i">Paint in one stroke</span><span class="m">Variational autoencoders and GANs</span></a>
+  </nav>
+
+  <footer>
+    Entries sit at their landmark paper; years are first public versions. The walking sentence is from Thoreau's <i>Walking</i> (1862). <a href="../index.html">Back to <span class="i">the park</span><span class="m">the index</span></a>.
+  </footer>
+</main>
+<script src="../park.js"></script>
+</body>
+</html>

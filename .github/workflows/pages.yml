@@ -1,7 +1,7 @@
 name: Deploy to GitHub Pages
 
-# The site is plain static files: the home page, one page per paper,
-# and the shared stylesheet and figure script.
+# The site is plain static files: the graph view (index.html and its scripts),
+# redirect stubs for the old paper URLs, and the archived illustrated edition.
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
       - name: Build site
         run: |
           mkdir -p _site
-          cp index.html park.css park.js _site/
+          cp index.html graph.css graph.js gloss.js about.js _site/
           cp -r papers archive img _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

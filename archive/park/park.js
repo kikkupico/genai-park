@@ -1260,7 +1260,7 @@ const GLOSS={"gc":[
     "l":[["e","e_v","the output embedding of token v"],["f","f_\\theta","the network"],["u","u","another token, summed over"],["N","N","the number of training sequences"],["n","n","training sequence index"]]
   },
   "1948-count-the-footprints":{
-    "c":[],"l":[["c","c(\\cdot)","count: how often that sequence occurs in the corpus"],["n","n","the n in n-gram: the model looks back n−1 tokens"],["w","w","a word"],["u","u","the previous word"],["p","p","the true probability"]]
+    "c":[],"l":[["c","c(\\cdot)","count: how often that sequence occurs in the corpus"],["n","n","the n in n-gram: the model looks back n−1 tokens"],["w","w","a word"],["u","u","the previous word"],["p","p","the true probability"],["a","a","a token"],["b","b","the token that comes right after a"]]
   },
   "1950-judge-the-footprints":{
     "c":[["10\\^9","10^9","one billion bits of storage (about 125 megabytes)"]],"l":[["x","x","a whole text"],["T","T","the number of tokens in the text"],["D","D","the discriminator"]]
@@ -1277,11 +1277,11 @@ const GLOSS={"gc":[
     "l":[["x","x_1, x_2","binary input features"],["h","h_1, h_2","hidden units"],["z","z_j","a unit's weighted input"],["a","a_j","a unit's activation (output)"],["w","w_{ij}","weight from unit i to unit j"],["y","y","target output"],["o","o","output unit index"],["t","t","update step"],["j","j","current unit"],["i","i","unit in the layer below j"],["k","k","unit in the layer above j"]]
   },
   "1989-a-garden-worn-in":{
-    "c":[["\\\\lambda","\\lambda","the HMM parameters (A, B, π) together"],["\\\\pi","\\pi","initial state distribution"],["\\\\mu","\\mu","Gaussian mean"],["\\\\Sigma","\\Sigma","Gaussian covariance matrix"],["\\\\alpha_t","\\alpha_t(j)","forward probability of observations 1..t ending in state j"],["\\\\gamma_t","\\gamma_t(i)","posterior probability of being in state i at time t"],["\\\\xi_t","\\xi_t(i,j)","posterior probability of transitioning i → j at time t"]],
+    "c":[["\\\\alpha","\\alpha_t(j)","forward variable: probability of the first t frames, ending in state j"],["\\\\lambda","\\lambda","the HMM parameters (A, B, π) together"],["\\\\pi","\\pi","initial state distribution"],["\\\\mu","\\mu","Gaussian mean"],["\\\\Sigma","\\Sigma","Gaussian covariance matrix"],["\\\\alpha_t","\\alpha_t(j)","forward probability of observations 1..t ending in state j"],["\\\\gamma_t","\\gamma_t(i)","posterior probability of being in state i at time t"],["\\\\xi_t","\\xi_t(i,j)","posterior probability of transitioning i → j at time t"]],
     "l":[["N","N","number of hidden states in the word model"],["T","T","number of acoustic frames in the recording"],["o","o_t","acoustic observation (frame) at time t"],["s","s_t","hidden state at time t"],["a","a_{ij}","transition probability from state i to state j"],["b","b_j(o)","emission density of observation o in state j"],["c","c_{jm}","mixture weight of Gaussian m in state j"],["m","m","mixture component index"],["t","t","time frame"],["i","i, j","hidden states"],["j","j","hidden state"],["w","w","candidate word"]]
   },
   "1990-carry-a-pack":{
-    "c":[["\\\\tilde ?c","\\tilde c_t","candidate new memory content"]],
+    "c":[["\\\\tilde ?c","\\tilde c_t","candidate new memory content"],["f(?:_\\\\theta)?\\(","f_\\theta","the recurrent update: one learned function applied at every step"]],
     "l":[["h","h_t","hidden state after token t"],["W","W","input-to-hidden weights"],["U","U","recurrent hidden-to-hidden weights"],["V","V","output weights mapping h_t to logits"],["c","c_t","LSTM memory cell"],["f","f_t","forget gate: fraction of old cell state kept"],["i","i_t","input gate: fraction of new candidate added"],["o","o_t","output gate: fraction of cell exposed as h_t"],["k","k","number of steps back"],["s","s","step index in the product"]]
   },
   "2000-similar-words-similar-ground":{
@@ -1290,7 +1290,7 @@ const GLOSS={"gc":[
   },
   "2012-ground-for-pictures":{
     "c":[["\\\\phi","\\phi","hand-designed feature extractor (e.g. SIFT, HOG)"]],
-    "l":[["x","x","input image"],["y","y","class label (1 of 1,000)"],["f","f_\\theta","deep convolutional network (8 learned layers)"],["K","K","learned convolutional filter"],["X","X","image or feature map"],["u","u, v","horizontal and vertical offsets inside the filter"],["v","v","vertical offset inside the filter"],["i","i, j","spatial row and column in the feature map"],["j","j","spatial column"],["z","z","pre-activation value passed into ReLU"],["h","h","layer activations"],["m","m","random Bernoulli(0.5) dropout mask"],["g","g_\\theta","learned classifier head"]]
+    "l":[["x","x","input image"],["y","y","class label (1 of 1,000)"],["f","f_\\theta","deep convolutional network (8 learned layers)"],["K","K","learned convolutional filter"],["X","X","image or feature map"],["u","u, v","horizontal and vertical offsets inside the filter"],["v","v","vertical offset inside the filter"],["i","i, j","spatial row and column in the feature map"],["j","j","spatial column"],["k","k","offset within the filter's window"],["w","w_k","the filter's weights, shared across positions"],["z","z","pre-activation value passed into ReLU"],["h","h","layer activations"],["m","m","random Bernoulli(0.5) dropout mask"],["g","g_\\theta","learned classifier head"]]
   },
   "2013-paint-in-one-stroke":{
     "c":[["q_\\\\phi","q_\\phi(z\\mid x)","encoder: approximate posterior over latent codes"],["p_G","p_G","distribution of images produced by the generator"]],
@@ -1301,7 +1301,7 @@ const GLOSS={"gc":[
     "l":[["x","x","source sentence"],["y","y","target translation"],["v","v","fixed-size summary vector in plain seq2seq"],["h","h_j","encoder annotation for source word j"],["s","s_i","decoder recurrent state at step i"],["c","c_i","attention context vector for step i"],["e","e_{ij}","unnormalized alignment score"],["a","a","alignment score function"],["f","f","decoder state update"],["g","g","output word distribution"],["i","i","target word position"],["j","j","source word position"],["k","k","source index summed in softmax"]]
   },
   "2017-drop-the-pack-keep-the-dog":{
-    "c":[["\\\\ell","\\ell","layer index"],["W(?:_i)?\\^[QKV]|W\\^O","W^Q, W^K, W^V, W^O","learned query, key, value and output projection matrices"],["PE","PE","sinusoidal positional encoding"]],
+    "c":[["\\\\alpha","\\alpha_{tj}","attention weight: how much position t draws from position j"],["\\\\ell","\\ell","layer index"],["W(?:_i)?\\^[QKV]|W\\^O","W^Q, W^K, W^V, W^O","learned query, key, value and output projection matrices"],["PE","PE","sinusoidal positional encoding"]],
     "l":[["Q","Q","matrix of query vectors"],["K","K","matrix of key vectors"],["V","V","matrix of value vectors"],["q","q","a token's query vector: what it looks for"],["k","k","an earlier token's key vector: what it offers"],["v","v","an earlier token's value vector: what it passes back"],["M","M","causal mask (−∞ on future tokens j > t)"],["h","h^{(\\ell)}","token representation at layer ℓ (or number of heads)"],["F","F_\\ell","attention or feed-forward sublayer"],["n","n","sequence length"],["t","t","current token position"],["j","j","attended token position"]]
   },
   "2018-hand-over-the-road":{
@@ -1317,23 +1317,23 @@ const GLOSS={"gc":[
     "l":[["x","x_t","image at noise step t (x₀ is clean, x_T is pure noise)"],["t","t","noise step (1 to T)"],["T","T","total number of diffusion steps"],["q","q","fixed forward noising process"],["z","z","fresh standard Gaussian noise"],["I","I","identity matrix"]]
   },
   "2021-name-the-destination":{
-    "c":[["\\\\bar ?\\\\alpha_t","\\bar\\alpha_t","signal fraction remaining at step t"],["p_\\\\phi","p_\\phi(c\\mid x_t)","separate noisy-image classifier"],["w'","w'","original paper's guidance weight (w = 1 + w')"]],
+    "c":[["\\\\tilde p","\\tilde p","the guided distribution that sampling approximately follows"],["\\\\tilde\\\\varepsilon","\\tilde\\varepsilon","the guided noise prediction actually used for the step"],["\\\\bar ?\\\\alpha_t","\\bar\\alpha_t","signal fraction remaining at step t"],["p_\\\\phi","p_\\phi(c\\mid x_t)","separate noisy-image classifier"],["w'","w'","original paper's guidance weight (w = 1 + w')"]],
     "l":[["x","x_t","noisy image at step t"],["t","t","denoising step"],["c","c","conditioning prompt or class"],["w","w","guidance scale (w = 1 is unguided conditional)"],["s","s","classifier guidance scale"],["p","p","probability distribution"]]
   },
   "2022-judge-where-walks-end":{
     "c":[["\\\\beta","\\beta","KL-penalty coefficient (strength of the leash)"],["y_w","y_w","preferred ('winning') response in a human comparison"],["y_l","y_l","dispreferred ('losing') response in a human comparison"]],
-    "l":[["x","x","input prompt"],["y","y","complete generated response"],["t","t","token step during generation"]]
+    "l":[["P","P","probability"],["x","x","input prompt"],["y","y","complete generated response"],["t","t","token step during generation"]]
   },
   "2022-scout-before-answering":{
-    "c":[],"l":[["q","q","input question"],["z","z","intermediate reasoning tokens (chain of thought)"],["a","a","final answer"],["r","r_i","verifiable reward for sampled output i"],["A","A_i","group-normalized advantage in GRPO"],["G","G","group size: number of outputs sampled per question"]]
+    "c":[],"l":[["i","i","index of one sampled answer in the group"],["q","q","input question"],["z","z","intermediate reasoning tokens (chain of thought)"],["a","a","final answer"],["r","r_i","verifiable reward for sampled output i"],["A","A_i","group-normalized advantage in GRPO"],["G","G","group size: number of outputs sampled per question"]]
   },
   "2023-let-other-hands-lay-road":{
     "c":[["\\\\tau_f","\\tau_f","loss-improvement threshold to keep a tool call"],["\\\\eta","\\eta","retriever parameters"],["E_D","E_D","document encoder"],["E_Q","E_Q","query encoder"]],
     "l":[["x","x","input query or context"],["y","y","generated output"],["d","d","retrieved document or spliced tool output"],["k","k","number of retrieved passages"],["L","L^+_i,\\ L^-_i","loss on later tokens with vs. without the tool result"],["i","i","token position"]]
   },
   "2023-trails-worn-by-walkers":{
-    "c":[["\\\\theta_\\{?n(?:\\+1)?\\}?","\\theta_n","parameters of generation n"],["\\\\sigma_\\{?[0n]\\}?\\^2","\\sigma_n^2","fitted variance at generation n"]],
-    "l":[["x","x","a generated sample"],["n","n","generation number"],["M","M","number of samples drawn per generation"],["k","k","generation index in the product"]]
+    "c":[["\\\\lambda","\\lambda","fraction of the training data that is model-generated"],["\\\\theta_\\{?n(?:\\+1)?\\}?","\\theta_n","parameters of generation n"],["\\\\sigma_\\{?[0n]\\}?\\^2","\\sigma_n^2","fitted variance at generation n"]],
+    "l":[["i","i","sample index"],["x","x","a generated sample"],["n","n","generation number"],["M","M","number of samples drawn per generation"],["k","k","generation index in the product"]]
   }
 }};
 
